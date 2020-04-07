@@ -10,7 +10,7 @@
             <span class="login100-form-title">
               Login
             </span>
-            <b-form @submit="onSubmit" v-if="show">
+            <b-form @submit="login" v-if="show">
               <b-form-group
                 id="input-group-1"
                 label="Email address:"
@@ -53,6 +53,7 @@
               <b-button
                 class="login100-form-btn"
                 type="submit"
+                @click="login"
                 variant="primary"
                 >Login</b-button
               >
@@ -75,9 +76,11 @@
 </template>
 
 <script>
+// import axios from "axios";
 export default {
   data() {
     return {
+      token: localStorage.getItem("token") || "",
       form: {
         email: "",
         password: ""
@@ -86,9 +89,13 @@ export default {
     };
   },
   methods: {
-    onSubmit(evt) {
-      evt.preventDefault();
-      alert(JSON.stringify(this.form));
+    login: function() {
+      let email = this.form.email;
+      let password = this.form.password;
+      this.$store
+        .dispatch("login", { email, password })
+        .then(() => this.$router.push("/"))
+        .catch(err => console.log(err));
     }
   }
 };

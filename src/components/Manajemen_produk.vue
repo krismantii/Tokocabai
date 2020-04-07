@@ -61,7 +61,7 @@
       </thead>
       <tbody>
         <tr>
-          <th scope="row">{{ produk.id }}</th>
+          <td scope="row">{{ produk.id }}</td>
           <td><img src="images/of9.png" alt="" /></td>
           <td>{{ produk.name }}</td>
           <td>{{ produk.slugName }}</td>
@@ -77,13 +77,14 @@
             </router-link>
           </td>
           <td>
-            <router-link
-              to="/edit_produk"
-              type="button"
-              class="btn btn-danger float-left"
+            <b-button
+              v-model="produk.id"
+              @click="deleteData"
+              variant="danger"
+              class="m-1"
             >
               Hapus
-            </router-link>
+            </b-button>
           </td>
         </tr>
       </tbody>
@@ -112,7 +113,7 @@ export default {
           query: `
             {
             product(params: {
-              id:1
+              id:4
             }) {
               id
               name
@@ -128,6 +129,30 @@ export default {
         .then(response => {
           console.log("Data :", response.data);
           this.produk = response.data.data.product;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    deleteData() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            mutation{
+              deleteProduct(params: {
+                id: ${this.produk.id}
+              }) {
+                success
+              }
+            }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data :", response.data);
         })
         .catch(function(error) {
           console.log(error);

@@ -15,6 +15,8 @@ import Manajemen_produk from "@/components/Manajemen_produk.vue";
 import Tambah_produk from "@/components/Tambah_produk.vue";
 import HelloWorld from "@/components/HelloWorld.vue";
 import Detail_transaksi from "@/components/Detail_transaksi.vue";
+import Resource from "@/components/Resources.vue";
+import store from "@/store/index.js";
 Vue.use(VueRouter);
 
 const routes = [
@@ -101,11 +103,31 @@ const routes = [
     path: "/detail_transaksi",
     name: "Detail_transaksi",
     component: Detail_transaksi
+  },
+  {
+    path: "/resources",
+    name: "resources",
+    component: Resource,
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 
 const router = new VueRouter({
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next();
+      return;
+    }
+    next("/login");
+  } else {
+    next();
+  }
 });
 
 export default router;

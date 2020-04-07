@@ -38,7 +38,9 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <li class="nav-item">
-            <router-link to="/" class="nav-link"> Logout</router-link>
+            <span v-if="isLoggedIn"
+              ><a @click="logout" class="nav-link"> Logout</a></span
+            >
           </li>
           <li class="nav-item">
             <router-link to="/login" class="nav-link"> Login</router-link>
@@ -69,3 +71,20 @@
 @import "../assets/Shop/font-awesome.css";
 @import "../assets/navigasi.css";
 </style>
+
+<script>
+export default {
+  computed: {
+    isLoggedIn: function() {
+      return this.$store.getters.isLoggedIn;
+    }
+  },
+  methods: {
+    logout: function() {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/login");
+      });
+    }
+  }
+};
+</script>
