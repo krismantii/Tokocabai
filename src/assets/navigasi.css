@@ -18,7 +18,14 @@
   float: right;
   cursor: pointer;
   margin-top: 0;
-  margin-left: 10px;
+  margin-left: 15px;
+  width: 9%;
+}
+.org {
+  float: right;
+  cursor: pointer;
+  margin-top: 0;
+  margin-left: 20px;
   width: 9%;
 }
 .badge {

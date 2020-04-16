@@ -16,6 +16,8 @@ import Tambah_produk from "@/components/Tambah_produk.vue";
 import HelloWorld from "@/components/HelloWorld.vue";
 import Detail_transaksi from "@/components/Detail_transaksi.vue";
 import Resource from "@/components/Resources.vue";
+import Shop_detail from "@/components/Shop_detail.vue";
+import Ganti_password from "@/components/Ganti_password.vue";
 import store from "@/store/index.js";
 Vue.use(VueRouter);
 
@@ -103,6 +105,16 @@ const routes = [
     path: "/detail_transaksi",
     name: "Detail_transaksi",
     component: Detail_transaksi
+  },
+  {
+    path: "/shop_detail",
+    name: "Shop_detail",
+    component: Shop_detail
+  },
+  {
+    path: "/ganti_password",
+    name: "Ganti_password",
+    component: Ganti_password
   },
   {
     path: "/resources",

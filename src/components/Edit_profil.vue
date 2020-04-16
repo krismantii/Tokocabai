@@ -50,55 +50,15 @@
             :disabled="!Boolean(ready)"
           ></b-form-select>
         </b-form-group>
-        <b-form-group id="input-group-3" label="Provinsi:" label-for="input-3">
-          <b-form-select v-model="selected" :options="provinsi"></b-form-select>
-        </b-form-group>
-
-        <b-form-group
-          id="input-group-2"
-          label="Alamat Lengkap :"
-          label-for="input-2"
-        >
-          <b-form-textarea
-            id="input-2"
-            v-model="form.deskripsi"
-            type="text"
-            rows="5"
-            required
-            placeholder=""
-          ></b-form-textarea>
-        </b-form-group>
-        <b-form-group id="input-group-1" label="Kode pos :" label-for="input-1">
-          <b-form-input
-            id="input-1"
-            v-model="form.hp"
-            type="number"
-            required
-            placeholder="masukan No.Handphone"
-          ></b-form-input>
-        </b-form-group>
         <b-form-group id="input-group-1" label="No. Hp:" label-for="input-1">
           <b-form-input
             id="input-1"
             v-model="form.hp"
-            type="number"
+            type="text"
             required
             placeholder="masukan No.Handphone"
           ></b-form-input>
         </b-form-group>
-        <b-form-group
-          id="input-group-2"
-          label="Foto profil:"
-          label-for="input-2"
-        >
-          <b-form-file
-            v-model="file"
-            :state="Boolean(file)"
-            placeholder="Choose a file or drop it here..."
-            drop-placeholder="Drop file here..."
-          ></b-form-file>
-        </b-form-group>
-
         <b-button type="submit" variant="success">Edit Profil</b-button>
       </b-form>
     </div>

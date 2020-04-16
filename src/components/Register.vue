@@ -83,14 +83,29 @@
                   id="input-group-1"
                   label="No. Hp:"
                   label-for="input-1"
+                  description=""
                 >
                   <b-form-input
                     id="input-1"
                     v-model="form.hp"
-                    type="number"
+                    type="text"
                     required
-                    placeholder="masukan No.Handphone"
+                    placeholder="Masukan No.Hp"
                   ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                  id="input-group-2"
+                  label="Alamat :"
+                  label-for="input-2"
+                >
+                  <b-form-textarea
+                    id="input-2"
+                    v-model="form.alamat"
+                    type="text"
+                    rows="5"
+                    required
+                    placeholder=" Masukan alamat tempat tinggal"
+                  ></b-form-textarea>
                 </b-form-group>
               </b-form>
               <div class="flex-col-c p-t-10 p-b-40"></div>
@@ -98,6 +113,7 @@
                 <b-button
                   class="login100-form-btn"
                   @click="register"
+                  @click.native="$router.go()"
                   type="submit"
                   >Submit</b-button
                 >
@@ -128,11 +144,12 @@ export default {
         email: "",
         name: "",
         password: "",
-        hp: ""
+        hp: "",
+        alamat: ""
       },
       role: [
-        { value: 1, text: "Petani cabai" },
-        { value: 0, text: "Bukan petani cabai" }
+        { value: 2, text: "Petani cabai" },
+        { value: 1, text: "Bukan petani cabai" }
       ],
       provinsi: [
         { value: "a", text: "Aceh" },
@@ -187,6 +204,7 @@ export default {
               phoneNumber: "${this.form.hp}"
               fullName: "${this.form.name}"
               role: ${this.form.role}
+              address: "${this.form.alamat}"
             }){
               success
             }

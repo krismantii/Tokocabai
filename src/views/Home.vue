@@ -31,10 +31,11 @@
             <hr class="mx-auto divider light my-4" />
             <p class="text-white-50 mb-4">
               Tokocabai merupakan e-commerce pertama di Indoensia yang menjual
-              berbagai produk cabai merah segar dari petani lokal ke konsumen.
+              berbagai produk cabai merah segar langsung dari petani lokal.
               Aplikasi ini diharapkan mampu mensejahterakan petani lokal di
               Indonesia dengan memperpendek rantai distribusi produk cabai yang
-              panjang.
+              panjang untuk bisa sampai ke tangan konsumen. Ayo ikut andil dalam
+              mensejahterakan petani lokal di Indonesia!
             </p>
             <a class="btn btn-light btn-xl js-scroll-trigger" href="#services"
               >Ayo mulai sekarang!</a

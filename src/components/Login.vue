@@ -94,8 +94,12 @@ export default {
       let password = this.form.password;
       this.$store
         .dispatch("login", { email, password })
-        .then(() => this.$router.push("/"))
-        .catch(err => console.log(err));
+        .then(() => this.$router.push("/", () => this.$router.go(0)))
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+          alert("Data tidak sesuai!");
+        });
     }
   }
 };

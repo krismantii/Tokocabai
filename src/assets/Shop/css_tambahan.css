@@ -224,3 +224,8 @@ body {
 .review-block-description {
   font-size: 13px;
 }
+.inline{
+  display: inline;
+  margin-left: 10px;
+  color: grey;
+  }

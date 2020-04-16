@@ -1,7 +1,7 @@
 <template>
   <div class="single">
     <div class="spec">
-      <h3>Produk</h3>
+      <h3>Detail Produk</h3>
       <div class="ser-t">
         <b></b>
         <span><i></i></span>
@@ -9,6 +9,16 @@
       </div>
     </div>
     <div class="container">
+      <div class="mb-2">
+        <b-avatar
+          variant="success"
+          src="https://placekitten.com/300/300"
+          size="4rem"
+        ></b-avatar>
+        <router-link to="/shop_detail">
+          <h4 class="inline">Pokikik_Store</h4></router-link
+        >
+      </div>
       <div class="single-top-main">
         <div class="col-md-5 single-top">
           <div class="single-w3agile">

@@ -39,6 +39,7 @@
         </ul>
         <router-link
           to="/tambah_produk"
+          @click.native="$router.go()"
           class="btn btn-outline-success my-2 my-sm-0"
           type="submit"
         >
@@ -93,16 +94,20 @@
 </template>
 
 <script>
+const token = localStorage.getItem("token");
 import axios from "axios";
 export default {
   data() {
     return {
       //dataku merupakan variabel yg menampung data array JSON
-      produk: []
+      produk: [],
+      user: [],
+      token
     };
   },
   created() {
     this.loadData();
+    this.loadUser();
   },
   methods: {
     loadData() {
@@ -113,7 +118,7 @@ export default {
           query: `
             {
             product(params: {
-              id:4
+              id: ${this.user.id}
             }) {
               id
               name
@@ -153,6 +158,31 @@ export default {
       })
         .then(response => {
           console.log("Data :", response.data);
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    loadUser() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+                getUserInfo(token:
+                  "${token}"
+                ){
+                  id
+                }
+              }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data :", response.data);
+          this.user = response.data.data.getUserInfo;
         })
         .catch(function(error) {
           console.log(error);
