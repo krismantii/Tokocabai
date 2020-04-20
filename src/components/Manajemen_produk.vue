@@ -18,25 +18,6 @@
         class="collapse navbar-collapse justify-content-end"
         id="navbarTogglerDemo02"
       >
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Filter Pencarian
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Terbaru</a>
-              <a class="dropdown-item" href="#">Terlama</a>
-            </div>
-          </li>
-        </ul>
         <router-link
           to="/tambah_produk"
           @click.native="$router.go()"
@@ -50,7 +31,7 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">No</th>
+          <th scope="col">Dibuat</th>
           <th scope="col">Foto barang</th>
           <th scope="col">Nama Barang</th>
           <th scope="col">Kategori</th>
@@ -61,31 +42,29 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td scope="row">{{ produk.id }}</td>
-          <td><img src="images/of9.png" alt="" /></td>
-          <td>{{ produk.name }}</td>
-          <td>{{ produk.slugName }}</td>
-          <td>{{ produk.stockKG }}</td>
-          <td>Rp {{ produk.pricePerKG }}</td>
+        <tr v-for="(pro, index) in produk" :key="pro.id">
+          <td>{{ pro.createdAt }}</td>
+          <td><img :src="pro.photoURL" alt="" /></td>
+          <td>{{ pro.name }}</td>
+          <td>{{ pro.category }}</td>
+          <td>{{ pro.stockKG }}</td>
+          <td>Rp {{ pro.pricePerKG }}</td>
           <td>
             <router-link
-              to="/edit_produk"
+              :to="{
+                name: 'Edit_produk',
+                params: { slug: pro.slugName, id: pro.id }
+              }"
               type="button"
               class="btn btn-secondary float-left"
             >
-              Edit Produk
+              Edit
             </router-link>
           </td>
           <td>
-            <b-button
-              v-model="produk.id"
-              @click="deleteData"
-              variant="danger"
-              class="m-1"
-            >
+            <button class="btn btn-danger" @click="deleteData(pro.id, index)">
               Hapus
-            </b-button>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -99,14 +78,12 @@ import axios from "axios";
 export default {
   data() {
     return {
-      //dataku merupakan variabel yg menampung data array JSON
       produk: [],
       user: [],
       token
     };
   },
-  created() {
-    this.loadData();
+  created: function() {
     this.loadUser();
   },
   methods: {
@@ -116,39 +93,44 @@ export default {
         url: "http://localhost:4000/query",
         data: {
           query: `
-            {
-            product(params: {
-              id: ${this.user.id}
-            }) {
+            query productsByShop($shopID: Int!){
+            productsByShop(params:{
+              shopID: $shopID
+            }){
               id
               name
-              quantity
               pricePerKG
               stockKG
-              slugName
+              category
+              photoURL
+              createdAt
+              slugName   
             }
           }
-        `
+        `,
+          variables: {
+            shopID: parseInt(this.user.id)
+          }
         }
       })
         .then(response => {
-          console.log("Data :", response.data);
-          this.produk = response.data.data.product;
+          console.log("Data produk :", response.data);
+          this.produk = response.data.data.productsByShop;
         })
         .catch(function(error) {
           console.log(error);
           console.log("error");
         });
     },
-    deleteData() {
+    deleteData(data, index) {
       axios({
         method: "post",
         url: "http://localhost:4000/query",
         data: {
           query: `
-            mutation{
+            mutation deleteProduct(){
               deleteProduct(params: {
-                id: ${this.produk.id}
+                id: ${data}
               }) {
                 success
               }
@@ -157,11 +139,14 @@ export default {
         }
       })
         .then(response => {
+          alert("Data berhasil dihapus");
+          this.produk.splice(index, 1);
           console.log("Data :", response.data);
         })
         .catch(function(error) {
           console.log(error);
           console.log("error");
+          alert("error");
         });
     },
     loadUser() {
@@ -181,8 +166,8 @@ export default {
         }
       })
         .then(response => {
-          console.log("Data :", response.data);
           this.user = response.data.data.getUserInfo;
+          this.loadData();
         })
         .catch(function(error) {
           console.log(error);

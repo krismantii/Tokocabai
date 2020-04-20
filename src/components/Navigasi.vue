@@ -144,7 +144,7 @@ export default {
         }
       })
         .then(response => {
-          console.log("Data :", response.data);
+          console.log("Data user:", response.data);
           this.dataku = response.data.data.getUserInfo;
         })
         .catch(function(error) {

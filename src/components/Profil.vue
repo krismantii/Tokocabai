@@ -13,14 +13,14 @@
           </div>
           <div class=" contact-w3">
             <div class="col-md-5 contact-right">
-              <img src="images/hello.jpg" class="img-responsive" alt="" />
+              <img :src="dataku.photoURL" class="img-responsive" alt="" />
             </div>
             <div class="col-md-7 contact-left">
               <h4>{{ dataku.name }}</h4>
-              <p>
-                <i class="fas fa-address-book" aria-hidden="true"></i>
-                Alamat pengiriman : {{ dataku.address }}
-              </p>
+              <i class="fas fa-address-book" aria-hidden="true"></i>
+              <p>Provinsi : {{ dataku.province }}</p>
+              <p>Alamat detail : {{ dataku.addressDetail }}</p>
+              <p>kode zip : {{ dataku.zipCode }}</p>
               <ul class="contact-list">
                 <li>
                   <i class="fas fa-envelope" aria-hidden="true"></i
@@ -34,12 +34,12 @@
               <div>
                 <br />
                 <router-link
-                  to="/edit_profil"
-                  class="btn btn-outline-danger btn-xl"
-                  style="float: right;"
-                  @click.native="$router.go()"
-                >
-                  Edit Profil Pribadi</router-link
+                  :to="{
+                    name: 'Edit_profil',
+                    params: { id: dataku.id }
+                  }"
+                  class="btn btn-outline-danger"
+                  >Edit Profil</router-link
                 >
               </div>
               <!--Plug-in Initialisation-->
@@ -252,14 +252,14 @@
           </div>
           <div class=" contact-w3">
             <div class="col-md-5 contact-right">
-              <img src="images/cac.jpg" class="img-responsive" alt="" />
+              <img :src="dataku.photoURL" class="img-responsive" alt="" />
             </div>
             <div class="col-md-7 contact-left">
               <h4>{{ dataku.name }}</h4>
-              <p>
-                <i class="fas fa-address-book" aria-hidden="true"></i>
-                Alamat pengiriman : {{ dataku.address }}
-              </p>
+              <i class="fas fa-address-book" aria-hidden="true"></i>
+              <p>Provinsi : {{ dataku.province }}</p>
+              <p>Alamat detail : {{ dataku.addressDetail }}</p>
+              <p>kode zip : {{ dataku.zipCode }}</p>
               <ul class="contact-list">
                 <li>
                   <i class="fas fa-envelope" aria-hidden="true"></i
@@ -294,9 +294,11 @@
                     Manajemen Transaksi</router-link
                   >
                   <router-link
-                    to="/edit_toko"
+                    :to="{
+                      name: 'Edit_profil',
+                      params: { id: dataku.id }
+                    }"
                     class="btn btn-outline-danger"
-                    @click.native="$router.go()"
                     >Edit Profil Toko</router-link
                   >
                 </div>
@@ -346,6 +348,10 @@ export default {
                   email
                   phone
                   type
+                  addressDetail
+                  province
+                  zipCode
+                  photoURL
                 }
               }
         `

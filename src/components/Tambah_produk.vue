@@ -32,8 +32,8 @@
 
         <b-form-group id="input-group-3" label="Kategori:" label-for="input-3">
           <b-form-select
-            v-model="form.slugName"
-            :options="slugName"
+            v-model="form.category"
+            :options="category"
             required
           ></b-form-select>
         </b-form-group>
@@ -70,7 +70,7 @@
         >
           <b-form-textarea
             id="input-2"
-            v-model="form.deskripsi"
+            v-model="form.description"
             type="text"
             rows="5"
             required
@@ -81,7 +81,7 @@
         <br />
         <div>
           <div class="file-upload-form">
-            Upload an image file:
+            Upload foto produk:
             <input type="file" @change="previewImage" accept="image/*" />
           </div>
           <div class="image-preview" v-if="imageData.length > 0">
@@ -94,9 +94,6 @@
           Tambah produk
         </b-button>
       </b-form>
-      <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-      </b-card>
     </div>
   </div>
 </template>
@@ -111,21 +108,22 @@ export default {
       imageData: "",
       contoh: null,
       token,
+      slug: [],
       user: [],
       //dataku merupakan variabel yg menampung data array JSON
       produk: [],
       form: {
         name: "",
-        deskripsi: "",
+        description: "",
         pricePerKG: null,
         stockKG: null,
-        slugName: "",
+        category: "",
         file: null
       },
-      slugName: [
-        { value: "1", text: "Cabai Merah Keriting" },
-        { value: "2", text: "Cabai Merah Besar" },
-        { value: "3", text: "Cabai rawit" }
+      category: [
+        { value: "Cabai Merah Keriting", text: "Cabai Merah Keriting" },
+        { value: "Cabai Merah Besar", text: "Cabai Merah Besar" },
+        { value: "Cabai Rawit", text: "Cabai Rawit" }
       ],
       show: true
     };
@@ -135,19 +133,21 @@ export default {
   },
   methods: {
     createData() {
+      const slug = this.sanitizeTitle(this.form.name);
       const formData = new FormData();
       const query = {
-        query: `mutation createProduct($name: String!,$shopID: Int!, 
-        $slugName: String!, $pricePerKG: Int!, $stockKG: Int!, $photo: Upload, 
+        query: `mutation createProduct($name: String!,$shopID: Int!,$slugName: String!, 
+        $category: String!, $pricePerKG: Int!, $stockKG: Float!, $photo: Upload, 
         $description: String!){
               createProduct(params:{ 
               name: $name,
               shopID: $shopID,
-              slugName: $slugName,
+              category: $category,
+              slugName: $slugName
               pricePerKG: $pricePerKG,
               stockKG: $stockKG,
               photo: $photo,
-              description: $deskripsi
+              description: $description
               }){
                 id
                 photoURL
@@ -156,17 +156,18 @@ export default {
         `,
         variables: {
           name: this.form.name,
-          shopID: this.user.id,
-          slugName: this.form.slugName,
+          shopID: parseInt(this.user.id),
+          category: this.form.category,
           pricePerKG: this.form.pricePerKG,
           stockKG: this.form.stockKG,
+          slugName: slug,
           photo: null,
-          description: this.form.deskripsi
+          description: this.form.description
         }
       };
       formData.append("operations", JSON.stringify(query));
       const map = {
-        "0": ["0.variables.photo"]
+        "0": ["variables.photo"]
       };
       formData.append("map", JSON.stringify(map));
       const file = this.contoh;
@@ -181,6 +182,7 @@ export default {
       })
         .then(response => {
           console.log(response.data);
+          alert("Produk berhasil ditambahkan!");
         })
         .catch(function(error) {
           console.log(error);
@@ -205,8 +207,8 @@ export default {
         }
       })
         .then(response => {
-          console.log("Data :", response.data);
           this.user = response.data.data.getUserInfo;
+          console.log(this.user.id);
         })
         .catch(function(error) {
           console.log(error);
@@ -231,6 +233,27 @@ export default {
         // Start the reader job - read file as a data url (base64 format)
         reader.readAsDataURL(input.files[0]);
       }
+    },
+    sanitizeTitle: function(title) {
+      var slug = "";
+      // Change to lower case
+      var titleLower = title.toLowerCase();
+      // Letter "e"
+      slug = titleLower.replace(/e|é|è|ẽ|ẻ|ẹ|ê|ế|ề|ễ|ể|ệ/gi, "e");
+      // Letter "a"
+      slug = slug.replace(/a|á|à|ã|ả|ạ|ă|ắ|ằ|ẵ|ẳ|ặ|â|ấ|ầ|ẫ|ẩ|ậ/gi, "a");
+      // Letter "o"
+      slug = slug.replace(/o|ó|ò|õ|ỏ|ọ|ô|ố|ồ|ỗ|ổ|ộ|ơ|ớ|ờ|ỡ|ở|ợ/gi, "o");
+      // Letter "u"
+      slug = slug.replace(/u|ú|ù|ũ|ủ|ụ|ư|ứ|ừ|ữ|ử|ự/gi, "u");
+      // Letter "d"
+      slug = slug.replace(/đ/gi, "d");
+      // Trim the last whitespace
+      slug = slug.replace(/\s*$/g, "");
+      // Change whitespace to "-"
+      slug = slug.replace(/\s+/g, "-");
+
+      return slug;
     }
   }
 };

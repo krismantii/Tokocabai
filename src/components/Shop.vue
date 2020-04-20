@@ -32,46 +32,33 @@
               </li>
             </ul>
           </nav>
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div
-              class="collapse navbar-collapse justify-content-end"
-              id="navbarTogglerDemo02"
-            >
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                  <a
-                    class="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Filter Pencarian
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Harga termurah</a>
-                    <a class="dropdown-item" href="#">Harga termahal</a>
-                    <a class="dropdown-item" href="#">Produk terpopuler</a>
-                  </div>
-                </li>
-              </ul>
-              <form class="form-inline my-2 my-lg-0">
+          <form>
+            <div class="row">
+              <div class="col">
+                <b-form-select
+                  v-model="produk.category"
+                  :options="category"
+                  required
+                ></b-form-select>
+              </div>
+              <div class="col">
                 <input
-                  class="form-control mr-sm-2"
-                  type="search"
-                  placeholder="Search"
+                  type="text"
+                  class="form-control"
+                  placeholder="Last name"
                 />
+              </div>
+              <div class="col">
                 <button
                   class="btn btn-outline-success my-2 my-sm-0"
                   type="submit"
                 >
                   Search
                 </button>
-              </form>
+              </div>
             </div>
-          </nav>
+          </form>
+          <br />
           <div class="tab-content tab-content-t">
             <div class="tab-pane active text-style" id="tab1">
               <div class=" con-w3l">
@@ -133,7 +120,7 @@
 
             <div class="tab-pane text-style" id="tab2">
               <div class=" con-w3l">
-                 <div class="col-md-3 m-wthree">
+                <div class="col-md-3 m-wthree">
                   <div class="col-m">
                     <a
                       href="#"
@@ -288,12 +275,16 @@ export default {
     return {
       //dataku merupakan variabel yg menampung data array JSON
       produk: [],
-      shop: []
+      shop: [],
+      category: [
+        { value: "Cabai Merah Keriting", text: "Berdasarkan provinsi" },
+        { value: "Cabai Merah Besar", text: "Harga termurah" },
+        { value: "Cabai Rawit", text: "Produk terbanyak dibeli" }
+      ]
     };
   },
   created() {
     this.loadData();
-    this.loadData2();
   },
   methods: {
     loadData() {
@@ -302,48 +293,24 @@ export default {
         url: "http://localhost:4000/query",
         data: {
           query: `
-            {
-            product(params: {
-              id:1
-            }) {
-              shopID
-              name
-              quantity
-              pricePerKG
-              stockKG
-            }
-          }
-        `
-        }
-      })
-        .then(response => {
-          console.log("Data :", response.data);
-          this.produk = response.data.data.product;
-        })
-        .catch(function(error) {
-          console.log(error);
-          console.log("error");
-        });
-    },
-    loadData2() {
-      axios({
-        method: "post",
-        url: "http://localhost:4000/query",
-        data: {
-          query: `
-            {
-              shop(params: {
-                id:1
-              }) {
-                name
+            query{
+                searchProducts(params:{
+                  category: ""
+                }
+                ){
+                  id
+                  name
+                  pricePerKG
+                  photoURL
+                  stockKG
+                }
               }
-            }
         `
         }
       })
         .then(response => {
           console.log("Data :", response.data);
-          this.shop = response.data.data.shop;
+          this.produk = response.data.data.searchProducts;
         })
         .catch(function(error) {
           console.log(error);

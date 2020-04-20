@@ -72,7 +72,7 @@ const routes = [
     component: Profil
   },
   {
-    path: "/edit_profil",
+    path: "/edit_profil/:id",
     name: "Edit_profil",
     component: Edit_profil
   },
@@ -97,7 +97,7 @@ const routes = [
     component: Manajemen_produk
   },
   {
-    path: "/edit_produk",
+    path: "/edit_produk/:slug/:id",
     name: "Edit_produk",
     component: Edit_produk
   },

@@ -113,7 +113,6 @@
                 <b-button
                   class="login100-form-btn"
                   @click="register"
-                  @click.native="$router.go()"
                   type="submit"
                   >Submit</b-button
                 >
@@ -151,41 +150,6 @@ export default {
         { value: 2, text: "Petani cabai" },
         { value: 1, text: "Bukan petani cabai" }
       ],
-      provinsi: [
-        { value: "a", text: "Aceh" },
-        { value: "b", text: "Bali" },
-        { value: "c", text: "Petani cabai" },
-        { value: "d", text: "Bangka Belitung" },
-        { value: "e", text: "Banten" },
-        { value: "f", text: "Gorontalo" },
-        { value: "g", text: "Jakarta" },
-        { value: "h", text: "Jambi" },
-        { value: "i", text: "Jawa Barat" },
-        { value: "j", text: "Jawa Tengah" },
-        { value: "k", text: "Jawa Timur" },
-        { value: "l", text: "Kalimantan Barat" },
-        { value: "m", text: "Kalimantan Timur" },
-        { value: "n", text: "Kalimantan Selatan" },
-        { value: "o", text: "Kalimantan Tengah" },
-        { value: "p", text: "Kalimantan Utara" },
-        { value: "q", text: "Kepulauan Riau" },
-        { value: "r", text: "Lampung" },
-        { value: "s", text: "Maluku Utara" },
-        { value: "t", text: "Maluku" },
-        { value: "u", text: "Nusa Tenggara Barat" },
-        { value: "v", text: "Nusa Tenggara Timur" },
-        { value: "w", text: "Papua Barat" },
-        { value: "x", text: "Papua" },
-        { value: "y", text: "Riau" },
-        { value: "z", text: "Sulawesi Selatan" },
-        { value: "aa", text: "Sulawesi Tengah" },
-        { value: "ab", text: "Sulawesi Tenggara" },
-        { value: "ac", text: "Sulawesi Utara" },
-        { value: "ad", text: "Sumatra Barat" },
-        { value: "ae", text: "Sumatra Selatan" },
-        { value: "af", text: "Sumatra Utara" },
-        { value: "ag", text: "Yogyakarta" }
-      ],
       show: true
     };
   },
@@ -204,9 +168,9 @@ export default {
               phoneNumber: "${this.form.hp}"
               fullName: "${this.form.name}"
               role: ${this.form.role}
-              address: "${this.form.alamat}"
+              addressDetail: "${this.form.alamat}"
             }){
-              success
+              id
             }
           }
         `
