@@ -9,26 +9,25 @@
         <div class="mb-2">
           <b-avatar
             variant="success"
-            src="https://placekitten.com/300/300"
+            :src="dataku.photoURL"
             size="4rem"
           ></b-avatar>
-          <router-link to="/shop_detail">
-            <h4 class="inline">Pokikik_Store</h4></router-link
-          >
+          <h4 class="inline">{{ dataku.name }}</h4>
         </div>
         <b-card-text>
-          <a class="font-weight-bold"> Deskripsi toko: </a>
+          <a class="font-weight-bold"> Deskripsi toko:</a>
+          <a style="color:green;"> {{ dataku.description }} </a>
         </b-card-text>
         <b-card-text>
           <i class="fas fa-map-marked-alt"></i>
           <a class="font-weight-bold"> Alamat toko:</a>
-          asljaksdakjhsfjhaslfkhlakshflkashfksfalhlkfhsakfhalhfl
+          {{ dataku.addressDetail }}
         </b-card-text>
       </b-card>
       <b-card header-tag="header" footer-tag="footer">
         <b-card-text><i class="fas fa-store"></i> 100 produk</b-card-text>
         <b-card-text>
-          <i class="fas fa-user-check"></i> Bergabng :
+          <i class="fas fa-user-check"></i> Bergabng : {{ dataku.createdAt }}
         </b-card-text>
         <b-card-text
           ><i class="fas fa-grin-hearts"></i> 10000 disukai</b-card-text
@@ -58,49 +57,13 @@
           </li>
         </ul>
       </nav>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarTogglerDemo02"
-        >
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Filter Pencarian
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Harga termurah</a>
-                <a class="dropdown-item" href="#">Harga termahal</a>
-                <a class="dropdown-item" href="#">Produk terpopuler</a>
-              </div>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-            />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
-      </nav>
+      <hr />
       <div class="tab-content tab-content-t">
         <div class="tab-pane active text-style" id="tab1">
           <div class=" con-w3l">
             <div class="col-md-3 m-wthree" v-for="pro in produk" :key="pro.id">
               <div class="col-m">
-                <p style="color: orange; ">Toko:</p>
+                <p style="color: orange; ">Toko: {{dataku.name}}</p>
                 <a
                   href="#"
                   data-toggle="modal"
@@ -174,7 +137,7 @@ export default {
     };
   },
   created() {
-    this.loadProduk();
+    this.loadData();
   },
   methods: {
     loadData() {
@@ -184,8 +147,8 @@ export default {
         data: {
           query: `
             query{
-                getUserInfo(token:
-                  "${token}"
+                getUserByID(userID:
+                  ${parseInt(this.$route.params.id)}
                 ){
                   id
                   name
@@ -197,6 +160,8 @@ export default {
                   zipCode
                   photoURL
                   description
+                  createdAt
+                  photoURL
                 }
               }
         `
@@ -204,7 +169,8 @@ export default {
       })
         .then(response => {
           console.log("Data :", response.data);
-          this.dataku = response.data.data.getUserInfo;
+          this.dataku = response.data.data.getUserByID;
+          this.loadProduk();
         })
         .catch(function(error) {
           console.log(error);
@@ -219,7 +185,7 @@ export default {
           query: `
             query{
               productsByShop(params:{
-                shopID: 6
+                shopID:  ${parseInt(this.$route.params.id)}
               }
               ){
                 id

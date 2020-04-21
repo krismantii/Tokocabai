@@ -57,7 +57,7 @@ const routes = [
     component: Shop
   },
   {
-    path: "/produk",
+    path: "/produk/:slug/:id",
     name: "Produk",
     component: Produk
   },
@@ -107,7 +107,7 @@ const routes = [
     component: Detail_transaksi
   },
   {
-    path: "/shop_detail",
+    path: "/shop_detail/:id",
     name: "Shop_detail",
     component: Shop_detail
   },

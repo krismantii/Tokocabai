@@ -5,6 +5,7 @@
     <br />
     <br />
     <div class="container">
+      {{ dataaja }}
       <div class="large-12 medium-12 small-12 cell">
         <label
           >File
@@ -27,6 +28,11 @@ export default {
     return {
       file: ""
     };
+  },
+  computed: {
+    dataaja: function() {
+      return this.$store.state.data_user;
+    }
   },
   methods: {
     submitFile() {

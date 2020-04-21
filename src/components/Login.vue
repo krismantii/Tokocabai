@@ -80,7 +80,6 @@
 export default {
   data() {
     return {
-      token: localStorage.getItem("token") || "",
       form: {
         email: "",
         password: ""
@@ -94,7 +93,7 @@ export default {
       let password = this.form.password;
       this.$store
         .dispatch("login", { email, password })
-        .then(() => this.$router.push("/", () => this.$router.go(0)))
+        .then(() => this.$router.push("/"))
         .catch(function(error) {
           console.log(error);
           console.log("error");

@@ -10,13 +10,14 @@
     </div>
     <div class="container">
       <div class="mb-2">
-        <b-avatar
-          variant="success"
-          src="https://placekitten.com/300/300"
-          size="4rem"
-        ></b-avatar>
-        <router-link to="/shop_detail">
-          <h4 class="inline">Pokikik_Store</h4></router-link
+        <b-avatar variant="success" :src="toko.photoURL" size="4rem"></b-avatar>
+        <router-link
+          :to="{
+            name: 'Shop_detail',
+            params: { id: produk.shopID }
+          }"
+        >
+          <h4 class="inline">{{ toko.name }}</h4></router-link
         >
       </div>
       <div class="single-top-main">
@@ -24,7 +25,7 @@
           <div class="single-w3agile">
             <div id="picture-frame">
               <img
-                src="images/si.jpg"
+                :src="produk.photoURL"
                 data-src="images/si-1.jpg"
                 alt=""
                 class="img-responsive"
@@ -44,12 +45,7 @@
             <div class="block block-w3">
               <div class="starbox small ghosting"></div>
             </div>
-            <p class="in-pa">
-              deskripsi barang : There are many variations of passages of Lorem
-              Ipsum available, but the majority have suffered alteration in some
-              form, by injected humour, or randomised words which don't look
-              even slightly believable.
-            </p>
+            <p class="in-pa">deskripsi barang : {{ produk.description }}.</p>
             <div class="form-group row">
               <label for="inputNama3" class="col-sm-2 col-form-label"
                 >Jumlah :</label
@@ -70,19 +66,24 @@
                 </select>
               </div>
             </div>
-            <div class="add add-3">
-              <button
-                class="btn btn-danger my-cart-btn my-cart-b"
-                data-id="1"
-                data-name="Wheat"
-                data-summary="summary 1"
-                data-price="6.00"
-                data-quantity="1"
-                data-image="images/si.jpg"
-              >
-                Add to Cart
-              </button>
-            </div>
+            <span v-if="isLoggedIn == ''">
+              <b-alert show variant="danger">Login sebagai pembeli</b-alert>
+            </span>
+            <span v-if="isLoggedIn">
+              <div class="add">
+                <button
+                  class="btn btn-danger my-cart-btn my-cart-b"
+                  data-id="7"
+                  data-name="Popcorn"
+                  data-summary="summary 7"
+                  data-price="1.00"
+                  data-quantity="1"
+                  data-image="images/of6.png"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </span>
 
             <div class="clearfix"></div>
           </div>
@@ -322,20 +323,29 @@
 </template>
 
 <script>
+const token = localStorage.getItem("token");
 import axios from "axios";
 export default {
   name: "Produk",
   data() {
     return {
       //dataku merupakan variabel yg menampung data array JSON
-      produk: []
+      produk: [],
+      toko: [],
+      token,
+      shop_id: null
     };
   },
+  computed: {
+    isLoggedIn: function() {
+      return this.$store.getters.isLoggedIn;
+    }
+  },
   created() {
-    this.loadData();
+    this.loadProduk();
   },
   methods: {
-    loadData() {
+    loadProduk() {
       axios({
         method: "post",
         url: "http://localhost:4000/query",
@@ -343,13 +353,14 @@ export default {
           query: `
             {
             product(params: {
-              id:1
+              id: ${this.$route.params.id}
             }) {
               shopID
               name
-              quantity
               pricePerKG
               stockKG
+              description
+              photoURL
             }
           }
         `
@@ -358,6 +369,62 @@ export default {
         .then(response => {
           console.log("Data :", response.data);
           this.produk = response.data.data.product;
+          this.loadToko();
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    loadData() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+                getUserInfo(token:
+                  "${token}"
+                ){
+                  id
+                  province
+                  type
+                }
+              }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data user:", response.data);
+          this.dataku = response.data.data.getUserInfo;
+          this.loadProduk();
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    loadToko() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+                getUserByID(userID:
+                  ${parseInt(this.produk.shopID)}
+                ){
+                  id
+                  name
+                  photoURL
+                }
+              }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data :", response.data);
+          this.toko = response.data.data.getUserByID;
         })
         .catch(function(error) {
           console.log(error);

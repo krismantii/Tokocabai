@@ -16,62 +16,94 @@
           <nav class="nav justify-content-center">
             <ul id="active-nav" class="nav tabs">
               <li class="">
-                <a href="#tab1" class="nav-shop" data-toggle="tab"
+                <a
+                  href="#tab1"
+                  class="nav-shop"
+                  data-toggle="tab"
+                  v-on:click="filterCategory('Cabai Merah Besar')"
                   >Cabai Merah Besar</a
                 >
               </li>
               <li class="">
-                <a href="#tab2" class="nav-shop" data-toggle="tab"
+                <a
+                  href="#tab2"
+                  class="nav-shop"
+                  data-toggle="tab"
+                  v-on:click="filterCategory('Cabai Merah Keriting')"
                   >Cabai Merah Keriting</a
                 >
               </li>
               <li class="">
-                <a href="#tab3" class="nav-shop" data-toggle="tab"
+                <a
+                  href="#tab3"
+                  class="nav-shop"
+                  data-toggle="tab"
+                  v-on:click="filterCategory('Cabai Rawit')"
                   >Cabai Rawit</a
                 >
               </li>
             </ul>
           </nav>
-          <form>
-            <div class="row">
-              <div class="col">
-                <b-form-select
-                  v-model="produk.category"
-                  :options="category"
-                  required
-                ></b-form-select>
-              </div>
-              <div class="col">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Last name"
-                />
-              </div>
-              <div class="col">
-                <button
-                  class="btn btn-outline-success my-2 my-sm-0"
-                  type="submit"
-                >
-                  Search
-                </button>
-              </div>
-            </div>
-          </form>
+          <div>
+            <b-navbar toggleable="lg" type="dark" variant="success">
+              <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+              <b-collapse id="nav-collapse" is-nav>
+                <b-navbar-nav>
+                  <b-nav-item-dropdown text="Filter pencarian" right>
+                    <b-dropdown-item v-on:click="filterHarga('asc')"
+                      >Harga Termurah</b-dropdown-item
+                    >
+                    <b-dropdown-item v-on:click="filterHarga('desc')"
+                      >Harga Termahal</b-dropdown-item
+                    >
+                    <span v-if="isLoggedIn">
+                      <b-dropdown-item
+                        v-on:click="filterProvince(dataku.province)"
+                        >Provinsi user</b-dropdown-item
+                      >
+                    </span>
+                  </b-nav-item-dropdown>
+                </b-navbar-nav>
+
+                <!-- Right aligned nav items -->
+                <b-navbar-nav class="ml-auto">
+                  <b-nav-form>
+                    <b-form-input
+                      v-model="search"
+                      size="sm"
+                      class="mr-sm-2"
+                      placeholder="Search"
+                    ></b-form-input>
+                    <b-button
+                      size="sm"
+                      class="my-2 my-sm-0"
+                      v-on:click="filterSearch(search)"
+                      >Search</b-button
+                    >
+                  </b-nav-form>
+                </b-navbar-nav>
+              </b-collapse>
+            </b-navbar>
+          </div>
+          <div></div>
           <br />
           <div class="tab-content tab-content-t">
             <div class="tab-pane active text-style" id="tab1">
               <div class=" con-w3l">
-                <div class="col-md-3 m-wthree">
+                <div
+                  class="col-md-3 m-wthree"
+                  v-for="pro in produk"
+                  :key="pro.id"
+                >
                   <div class="col-m">
-                    <p style="color: orange; ">Toko: {{ shop.name }}</p>
                     <a
                       href="#"
                       data-toggle="modal"
                       data-target="#myModal7"
                       class="offer-img"
                     >
-                      <img src="images/of6.png" class="img-responsive" alt="" />
+                      <img :src="pro.photoURL" class="img-responsive" alt="" />
                       <div class="offer">
                         <p><span>Offer</span></p>
                       </div>
@@ -79,38 +111,50 @@
                     <div class="mid-1">
                       <div class="women">
                         <h6>
-                          <a href="single.html" style="font-weight: bold;">{{
-                            produk.name
-                          }}</a>
+                          <router-link
+                            :to="{
+                              name: 'Produk',
+                              params: { slug: pro.slugName, id: pro.id }
+                            }"
+                          >
+                            <a href="single.html" style="font-weight: bold;">{{
+                              pro.name
+                            }}</a>
+                          </router-link>
                         </h6>
                       </div>
                       <div class="mid-2">
                         <p>
                           Harga:
-                          <em class="item_price"
-                            >Rp. {{ produk.pricePerKG }}</em
-                          >
+                          <em class="item_price">Rp. {{ pro.pricePerKG }}</em>
                         </p>
                         <div class="block">
                           <p style="color: red;">
-                            Stock : {{ produk.stockKG }} KG
+                            Stock : {{ pro.stockKG }} KG
                           </p>
                         </div>
                         <div class="clearfix"></div>
                       </div>
-                      <div class="add">
-                        <button
-                          class="btn btn-danger my-cart-btn my-cart-b"
-                          data-id="7"
-                          data-name="Popcorn"
-                          data-summary="summary 7"
-                          data-price="1.00"
-                          data-quantity="1"
-                          data-image="images/of6.png"
+                      <span v-if="isLoggedIn == ''">
+                        <b-alert show variant="danger"
+                          >Login sebagai pembeli</b-alert
                         >
-                          Add to Cart
-                        </button>
-                      </div>
+                      </span>
+                      <span v-if="isLoggedIn">
+                        <div class="add">
+                          <button
+                            class="btn btn-danger my-cart-btn my-cart-b"
+                            data-id="7"
+                            data-name="Popcorn"
+                            data-summary="summary 7"
+                            data-price="1.00"
+                            data-quantity="1"
+                            data-image="images/of6.png"
+                          >
+                            Add to Cart
+                          </button>
+                        </div>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -120,87 +164,70 @@
 
             <div class="tab-pane text-style" id="tab2">
               <div class=" con-w3l">
-                <div class="col-md-3 m-wthree">
+                <div
+                  class="col-md-3 m-wthree"
+                  v-for="pro in produk"
+                  :key="pro.id"
+                >
                   <div class="col-m">
                     <a
                       href="#"
                       data-toggle="modal"
-                      data-target="#myModal6"
+                      data-target="#myModal7"
                       class="offer-img"
                     >
-                      <img src="images/of5.png" class="img-responsive" alt="" />
+                      <img :src="pro.photoURL" class="img-responsive" alt="" />
                       <div class="offer">
                         <p><span>Offer</span></p>
                       </div>
                     </a>
                     <div class="mid-1">
                       <div class="women">
-                        <h6><a href="single.html">Kurkure</a>(100 g)</h6>
+                        <h6>
+                          <router-link
+                            :to="{
+                              name: 'Produk',
+                              params: { slug: pro.slugName, id: pro.id }
+                            }"
+                          >
+                            <a href="single.html" style="font-weight: bold;">{{
+                              pro.name
+                            }}</a>
+                          </router-link>
+                        </h6>
                       </div>
                       <div class="mid-2">
                         <p>
-                          <label>$1.00</label><em class="item_price">$0.70</em>
+                          Harga:
+                          <em class="item_price">Rp. {{ pro.pricePerKG }}</em>
                         </p>
                         <div class="block">
-                          <div class="starbox small ghosting"></div>
+                          <p style="color: red;">
+                            Stock : {{ pro.stockKG }} KG
+                          </p>
                         </div>
                         <div class="clearfix"></div>
                       </div>
-                      <div class="add">
-                        <button
-                          class="btn btn-danger my-cart-btn my-cart-b"
-                          data-id="6"
-                          data-name="Kurkure"
-                          data-summary="summary 6"
-                          data-price="0.70"
-                          data-quantity="1"
-                          data-image="images/of5.png"
+                      <span v-if="isLoggedIn == ''">
+                        <b-alert show variant="danger"
+                          >Login sebagai pembeli</b-alert
                         >
-                          Add to Cart
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3 m-wthree">
-                  <div class="col-m">
-                    <a
-                      href="#"
-                      data-toggle="modal"
-                      data-target="#myModal6"
-                      class="offer-img"
-                    >
-                      <img src="images/of5.png" class="img-responsive" alt="" />
-                      <div class="offer">
-                        <p><span>Offer</span></p>
-                      </div>
-                    </a>
-                    <div class="mid-1">
-                      <div class="women">
-                        <h6><a href="single.html">Kurkure</a>(100 g)</h6>
-                      </div>
-                      <div class="mid-2">
-                        <p>
-                          <label>$1.00</label><em class="item_price">$0.70</em>
-                        </p>
-                        <div class="block">
-                          <div class="starbox small ghosting"></div>
+                      </span>
+                      <span v-if="isLoggedIn">
+                        <div class="add">
+                          <button
+                            class="btn btn-danger my-cart-btn my-cart-b"
+                            data-id="7"
+                            data-name="Popcorn"
+                            data-summary="summary 7"
+                            data-price="1.00"
+                            data-quantity="1"
+                            data-image="images/of6.png"
+                          >
+                            Add to Cart
+                          </button>
                         </div>
-                        <div class="clearfix"></div>
-                      </div>
-                      <div class="add">
-                        <button
-                          class="btn btn-danger my-cart-btn my-cart-b"
-                          data-id="6"
-                          data-name="Kurkure"
-                          data-summary="summary 6"
-                          data-price="0.70"
-                          data-quantity="1"
-                          data-image="images/of5.png"
-                        >
-                          Add to Cart
-                        </button>
-                      </div>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -209,45 +236,70 @@
             </div>
             <div class="tab-pane  text-style" id="tab3">
               <div class=" con-w3l">
-                <div class="col-md-3 m-wthree">
+                <div
+                  class="col-md-3 m-wthree"
+                  v-for="pro in produk"
+                  :key="pro.id"
+                >
                   <div class="col-m">
                     <a
                       href="#"
                       data-toggle="modal"
-                      data-target="#myModal9"
+                      data-target="#myModal7"
                       class="offer-img"
                     >
-                      <img src="images/of8.png" class="img-responsive" alt="" />
+                      <img :src="pro.photoURL" class="img-responsive" alt="" />
                       <div class="offer">
                         <p><span>Offer</span></p>
                       </div>
                     </a>
                     <div class="mid-1">
                       <div class="women">
-                        <h6><a href="single.html">Banana</a>(6 pcs)</h6>
+                        <h6>
+                          <router-link
+                            :to="{
+                              name: 'Produk',
+                              params: { slug: pro.slugName, id: pro.id }
+                            }"
+                          >
+                            <a href="single.html" style="font-weight: bold;">{{
+                              pro.name
+                            }}</a>
+                          </router-link>
+                        </h6>
                       </div>
                       <div class="mid-2">
                         <p>
-                          <label>$2.00</label><em class="item_price">$1.50</em>
+                          Harga:
+                          <em class="item_price">Rp. {{ pro.pricePerKG }}</em>
                         </p>
                         <div class="block">
-                          <div class="starbox small ghosting"></div>
+                          <p style="color: red;">
+                            Stock : {{ pro.stockKG }} KG
+                          </p>
                         </div>
                         <div class="clearfix"></div>
                       </div>
-                      <div class="add">
-                        <button
-                          class="btn btn-danger my-cart-btn my-cart-b"
-                          data-id="9"
-                          data-name="Banana"
-                          data-summary="summary 9"
-                          data-price="1.50"
-                          data-quantity="1"
-                          data-image="images/of8.png"
+                      <span v-if="isLoggedIn == '' || dataku.type == 2">
+                        <b-alert show variant="danger"
+                          >Login sebagai pembeli</b-alert
                         >
-                          Add to Cart
-                        </button>
-                      </div>
+                      </span>
+                      <span v-if="isLoggedIn || dataku.type == 1">
+                        <div>
+                          <button
+                            class="btn btn-danger my-cart-btn my-cart-b"
+                            data-id="7"
+                            data-name="Popcorn"
+                            data-summary="summary 7"
+                            data-price="1.00"
+                            data-quantity="1"
+                            data-image="images/of6.png"
+                          >
+                            Add to Cart
+                          </button>
+                        </div>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -268,14 +320,20 @@
 </style>
 
 <script>
+const token = localStorage.getItem("token");
 import axios from "axios";
 export default {
   name: "Produk",
   data() {
     return {
+      search: "",
+      token,
       //dataku merupakan variabel yg menampung data array JSON
       produk: [],
+      dataku: [],
+      barang: [],
       shop: [],
+      yey: [],
       category: [
         { value: "Cabai Merah Keriting", text: "Berdasarkan provinsi" },
         { value: "Cabai Merah Besar", text: "Harga termurah" },
@@ -283,11 +341,19 @@ export default {
       ]
     };
   },
+  computed: {
+    isLoggedIn: function() {
+      return this.$store.getters.isLoggedIn;
+    },
+    data_user: function() {
+      return this.$store.state.data_id;
+    }
+  },
   created() {
-    this.loadData();
+    this.loadProduk();
   },
   methods: {
-    loadData() {
+    loadProduk() {
       axios({
         method: "post",
         url: "http://localhost:4000/query",
@@ -295,7 +361,7 @@ export default {
           query: `
             query{
                 searchProducts(params:{
-                  category: ""
+                  category: "Cabai Merah Besar"
                 }
                 ){
                   id
@@ -303,6 +369,161 @@ export default {
                   pricePerKG
                   photoURL
                   stockKG
+                  category
+                  slugName
+                }
+              }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data produk :", response.data);
+          this.produk = response.data.data.searchProducts;
+          this.loadData();
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    filterCategory(event) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+                searchProducts(params:{
+                  category: "${event}"
+                }
+                ){
+                  id
+                  name
+                  pricePerKG
+                  photoURL
+                  stockKG
+                  category
+                  slugName
+                }
+              }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data filter category :", response.data);
+          this.produk = response.data.data.searchProducts;
+          console.log("produk data:", this.barang);
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    filterSearch(event) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+                searchProducts(params:{
+                  search: "${event}"
+                }
+                ){
+                  id
+                  name
+                  pricePerKG
+                  photoURL
+                  stockKG
+                  category
+                  slugName
+                }
+              }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data search :", response.data);
+          this.produk = response.data.data.searchProducts;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    filterProvince(event) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+                searchProducts(params:{
+                  province: "${event}"
+                }
+                ){
+                  id
+                  name
+                  pricePerKG
+                  photoURL
+                  stockKG
+                  category
+                  slugName
+                }
+              }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data produk :", response.data);
+          this.produk = response.data.data.searchProducts;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    filterHarga(event) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+                  {
+          searchProducts(params: {orderType: "${event}"}) {
+                  id
+                  name
+                  pricePerKG
+                  photoURL
+                  stockKG
+                  category
+                  slugName
+          }
+        }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data filter harga:", response.data);
+          this.produk = response.data.data.searchProducts;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    loadData() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+                getUserInfo(token:
+                  "${token}"
+                ){
+                  id
+                  province
                 }
               }
         `
@@ -310,7 +531,7 @@ export default {
       })
         .then(response => {
           console.log("Data :", response.data);
-          this.produk = response.data.data.searchProducts;
+          this.dataku = response.data.data.getUserInfo;
         })
         .catch(function(error) {
           console.log(error);

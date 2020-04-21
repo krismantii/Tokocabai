@@ -332,6 +332,11 @@ export default {
   created() {
     this.loadData();
   },
+  computed: {
+    isLoggedIn: function() {
+      return this.$store.getters.isLoggedIn;
+    }
+  },
   methods: {
     loadData() {
       axios({
