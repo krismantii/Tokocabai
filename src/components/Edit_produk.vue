@@ -86,9 +86,12 @@
         </div>
         <br />
         <br />
-        <b-button type="submit" variant="success" class="m-1">
-          Edit Produk
-        </b-button>
+        <div>
+          <router-link to="/manajemen_produk" @click.native="$router.go()">
+            <b-button>Kembali</b-button></router-link
+          >
+          <b-button type="submit" variant="success">Edit Produk</b-button>
+        </div>
       </b-form>
     </div>
   </div>
@@ -127,7 +130,6 @@ export default {
   methods: {
     updateData() {
       const slug = this.sanitizeTitle(this.produk.name);
-      console.log(this.produk.category);
       const formData = new FormData();
       const query = {
         query: `

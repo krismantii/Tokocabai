@@ -13,7 +13,11 @@
           </div>
           <div class=" contact-w3">
             <div class="col-md-5 contact-right">
-              <img :src="dataku.photoURL" class="img-responsive" alt="" />
+              <img
+                :src="dataku.photoURL || 'images/default.png'"
+                class="img-responsive"
+                alt=""
+              />
             </div>
             <div class="col-md-7 contact-left">
               <h4>{{ dataku.name }}</h4>
@@ -252,7 +256,11 @@
           </div>
           <div class=" contact-w3">
             <div class="col-md-5 contact-right">
-              <img :src="dataku.photoURL" class="img-responsive" alt="" />
+              <img
+                :src="dataku.photoURL || 'images/default.png'"
+                class="img-responsive"
+                alt=""
+              />
             </div>
             <div class="col-md-7 contact-left">
               <h4>{{ dataku.name }}</h4>

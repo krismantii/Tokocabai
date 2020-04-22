@@ -28,14 +28,6 @@
             >
           </li>
           <li class="nav-item">
-            <router-link to="/produk" class="nav-link"> Produk</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/shop_detail" class="nav-link">
-              Shop detail</router-link
-            >
-          </li>
-          <li class="nav-item">
             <router-link to="/" class="nav-link"> Promo</router-link>
           </li>
           <li class="nav-item">
@@ -81,7 +73,7 @@
               ></router-link>
             </li>
           </span>
-          <span v-if="isLoggedIn">
+          <span v-if="isLoggedIn && dataku.type == 1">
             <li class="cart">
               <router-link
                 to="/Keranjang"
@@ -138,6 +130,7 @@ export default {
                   "${token}"
                 ){
                   id
+                  type
                 }
               }
         `

@@ -8,7 +8,6 @@ import Keranjang from "@/components/Keranjang.vue";
 import Produk from "@/components/Produk.vue";
 import Profil from "@/components/Profil.vue";
 import Edit_profil from "@/components/Edit_profil.vue";
-import Edit_toko from "@/components/Edit_toko.vue";
 import Edit_produk from "@/components/Edit_produk.vue";
 import Manajemen_toko from "@/components/Manajemen_toko.vue";
 import Manajemen_produk from "@/components/Manajemen_produk.vue";
@@ -54,7 +53,10 @@ const routes = [
   {
     path: "/shop",
     name: "Shop",
-    component: Shop
+    component: Shop,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/produk/:slug/:id",
@@ -75,11 +77,6 @@ const routes = [
     path: "/edit_profil/:id",
     name: "Edit_profil",
     component: Edit_profil
-  },
-  {
-    path: "/edit_toko",
-    name: "Edit_toko",
-    component: Edit_toko
   },
   {
     path: "/manajemen_toko",

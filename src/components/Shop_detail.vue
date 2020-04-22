@@ -9,7 +9,7 @@
         <div class="mb-2">
           <b-avatar
             variant="success"
-            :src="dataku.photoURL"
+            :src="dataku.photoURL || 'images/default.png'"
             size="4rem"
           ></b-avatar>
           <h4 class="inline">{{ dataku.name }}</h4>
@@ -63,7 +63,7 @@
           <div class=" con-w3l">
             <div class="col-md-3 m-wthree" v-for="pro in produk" :key="pro.id">
               <div class="col-m">
-                <p style="color: orange; ">Toko: {{dataku.name}}</p>
+                <p style="color: orange; ">Toko: {{ dataku.name }}</p>
                 <a
                   href="#"
                   data-toggle="modal"
@@ -78,9 +78,7 @@
                 <div class="mid-1">
                   <div class="women">
                     <h6>
-                      <a href="single.html" style="font-weight: bold;">{{
-                        pro.name
-                      }}</a>
+                      <a style="font-weight: bold;">{{ pro.name }}</a>
                     </h6>
                   </div>
                   <div class="mid-2">
@@ -103,7 +101,7 @@
                       data-quantity="1"
                       data-image="images/of6.png"
                     >
-                      Add to Cart
+                      Detail
                     </button>
                   </div>
                 </div>

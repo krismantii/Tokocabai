@@ -117,9 +117,7 @@
                               params: { slug: pro.slugName, id: pro.id }
                             }"
                           >
-                            <a href="single.html" style="font-weight: bold;">{{
-                              pro.name
-                            }}</a>
+                            <a style="font-weight: bold;">{{ pro.name }}</a>
                           </router-link>
                         </h6>
                       </div>
@@ -142,17 +140,18 @@
                       </span>
                       <span v-if="isLoggedIn">
                         <div class="add">
-                          <button
-                            class="btn btn-danger my-cart-btn my-cart-b"
-                            data-id="7"
-                            data-name="Popcorn"
-                            data-summary="summary 7"
-                            data-price="1.00"
-                            data-quantity="1"
-                            data-image="images/of6.png"
+                          <router-link
+                            :to="{
+                              name: 'Produk',
+                              params: { slug: pro.slugName, id: pro.id }
+                            }"
                           >
-                            Add to Cart
-                          </button>
+                            <button
+                              class="btn btn-danger my-cart-btn my-cart-b"
+                            >
+                              Detail
+                            </button>
+                          </router-link>
                         </div>
                       </span>
                     </div>
@@ -215,17 +214,18 @@
                       </span>
                       <span v-if="isLoggedIn">
                         <div class="add">
-                          <button
-                            class="btn btn-danger my-cart-btn my-cart-b"
-                            data-id="7"
-                            data-name="Popcorn"
-                            data-summary="summary 7"
-                            data-price="1.00"
-                            data-quantity="1"
-                            data-image="images/of6.png"
+                          <router-link
+                            :to="{
+                              name: 'Produk',
+                              params: { slug: pro.slugName, id: pro.id }
+                            }"
                           >
-                            Add to Cart
-                          </button>
+                            <button
+                              class="btn btn-danger my-cart-btn my-cart-b"
+                            >
+                              Detail
+                            </button>
+                          </router-link>
                         </div>
                       </span>
                     </div>
@@ -287,17 +287,18 @@
                       </span>
                       <span v-if="isLoggedIn || dataku.type == 1">
                         <div>
-                          <button
-                            class="btn btn-danger my-cart-btn my-cart-b"
-                            data-id="7"
-                            data-name="Popcorn"
-                            data-summary="summary 7"
-                            data-price="1.00"
-                            data-quantity="1"
-                            data-image="images/of6.png"
+                          <router-link
+                            :to="{
+                              name: 'Produk',
+                              params: { slug: pro.slugName, id: pro.id }
+                            }"
                           >
-                            Add to Cart
-                          </button>
+                            <button
+                              class="btn btn-danger my-cart-btn my-cart-b"
+                            >
+                              Detail
+                            </button>
+                          </router-link>
                         </div>
                       </span>
                     </div>

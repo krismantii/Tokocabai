@@ -138,7 +138,12 @@
         </b-form-group>
         <hr />
         <br />
-        <b-button type="submit" variant="success">Edit Profil</b-button>
+        <div>
+          <router-link to="/profil" @click.native="$router.go()">
+            <b-button>Kembali</b-button></router-link
+          >
+          <b-button type="submit" variant="success">Edit Profil</b-button>
+        </div>
       </b-form>
     </div>
   </div>
@@ -280,7 +285,6 @@ export default {
       };
       formData.append("map", JSON.stringify(map));
       const file = this.image;
-      console.log(this.user.description);
       formData.append("0", file);
       axios({
         method: "post",
@@ -294,6 +298,7 @@ export default {
         .catch(function(error) {
           console.log(error);
           console.log("error");
+          alert("Data masih belum benar!");
         });
     },
     previewImage: function(event) {

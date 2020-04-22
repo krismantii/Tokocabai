@@ -3,6 +3,12 @@
     <br />
     <br />
     <br />
+    <br />
+    <div class="container">
+      <b-alert show dismissible>
+        Login untuk bisa akses semua fitur di website Tokocabai~ <b>&rArr;</b>
+      </b-alert>
+    </div>
     <div class="limiter">
       <div class="container-login100">
         <div class="wrap-login100">
@@ -93,7 +99,7 @@ export default {
       let password = this.form.password;
       this.$store
         .dispatch("login", { email, password })
-        .then(() => this.$router.push("/"))
+        .then(() => this.$router.push("/", () => this.$router.go(0)))
         .catch(function(error) {
           console.log(error);
           console.log("error");

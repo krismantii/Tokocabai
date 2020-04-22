@@ -10,7 +10,11 @@
     </div>
     <div class="container">
       <div class="mb-2">
-        <b-avatar variant="success" :src="toko.photoURL" size="4rem"></b-avatar>
+        <b-avatar
+          variant="success"
+          :src="toko.photoURL || 'images/default.png'"
+          size="4rem"
+        ></b-avatar>
         <router-link
           :to="{
             name: 'Shop_detail',
@@ -69,17 +73,9 @@
             <span v-if="isLoggedIn == ''">
               <b-alert show variant="danger">Login sebagai pembeli</b-alert>
             </span>
-            <span v-if="isLoggedIn">
-              <div class="add">
-                <button
-                  class="btn btn-danger my-cart-btn my-cart-b"
-                  data-id="7"
-                  data-name="Popcorn"
-                  data-summary="summary 7"
-                  data-price="1.00"
-                  data-quantity="1"
-                  data-image="images/of6.png"
-                >
+            <span v-if="isLoggedIn && dataku.type == 1">
+              <div class="add" style="float: left;">
+                <button class="btn btn-danger my-cart-btn my-cart-b">
                   Add to Cart
                 </button>
               </div>
@@ -329,6 +325,7 @@ export default {
   name: "Produk",
   data() {
     return {
+      dataku: [],
       //dataku merupakan variabel yg menampung data array JSON
       produk: [],
       toko: [],
@@ -342,7 +339,7 @@ export default {
     }
   },
   created() {
-    this.loadProduk();
+    this.loadData();
   },
   methods: {
     loadProduk() {
