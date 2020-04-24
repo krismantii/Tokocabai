@@ -55,27 +55,24 @@
                 >Jumlah :</label
               >
               <div class="col-sm-3">
-                <input
-                  type="nama"
-                  class="form-control"
-                  id="inputNama3"
-                  placeholder="Jumlah"
-                />
+                <b-form-input
+                  id="input-1"
+                  v-model="jumlah"
+                  type="number"
+                  placeholder=""
+                ></b-form-input>
               </div>
-              <div class="col-sm-3">
-                <select class="form-control" id="sel1">
-                  <option>Kg</option>
-                  <option>Ton</option>
-                  <option>ons</option>
-                </select>
-              </div>
+              <p>KG</p>
             </div>
             <span v-if="isLoggedIn == ''">
               <b-alert show variant="danger">Login sebagai pembeli</b-alert>
             </span>
             <span v-if="isLoggedIn && dataku.type == 1">
               <div class="add" style="float: left;">
-                <button class="btn btn-danger my-cart-btn my-cart-b">
+                <button
+                  class="btn btn-danger my-cart-btn my-cart-b"
+                  v-on:click="createCart()"
+                >
                   Add to Cart
                 </button>
               </div>
@@ -330,7 +327,9 @@ export default {
       produk: [],
       toko: [],
       token,
-      shop_id: null
+      shop_id: null,
+      cart: [],
+      jumlah: null
     };
   },
   computed: {
@@ -424,6 +423,44 @@ export default {
           this.toko = response.data.data.getUserByID;
         })
         .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    createCart() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+          mutation{
+            createCart(params:{
+              productID: ${parseInt(this.$route.params.id)}
+              quantityKG: ${parseFloat(this.jumlah)}
+            }){
+              id
+              product{
+                id
+                photoURL
+                pricePerKG
+                stockKG
+                name
+                category
+              }
+              userID
+              AmountKG
+            }
+          }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data cart:", response.data);
+          this.cart = response.data.data.createCart;
+          alert("Produk berhasil masuk keranjang");
+        })
+        .catch(function(error) {
+          alert("Data tidak sesuai");
           console.log(error);
           console.log("error");
         });

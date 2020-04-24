@@ -219,7 +219,7 @@
 
               <div class="tab-pane  text-style" id="tab2">
                 <div class=" con-w3l">
-              <div
+                  <div
                     class="col-md-3 m-wthree"
                     v-for="pro in produk"
                     :key="pro.id"

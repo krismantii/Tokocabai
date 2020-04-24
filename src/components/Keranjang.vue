@@ -14,98 +14,64 @@
     </div>
     <table class="table ">
       <tr>
-        <th class="t-head head-it ">Products</th>
-        <th class="t-head">Price</th>
+        <th class="t-head head-it ">Pilih</th>
+        <th class="t-head  ">Toko</th>
+        <th class="t-head  ">Produk</th>
+        <th class="t-head">Harga/Kg</th>
         <th class="t-head">Quantity</th>
-
-        <th class="t-head">Purchase</th>
+        <th class="t-head">Total</th>
       </tr>
-      <tr class="cross">
+      <tr class="cross" v-for="(pro, index) in cart" :key="pro.id">
+        {{
+          loadToko(pro.product.shopID)
+        }}
+        <td class="t-data">
+          <div class="form-group form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              :value="pro"
+              v-model="check"
+            />
+            <label class="form-check-label" for="exampleCheck1">Pilih</label>
+          </div>
+        </td>
+        <td class="t-data">toko : {{ toko }}</td>
         <td class="ring-in t-data">
-          <a href="single.html" class="at-in">
-            <img src="images/wi.png" class="img-responsive" alt="" />
+          <a class="at-in">
+            <img :src="pro.product.photoURL" class="gambar" alt="" />
           </a>
           <div class="sed">
-            <h5>Cabai Merah jawa barat</h5>
-            <h6>Toko :</h6>
+            <router-link
+              :to="{
+                name: 'Produk',
+                params: { slug: pro.product.slugName, id: pro.product.id }
+              }"
+            >
+              <h5>{{ pro.product.name }}</h5>
+            </router-link>
           </div>
           <div class="clearfix"></div>
           <div class="close1">
-            <i class="fas fa-times" aria-hidden="true"></i>
+            <button class="btn btn-danger" @click="deleteData(pro.id, index)">
+              x
+            </button>
           </div>
         </td>
-        <td class="t-data">Rp 10.000,00</td>
+        <td class="t-data">Rp {{ pro.product.pricePerKG }}</td>
         <td class="t-data">
-          <div class="quantity">
-            <div class="quantity-select">
-              <div class="entry value-minus">&nbsp;</div>
-              <div class="entry value"><span class="span-1">1</span></div>
-              <div class="entry value-plus active">&nbsp;</div>
-            </div>
+          <div class="col-5">
+            <b-form-input
+              v-model="pro.AmountKG"
+              type="number"
+              min="0"
+              step="any"
+              placeholder=""
+            ></b-form-input>
           </div>
         </td>
 
-        <td class="t-data t-w3l">
-          <a class=" add-1" href="single.html">Add To Cart</a>
-        </td>
-      </tr>
-
-      <tr class="cross1">
-        <td class="t-data ring-in">
-          <a href="single.html" class="at-in"
-            ><img src="images/wi1.png" class="img-responsive" alt=""
-          /></a>
-          <div class="sed">
-            <h5>Sed ut perspiciatis unde</h5>
-            <h6>Sed ut perspiciatis unde</h6>
-          </div>
-          <div class="clearfix"></div>
-          <div class="close2">
-            <i class="fas fa-times" aria-hidden="true"></i>
-          </div>
-        </td>
-        <td class="t-data">$20.00</td>
-        <td class="t-data">
-          <div class="quantity">
-            <div class="quantity-select">
-              <div class="entry value-minus">&nbsp;</div>
-              <div class="entry value"><span class="span-1">1</span></div>
-              <div class="entry value-plus active">&nbsp;</div>
-            </div>
-          </div>
-        </td>
-
-        <td class="t-data t-w3l">
-          <a class=" add-1" href="single.html">Add To Cart</a>
-        </td>
-      </tr>
-      <tr class="cross2">
-        <td class="t-data ring-in">
-          <a href="single.html" class="at-in"
-            ><img src="images/wi2.png" class="img-responsive" alt=""
-          /></a>
-          <div class="sed">
-            <h5>Sed ut perspiciatis unde</h5>
-          </div>
-          <div class="clearfix"></div>
-          <div class="close3">
-            <i class="fas fa-times" aria-hidden="true"></i>
-          </div>
-        </td>
-        <td class="t-data">$15.00</td>
-        <td class="t-data">
-          <div class="quantity">
-            <div class="quantity-select">
-              <div class="entry value-minus">&nbsp;</div>
-              <div class="entry value"><span class="span-1">1</span></div>
-              <div class="entry value-plus active">&nbsp;</div>
-            </div>
-          </div>
-        </td>
-
-        <td class="t-data">
-          <a class=" add-1" href="single.html">Add To Cart</a>
-        </td>
+        <td class="t-data">Rp {{ pro.product.pricePerKG * pro.AmountKG }}</td>
       </tr>
     </table>
 
@@ -119,7 +85,7 @@
           <h4>Total bayar :</h4>
         </td>
         <td class="t-data" style="text-align: center; ">
-          <h5>Rp 100000</h5>
+          <h5>Rp {{ totalSumm }}</h5>
         </td>
       </tr>
       <tr class="cross">
@@ -143,4 +109,124 @@ th.t-head {
   padding: 1em !important;
   border: 1px solid #d2d2d2 !important;
 }
+.gambar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
 </style>
+<script>
+const token = localStorage.getItem("token");
+import axios from "axios";
+export default {
+  data() {
+    return {
+      dataku: [],
+      //dataku merupakan variabel yg menampung data array JSON
+      cart: [],
+      toko: [],
+      token,
+      shop_id: null,
+      harga_total: [],
+      check: []
+    };
+  },
+  computed: {
+    totalSumm: function() {
+      return this.check.reduce(function(total, pro) {
+        return total + pro.product.pricePerKG * pro.AmountKG;
+      }, 0);
+    }
+  },
+  created() {
+    this.Cart_user();
+  },
+  methods: {
+    Cart_user() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+            carts(token:"${token}" ){
+              id
+              product{
+                id
+                photoURL
+                pricePerKG
+                name
+                shopID
+                slugName
+              }
+              userID
+              AmountKG
+            }
+          }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data cart:", response.data);
+          this.cart = response.data.data.carts;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    deleteData(event, index) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+           mutation{
+              deleteCart(cartID: ${event}){
+              success
+              }
+            }
+        `
+        }
+      })
+        .then(response => {
+          alert("Data berhasil dihapus");
+          this.cart.splice(index, 1);
+          console.log("Data hapus :", response.data);
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+          alert("error");
+        });
+    },
+    loadToko(event) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+                getUserByID(userID:
+                  ${parseInt(event)}
+                ){
+                  id
+                  name
+                }
+              }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data toko:", response.data);
+          this.toko = response.data.data.getUserByID.name;
+          return this.toko;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    }
+  }
+};
+</script>
