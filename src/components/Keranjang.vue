@@ -14,7 +14,7 @@
     </div>
     <table class="table ">
       <tr>
-        <th class="t-head head-it ">Pilih</th>
+        <th class="t-head head-it "></th>
         <th class="t-head  ">Toko</th>
         <th class="t-head  ">Produk</th>
         <th class="t-head">Harga/Kg</th>
@@ -36,7 +36,9 @@
             <label class="form-check-label" for="exampleCheck1">Pilih</label>
           </div>
         </td>
-        <td class="t-data">toko : {{ toko }}</td>
+        <td class="t-data">
+          <h6 style="color: grey;">toko : {{ toko }}</h6>
+        </td>
         <td class="ring-in t-data">
           <a class="at-in">
             <img :src="pro.product.photoURL" class="gambar" alt="" />
@@ -60,7 +62,7 @@
         </td>
         <td class="t-data">Rp {{ pro.product.pricePerKG }}</td>
         <td class="t-data">
-          <div class="col-5">
+          <div class="col-sm-10">
             <b-form-input
               v-model="pro.AmountKG"
               type="number"
@@ -82,7 +84,7 @@
       </tr>
       <tr class="cross">
         <td class="ring-in t-data" style="text-align: right; ">
-          <h4>Total bayar :</h4>
+          <h4 style="color: green;">Total bayar :</h4>
         </td>
         <td class="t-data" style="text-align: center; ">
           <h5>Rp {{ totalSumm }}</h5>
@@ -91,9 +93,9 @@
       <tr class="cross">
         <td class="ring-in t-data" style="text-align: right; "></td>
         <td class="t-data" style="text-align: center; ">
-          <router-link to="/detail_transaksi" class="btn btn-danger"
-            >Bayar Isi Keranjang Belanja</router-link
-          >
+          <button v-on:click="checkout()" class="btn btn-danger">
+            Check out
+          </button>
         </td>
       </tr>
     </table>
@@ -128,7 +130,8 @@ export default {
       token,
       shop_id: null,
       harga_total: [],
-      check: []
+      check: [],
+      check_out: []
     };
   },
   computed: {
@@ -173,6 +176,48 @@ export default {
         .catch(function(error) {
           console.log(error);
           console.log("error");
+        });
+    },
+    checkout() {
+      var result = this.check.map(a => a.id);
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+           mutation{
+            checkout(params:{
+              cartIDs: "${result}"
+              paymentAmount: "${this.totalSumm.toString()}"
+            }){
+              id
+              customerID
+              shopID
+              totalPrice
+              products{
+                id
+                name
+                quantity
+              }
+              status
+              payment{
+                id
+                amount
+                status
+                method
+              }
+            }
+          }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data check out:", response.data);
+          this.check_out = response.data.data.checkout;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error check");
         });
     },
     deleteData(event, index) {
