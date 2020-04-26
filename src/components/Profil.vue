@@ -11,6 +11,46 @@
               <b class="line"></b>
             </div>
           </div>
+          <div>
+            <b-card-group>
+              <b-card title="Saldo Tokocabai">
+                <b-card-text>
+                  <i class="fas fa-credit-card"></i> Rp {{ this.saldo_user.saldo }}
+                </b-card-text>
+              </b-card>
+              <b-card title="Top up saldo">
+                <b-card-text>
+                  <b-button pill variant="info" v-b-modal.modal-prevent-closing
+                    >Topup</b-button
+                  >
+                </b-card-text>
+              </b-card>
+            </b-card-group>
+            <b-modal
+              id="modal-prevent-closing"
+              ref="modal"
+              title="Top up saldo"
+              @show="resetModal"
+              @hidden="resetModal"
+              @ok="handleOk"
+            >
+              <form ref="form" @submit.stop.prevent="handleSubmit">
+                <b-form-group
+                  :state="nameState"
+                  label="Rp"
+                  label-for="name-input"
+                  invalid-feedback="Isikan nominal"
+                >
+                  <b-form-input
+                    id="name-input"
+                    :state="nameState"
+                    v-model="saldo"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+              </form>
+            </b-modal>
+          </div>
           <div class=" contact-w3">
             <div class="col-md-5 contact-right">
               <img
@@ -52,6 +92,7 @@
           </div>
         </div>
       </div>
+
       <div class="container">
         <div class="spec ">
           <h3>History</h3>
@@ -334,7 +375,10 @@ export default {
   data() {
     return {
       token,
-      dataku: []
+      dataku: [],
+      saldo: "",
+      saldo_user: "",
+      nameState: null
     };
   },
   created() {
@@ -378,6 +422,53 @@ export default {
           console.log(error);
           console.log("error");
         });
+    },
+    checkFormValidity() {
+      const valid = this.$refs.form.checkValidity();
+      this.nameState = valid;
+      return valid;
+    },
+    resetModal() {
+      this.saldo = "";
+      this.nameState = null;
+    },
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.handleSubmit();
+    },
+    handleSubmit() {
+      // Exit when the form isn't valid
+      if (!this.checkFormValidity()) {
+        return;
+      }
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+              topup(amount: "${this.saldo}"){
+                id
+                saldo
+              }
+            }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data saldo :", response.data);
+          this.saldo_user = response.data.data.topup;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$bvModal.hide("modal-prevent-closing");
+      });
     }
   }
 };
