@@ -57,7 +57,7 @@
             <div class="col-md-5 contact-right">
               <img
                 :src="dataku.photoURL || 'images/default.png'"
-                class="img-responsive"
+                class="gambar"
                 alt=""
               />
             </div>
@@ -138,7 +138,7 @@
             <div class="col-md-5 contact-right">
               <img
                 :src="dataku.photoURL || 'images/default.png'"
-                class="img-responsive"
+                class="gambar"
                 alt=""
               />
             </div>
@@ -205,6 +205,11 @@
 @import "../assets/Shop/font-awesome.css";
 @import "../assets/Shop/css_tambahan.css";
 @import "../assets/produk/style.css";
+.gambar {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+}
 </style>
 <script>
 const token = localStorage.getItem("token");
