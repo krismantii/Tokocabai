@@ -258,7 +258,7 @@ export default {
         });
     },
     checkout() {
-      var result = this.check.map(a => a.id);
+      var result = JSON.stringify(this.check.map(a => a.id));
       axios({
         method: "post",
         url: "http://localhost:4000/query",

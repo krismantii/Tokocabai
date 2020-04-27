@@ -16,7 +16,7 @@ import HelloWorld from "@/components/HelloWorld.vue";
 import Detail_transaksi from "@/components/Detail_transaksi.vue";
 import Resource from "@/components/Resources.vue";
 import Shop_detail from "@/components/Shop_detail.vue";
-import Check_out from "@/components/Check_out.vue";
+import Topup_history from "@/components/Topup_history.vue";
 import History from "@/components/History.vue";
 import store from "@/store/index.js";
 Vue.use(VueRouter);
@@ -118,9 +118,9 @@ const routes = [
     }
   },
   {
-    path: "/check_out",
-    name: "Check_out",
-    component: Check_out
+    path: "/topup_history/:id",
+    name: "Topup_history",
+    component: Topup_history
   },
   {
     path: "/history/:id",

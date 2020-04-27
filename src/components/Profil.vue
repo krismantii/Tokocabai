@@ -25,6 +25,16 @@
                   <b-button pill variant="info" v-b-modal.modal-prevent-closing
                     >Topup</b-button
                   >
+                  <router-link
+                    :to="{
+                      name: 'Topup_history',
+                      params: { id: dataku.id }
+                    }"
+                  >
+                    <b-button pill variant="secondary"
+                      >History</b-button
+                    ></router-link
+                  >
                 </b-card-text>
               </b-card>
             </b-card-group>
@@ -123,6 +133,58 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+      </div>
+      <div class="container">
+        <b-card-group>
+          <b-card title="Saldo Tokocabai">
+            <b-card-text>
+              <p style="color:green;">
+                <i class="fas fa-credit-card"></i> Rp {{ dataku.saldo }}
+              </p>
+            </b-card-text>
+          </b-card>
+          <b-card title="Top up saldo">
+            <b-card-text>
+              <b-button pill variant="info" v-b-modal.modal-prevent-closing
+                >Topup</b-button
+              >
+              <router-link
+                :to="{
+                  name: 'Topup_history',
+                  params: { id: dataku.id }
+                }"
+              >
+                <b-button pill variant="secondary"
+                  >History</b-button
+                ></router-link
+              >
+            </b-card-text>
+          </b-card>
+        </b-card-group>
+        <b-modal
+          id="modal-prevent-closing"
+          ref="modal"
+          title="Top up saldo"
+          @show="resetModal"
+          @hidden="resetModal"
+          @ok="handleOk"
+        >
+          <form ref="form" @submit.stop.prevent="handleSubmit">
+            <b-form-group
+              :state="nameState"
+              label="Rp"
+              label-for="name-input"
+              invalid-feedback="Isikan nominal"
+            >
+              <b-form-input
+                id="name-input"
+                :state="nameState"
+                v-model="saldo"
+                required
+              ></b-form-input>
+            </b-form-group>
+          </form>
+        </b-modal>
       </div>
       <div class="contact">
         <div class="container">

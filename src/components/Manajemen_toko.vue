@@ -23,13 +23,11 @@
             </li>
             <li class="">
               <a href="#tab2" class="nav-shop" data-toggle="tab"
-                >Barang Diproses</a
+                >Barang Dikirim</a
               >
             </li>
             <li class="">
-              <a href="#tab3" class="nav-shop" data-toggle="tab"
-                >Barang Dikirim</a
-              >
+              <a href="#tab3" class="nav-shop" data-toggle="tab"></a>
             </li>
           </ul>
         </nav>
@@ -47,7 +45,11 @@
                 </thead>
                 <tbody>
                   <tr v-for="(pro, index) in order" :key="index">
-                    <div style="font-size: 12px;" v-for="(produk, index) in pro.products" :key="index">
+                    <div
+                      style="font-size: 12px;"
+                      v-for="(produk, index) in pro.products"
+                      :key="index"
+                    >
                       <td>{{ produk.name }}</td>
                       <td>Rp {{ produk.pricePerKG }}/KG</td>
                       <td>{{ produk.boughtKG }} KG</td>
@@ -64,8 +66,12 @@
                       </button>
                     </td>
                     <td>
-                      <button type="button" class="btn btn-danger float-left">
-                        Pindah status
+                      <button
+                        type="button"
+                        class="btn btn-danger float-left"
+                        @click="shipOrder(pro.id, index)"
+                      >
+                        Produk dikirim
                       </button>
                     </td>
                   </tr>
@@ -80,28 +86,41 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Jumlah diminta(KG)</th>
-                    <th scope="col">Harga</th>
-                    <th scope="col">Alamat pembeli</th>
-                    <th scope="col">kode pos</th>
-                    <th scope="col">No. HP pembli</th>
-                    <th scope="col">Status Pengiriman</th>
+                    <th scope="col">Nama Barang - Jumlah diminta</th>
+                    <th scope="col">Total Harga</th>
+                    <th scope="col">Detail pengiriman</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Cabe keriting berkualitas</td>
-                    <td>10KG</td>
-                    <td>Rp 20.000,00</td>
-                    <td>Perumahan BCE blok B10 no.25,kec-cibinong</td>
-                    <td>19613</td>
-                    <td>081383385553</td>
+                  <tr v-for="(pro, index) in order" :key="index">
+                    <div
+                      style="font-size: 12px;"
+                      v-for="(produk, index) in pro.products"
+                      :key="index"
+                    >
+                      <td>{{ produk.name }}</td>
+                      <td>Rp {{ produk.pricePerKG }}/KG</td>
+                      <td>{{ produk.boughtKG }} KG</td>
+                    </div>
+                    <td style="font-size: 12px;">Rp {{ pro.totalPrice }}</td>
                     <td>
-                      <button type="button" class="btn btn-danger float-left">
-                        Barang dikirim
+                      <button
+                        type="button"
+                        class="btn btn-secondary float-left"
+                        v-b-modal.modal-prevent-closing
+                        @click="loadData(pro.customerID)"
+                      >
+                        lihat alamat
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-danger float-left"
+                        @click="shipOrder(pro.id, index)"
+                      >
+                        Produk dikirim
                       </button>
                     </td>
                   </tr>
@@ -112,30 +131,6 @@
           </div>
           <div class="tab-pane  text-style" id="tab3">
             <div class=" con-w3l">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Nama Barang</th>
-                    <th scope="col">Jumlah diminta(KG)</th>
-                    <th scope="col">Harga</th>
-                    <th scope="col">Selesai</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Cabe ijo</td>
-                    <td>Otto</td>
-                    <td>Rp 5.000,00</td>
-                    <td>
-                      <button type="button" class="btn btn-danger float-left">
-                        Uang diterima
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
               <div class="clearfix"></div>
             </div>
           </div>
@@ -307,6 +302,48 @@ export default {
           console.log(error);
           console.log("error");
         });
+    },
+    shipOrder(data, index) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            mutation{
+              shipOrder(orderID: ${data} ){
+                id
+                customerID
+                status
+                payment{
+                  createdAt
+                }
+              }
+            }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data :", response.data);
+          alert("status berhasil dipindah");
+          this.order.splice(index, 1);
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+          alert("error");
+        });
+    },
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.handleSubmit();
+    },
+    handleSubmit() {
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$bvModal.hide("modal-prevent-closing");
+      });
     }
   }
 };

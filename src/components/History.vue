@@ -18,17 +18,12 @@
           <ul id="active-nav" class="nav tabs">
             <li class="">
               <a href="#tab1" class="nav-shop" data-toggle="tab"
-                >Barang Dikemas</a
+                >Pemesanan cabai</a
               >
             </li>
             <li class="">
               <a href="#tab2" class="nav-shop" data-toggle="tab"
-                >Barang Dikirim</a
-              >
-            </li>
-            <li class="">
-              <a href="#tab3" class="nav-shop" data-toggle="tab"
-                >Barang Diterima</a
+                >Pemesanan selesai</a
               >
             </li>
           </ul>
@@ -39,7 +34,7 @@
               <span v-for="(pro, index) in order" :key="index">
                 <div class="card border-success">
                   <h5 class="card-header border-success">
-                    Produk dikemas
+                    <i class="fas fa-dolly"></i>Status : {{ pro.status }}
                   </h5>
                   <div class="card-body">
                     <span v-for="(produk, index) in pro.products" :key="index">
@@ -55,15 +50,21 @@
                         {{ produk.name }} X {{ produk.boughtKG }}KG
                       </h5>
                       <p class="card-text" style=" margin-left:110px">
-                        harga produk : Rp {{ produk.pricePerKG }}
+                        <i class="fas fa-tag"></i>harga produk : Rp
+                        {{ produk.pricePerKG }}
                       </p>
                       <br />
                       <br />
                       <br />
                     </span>
-                    <h5 style="text-align: right; color:grey;">
-                      {{ pro.status }}
-                    </h5>
+                    <b-button
+                      pill
+                      variant="danger"
+                      style="margin-left: 10%"
+                      @click="fulfillOrder(pro.id, index)"
+                      v-if="pro.status == 'on_shipment'"
+                      >Produk telah sampai</b-button
+                    >
                     <h5 style="text-align: right; color:green;">
                       Total Bayar: Rp {{ pro.totalPrice }}
                     </h5>
@@ -167,6 +168,31 @@ export default {
         .catch(function(error) {
           console.log(error);
           console.log("error");
+        });
+    },
+    fulfillOrder(data, index) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            mutation{
+              fulfillOrder(orderID: ${data} ){
+                success
+              }
+            }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data :", response.data);
+          alert("Terimakasih sudah berbelanja di Tokopedia!");
+          this.order.splice(index, 1);
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+          alert("error");
         });
     }
   }
