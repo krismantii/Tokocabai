@@ -264,7 +264,8 @@ export default {
         url: "http://localhost:4000/query",
         data: {
           query: `mutation {
-                checkout(params: {cartIDs: ${result}paymentAmount: "${this.totalSumm.toString()}"}) {
+                checkout(params: {cartIDs: ${result}
+                paymentAmount: "${this.totalSumm.toString()}"}) {
                   id
                   customerID
                   shopID

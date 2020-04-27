@@ -47,12 +47,12 @@
                 </thead>
                 <tbody>
                   <tr v-for="(pro, index) in order" :key="index">
-                    <div v-for="(produk, index) in pro.products" :key="index">
+                    <div style="font-size: 12px;" v-for="(produk, index) in pro.products" :key="index">
                       <td>{{ produk.name }}</td>
                       <td>Rp {{ produk.pricePerKG }}/KG</td>
                       <td>{{ produk.boughtKG }} KG</td>
                     </div>
-                    <td>Rp {{ pro.totalPrice }}</td>
+                    <td style="font-size: 12px;">Rp {{ pro.totalPrice }}</td>
                     <td>
                       <button
                         type="button"

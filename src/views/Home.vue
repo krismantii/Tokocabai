@@ -151,11 +151,7 @@
                         data-target="#myModal7"
                         class="offer-img"
                       >
-                        <img
-                          :src="pro.photoURL"
-                          class="img-responsive"
-                          alt=""
-                        />
+                        <img :src="pro.photoURL" class="gambar" alt="" />
                         <div class="offer">
                           <p><span>Offer</span></p>
                         </div>
@@ -231,11 +227,7 @@
                         data-target="#myModal7"
                         class="offer-img"
                       >
-                        <img
-                          :src="pro.photoURL"
-                          class="img-responsive"
-                          alt=""
-                        />
+                        <img :src="pro.photoURL" class="gambar" alt="" />
                         <div class="offer">
                           <p><span>Offer</span></p>
                         </div>
@@ -310,11 +302,7 @@
                         data-target="#myModal7"
                         class="offer-img"
                       >
-                        <img
-                          :src="pro.photoURL"
-                          class="img-responsive"
-                          alt=""
-                        />
+                        <img :src="pro.photoURL" class="gambar" alt="" />
                         <div class="offer">
                           <p><span>Offer</span></p>
                         </div>
@@ -538,4 +526,9 @@ export default {
 @import "../assets/Shop/font-awesome.css";
 @import "../assets/Shop/jstarbox.css";
 @import "../assets/Shop/css_tambahan.css";
+.gambar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
 </style>
