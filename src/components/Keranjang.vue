@@ -22,9 +22,6 @@
         <th class="t-head">Total</th>
       </tr>
       <tr class="cross" v-for="(pro, index) in cart" :key="pro.id">
-        {{
-          loadToko(pro.product.shopID)
-        }}
         <td class="t-data">
           <div class="form-group form-check">
             <input
@@ -37,7 +34,7 @@
           </div>
         </td>
         <td class="t-data">
-          <h6 style="color: grey;">toko : {{ toko }}</h6>
+          <h6 style="color: grey;">toko :</h6>
         </td>
         <td class="ring-in t-data">
           <a class="at-in">
@@ -93,12 +90,92 @@
       <tr class="cross">
         <td class="ring-in t-data" style="text-align: right; "></td>
         <td class="t-data" style="text-align: center; ">
-          <button v-on:click="checkout()" class="btn btn-danger">
+          <button class="btn btn-danger" v-b-modal.modal-prevent-closing>
             Check out
           </button>
         </td>
       </tr>
     </table>
+
+    <b-modal
+      id="modal-prevent-closing"
+      ref="modal"
+      title="Informasi pengiriman produk"
+      @ok="handleOk"
+    >
+      <div>
+        <b-alert show dismissible variant="danger">
+          Pastikan informasi sudah benar sebelum check out <b>&rArr;</b>
+        </b-alert>
+      </div>
+      <div>
+        <h4 style="text-align:center; color:green;">
+          Saldo : <i class="fas fa-credit-card"></i> Rp
+          {{ this.user.saldo }}
+        </h4>
+      </div>
+      <form ref="form" @submit.stop.prevent="handleSubmit">
+        <b-form-group id="input-group-1" label="Nama :" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="user.name"
+            type="text"
+            required
+            :readonly="user.id >= 1"
+            placeholder=""
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group id="input-group-1" label="Provinsi :" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="user.province"
+            type="text"
+            required
+            :readonly="user.id >= 1"
+            placeholder=""
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group
+          id="input-group-2"
+          label="Alamat Lengkap :"
+          label-for="input-2"
+        >
+          <b-form-textarea
+            id="input-2"
+            v-model="user.addressDetail"
+            type="text"
+            rows="5"
+            :readonly="user.id >= 1"
+            required
+            placeholder=""
+          ></b-form-textarea>
+        </b-form-group>
+        <b-form-group id="input-group-1" label="kode zip :" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="user.zipCode"
+            type="number"
+            required
+            :readonly="user.id >= 1"
+            placeholder=""
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group id="input-group-1" label="No. Hp :" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="user.phone"
+            type="text"
+            required
+            :readonly="user.id >= 1"
+            placeholder=""
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group label="Pilih kurir pengiriman :">
+          <b-form-radio name="some-radios" value="A">Kurir A</b-form-radio>
+          <b-form-radio name="some-radios" value="B">Kurir B</b-form-radio>
+        </b-form-group>
+      </form>
+    </b-modal>
   </div>
 </template>
 <style scoped>
@@ -131,7 +208,8 @@ export default {
       shop_id: null,
       harga_total: [],
       check: [],
-      check_out: []
+      check_out: [],
+      user: []
     };
   },
   computed: {
@@ -172,6 +250,7 @@ export default {
         .then(response => {
           console.log("Data cart:", response.data);
           this.cart = response.data.data.carts;
+          this.loadData();
         })
         .catch(function(error) {
           console.log(error);
@@ -184,40 +263,42 @@ export default {
         method: "post",
         url: "http://localhost:4000/query",
         data: {
-          query: `
-           mutation{
-            checkout(params:{
-              cartIDs: "${result}"
-              paymentAmount: "${this.totalSumm.toString()}"
-            }){
-              id
-              customerID
-              shopID
-              totalPrice
-              products{
-                id
-                name
-                quantity
+          query: `mutation {
+                checkout(params: {cartIDs: ${result}paymentAmount: "${this.totalSumm.toString()}"}) {
+                  id
+                  customerID
+                  shopID
+                  totalPrice
+                  products {
+                    id
+                    name
+                    quantity
+                  }
+                  status
+                  payment {
+                    id
+                    amount
+                    status
+                    method
+                  }
+                }
               }
-              status
-              payment{
-                id
-                amount
-                status
-                method
-              }
-            }
-          }
         `
         }
       })
         .then(response => {
-          console.log("Data check out:", response.data);
-          this.check_out = response.data.data.checkout;
+          console.log(response.data);
+          console.log(result);
+          if (response.data.errors == null) {
+            this.check_out = response.data.data.checkout;
+            alert("Produk berhasil dibeli");
+            this.$router.push("/keranjang", () => this.$router.go(0));
+          }
+          alert("error");
         })
         .catch(function(error) {
           console.log(error);
-          console.log("error check");
+          alert("Data tidak sesuai atau saldo tidak cukup");
         });
     },
     deleteData(event, index) {
@@ -271,6 +352,54 @@ export default {
           console.log(error);
           console.log("error");
         });
+    },
+    loadData() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+                getUserInfo(token:
+                  "${token}"
+                ){
+                  id
+                  name
+                  email
+                  phone
+                  type
+                  addressDetail
+                  province
+                  zipCode
+                  photoURL
+                  saldo
+                }
+              }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data user:", response.data);
+          this.user = response.data.data.getUserInfo;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.handleSubmit();
+    },
+    handleSubmit() {
+      // Exit when the form isn't valid
+      this.checkout();
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$bvModal.hide("modal-prevent-closing");
+      });
     }
   }
 };

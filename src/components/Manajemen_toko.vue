@@ -33,56 +33,39 @@
             </li>
           </ul>
         </nav>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <div
-            class="collapse navbar-collapse justify-content-end"
-            id="navbarTogglerDemo02"
-          >
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Filter Pencarian
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Terbaru</a>
-                  <a class="dropdown-item" href="#">Terlama</a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </nav>
         <div class="tab-content tab-content-t">
           <div class="tab-pane active text-style" id="tab1">
             <div class=" con-w3l">
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Nama Barang</th>
-                    <th scope="col">Jumlah diminta(KG)</th>
-                    <th scope="col">Harga</th>
-                    <th scope="col">Bukti Transfer</th>
+                    <th scope="col">Nama Barang - Jumlah diminta</th>
+                    <th scope="col">Total Harga</th>
+                    <th scope="col">Detail pengiriman</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Cabe merah bekualitas</td>
-                    <td>10KG</td>
-                    <td>Rp 20.000,00</td>
-                    <td><img src="images/of9.png" alt="" /></td>
+                  <tr v-for="(pro, index) in order" :key="index">
+                    <div v-for="(produk, index) in pro.products" :key="index">
+                      <td>{{ produk.name }}</td>
+                      <td>Rp {{ produk.pricePerKG }}/KG</td>
+                      <td>{{ produk.boughtKG }} KG</td>
+                    </div>
+                    <td>Rp {{ pro.totalPrice }}</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-secondary float-left"
+                        v-b-modal.modal-prevent-closing
+                        @click="loadData(pro.customerID)"
+                      >
+                        lihat alamat
+                      </button>
+                    </td>
                     <td>
                       <button type="button" class="btn btn-danger float-left">
-                        Pindah status "diproses"
+                        Pindah status
                       </button>
                     </td>
                   </tr>
@@ -163,8 +146,168 @@
     <br />
     <br />
     <br />
+
+    <b-modal
+      id="modal-prevent-closing"
+      ref="modal"
+      title="Informasi pengiriman produk"
+      @ok="handleOk"
+    >
+      <form ref="form" @submit.stop.prevent="handleSubmit">
+        <b-form-group id="input-group-1" label="Nama :" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="user.name"
+            type="text"
+            required
+            :readonly="user.id >= 1"
+            placeholder=""
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group id="input-group-1" label="Provinsi :" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="user.province"
+            type="text"
+            required
+            :readonly="user.id >= 1"
+            placeholder=""
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group
+          id="input-group-2"
+          label="Alamat Lengkap :"
+          label-for="input-2"
+        >
+          <b-form-textarea
+            id="input-2"
+            v-model="user.addressDetail"
+            type="text"
+            rows="5"
+            :readonly="user.id >= 1"
+            required
+            placeholder=""
+          ></b-form-textarea>
+        </b-form-group>
+        <b-form-group id="input-group-1" label="kode zip :" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="user.zipCode"
+            type="number"
+            required
+            :readonly="user.id >= 1"
+            placeholder=""
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group id="input-group-1" label="No. Hp :" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="user.phone"
+            type="text"
+            required
+            :readonly="user.id >= 1"
+            placeholder=""
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group id="input-group-1" label="Kurir :" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            type="text"
+            required
+            :readonly="user.id >= 1"
+            placeholder="Silambat"
+          ></b-form-input>
+        </b-form-group>
+      </form>
+    </b-modal>
   </div>
 </template>
 <style scoped>
 @import "../assets/Shop/css_tambahan.css";
 </style>
+<script>
+const token = localStorage.getItem("token");
+import axios from "axios";
+export default {
+  data() {
+    return {
+      token,
+      order: [],
+      user: []
+    };
+  },
+  created() {
+    this.shopOrder();
+  },
+  methods: {
+    shopOrder() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+                  {
+            shopOrders(token: "${token}") {
+              id
+              customerID
+              totalPrice
+              status
+              products {
+                id
+                name
+                boughtKG
+                shopID
+                pricePerKG
+                photoURL
+              }
+              payment {
+                createdAt
+                amount
+              }
+            }
+          }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data order:", response.data);
+          this.order = response.data.data.shopOrders;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    loadData(event) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            query{
+                getUserByID(userID:
+                  ${parseInt(event)}
+                ){
+                  id
+                  name
+                  phone
+                  addressDetail
+                  province
+                  zipCode
+                }
+              }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data :", response.data);
+          this.user = response.data.data.getUserByID;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    }
+  }
+};
+</script>

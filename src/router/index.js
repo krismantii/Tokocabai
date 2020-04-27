@@ -16,7 +16,8 @@ import HelloWorld from "@/components/HelloWorld.vue";
 import Detail_transaksi from "@/components/Detail_transaksi.vue";
 import Resource from "@/components/Resources.vue";
 import Shop_detail from "@/components/Shop_detail.vue";
-import Ganti_password from "@/components/Ganti_password.vue";
+import Check_out from "@/components/Check_out.vue";
+import History from "@/components/History.vue";
 import store from "@/store/index.js";
 Vue.use(VueRouter);
 
@@ -109,17 +110,22 @@ const routes = [
     component: Shop_detail
   },
   {
-    path: "/ganti_password",
-    name: "Ganti_password",
-    component: Ganti_password
-  },
-  {
     path: "/resources",
     name: "resources",
     component: Resource,
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: "/check_out",
+    name: "Check_out",
+    component: Check_out
+  },
+  {
+    path: "/history/:id",
+    name: "History",
+    component: History
   }
 ];
 
