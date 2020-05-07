@@ -145,16 +145,8 @@
                     :key="pro.id"
                   >
                     <div class="col-m">
-                      <a
-                        href="#"
-                        data-toggle="modal"
-                        data-target="#myModal7"
-                        class="offer-img"
-                      >
+                      <a class="center">
                         <img :src="pro.photoURL" class="gambar" alt="" />
-                        <div class="offer">
-                          <p><span>Offer</span></p>
-                        </div>
                       </a>
                       <div class="mid-1">
                         <div class="women">
@@ -165,33 +157,30 @@
                                 params: { slug: pro.slugName, id: pro.id }
                               }"
                             >
-                              <a
-                                href="single.html"
-                                style="font-weight: bold;"
-                                >{{ pro.name }}</a
-                              >
+                              <a style="font-weight: bold;">{{ pro.name }}</a>
                             </router-link>
                           </h6>
                         </div>
-                        <div class="mid-2">
-                          <p>
-                            Harga:
-                            <em class="item_price">Rp. {{ pro.pricePerKG }}</em>
-                          </p>
-                          <div class="block">
-                            <p style="color: red;">
-                              Stock : {{ pro.stockKG }} KG
-                            </p>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-                        <span v-if="isLoggedIn == '' || dataku.type == 2">
+
+                        <p>
+                          Harga:
+                          <a style="color: green;"> Rp {{ pro.pricePerKG }} </a>
+                        </p>
+
+                        <p>
+                          Stock :
+                          <a style="color: red;">{{ pro.stockKG }} KG </a>
+                        </p>
+
+                        <div class="clearfix"></div>
+
+                        <span v-if="isLoggedIn == ''">
                           <b-alert show variant="danger"
                             >Login sebagai pembeli</b-alert
                           >
                         </span>
-                        <span v-if="isLoggedIn || dataku.type == 1">
-                          <div>
+                        <span v-if="isLoggedIn">
+                          <div class="add">
                             <router-link
                               :to="{
                                 name: 'Produk',
@@ -221,16 +210,8 @@
                     :key="pro.id"
                   >
                     <div class="col-m">
-                      <a
-                        href="#"
-                        data-toggle="modal"
-                        data-target="#myModal7"
-                        class="offer-img"
-                      >
+                      <a class="center">
                         <img :src="pro.photoURL" class="gambar" alt="" />
-                        <div class="offer">
-                          <p><span>Offer</span></p>
-                        </div>
                       </a>
                       <div class="mid-1">
                         <div class="women">
@@ -241,33 +222,30 @@
                                 params: { slug: pro.slugName, id: pro.id }
                               }"
                             >
-                              <a
-                                href="single.html"
-                                style="font-weight: bold;"
-                                >{{ pro.name }}</a
-                              >
+                              <a style="font-weight: bold;">{{ pro.name }}</a>
                             </router-link>
                           </h6>
                         </div>
-                        <div class="mid-2">
-                          <p>
-                            Harga:
-                            <em class="item_price">Rp. {{ pro.pricePerKG }}</em>
-                          </p>
-                          <div class="block">
-                            <p style="color: red;">
-                              Stock : {{ pro.stockKG }} KG
-                            </p>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-                        <span v-if="isLoggedIn == '' || dataku.type == 2">
+
+                        <p>
+                          Harga:
+                          <a style="color: green;"> Rp {{ pro.pricePerKG }} </a>
+                        </p>
+
+                        <p>
+                          Stock :
+                          <a style="color: red;">{{ pro.stockKG }} KG </a>
+                        </p>
+
+                        <div class="clearfix"></div>
+
+                        <span v-if="isLoggedIn == ''">
                           <b-alert show variant="danger"
                             >Login sebagai pembeli</b-alert
                           >
                         </span>
-                        <span v-if="isLoggedIn || dataku.type == 1">
-                          <div>
+                        <span v-if="isLoggedIn">
+                          <div class="add">
                             <router-link
                               :to="{
                                 name: 'Produk',
@@ -290,22 +268,14 @@
               </div>
               <div class="tab-pane  text-style" id="tab3">
                 <div class=" con-w3l">
-                  <div
+                   <div
                     class="col-md-3 m-wthree"
                     v-for="pro in produk"
                     :key="pro.id"
                   >
                     <div class="col-m">
-                      <a
-                        href="#"
-                        data-toggle="modal"
-                        data-target="#myModal7"
-                        class="offer-img"
-                      >
+                      <a class="center">
                         <img :src="pro.photoURL" class="gambar" alt="" />
-                        <div class="offer">
-                          <p><span>Offer</span></p>
-                        </div>
                       </a>
                       <div class="mid-1">
                         <div class="women">
@@ -316,33 +286,30 @@
                                 params: { slug: pro.slugName, id: pro.id }
                               }"
                             >
-                              <a
-                                href="single.html"
-                                style="font-weight: bold;"
-                                >{{ pro.name }}</a
-                              >
+                              <a style="font-weight: bold;">{{ pro.name }}</a>
                             </router-link>
                           </h6>
                         </div>
-                        <div class="mid-2">
-                          <p>
-                            Harga:
-                            <em class="item_price">Rp. {{ pro.pricePerKG }}</em>
-                          </p>
-                          <div class="block">
-                            <p style="color: red;">
-                              Stock : {{ pro.stockKG }} KG
-                            </p>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-                        <span v-if="isLoggedIn == '' || dataku.type == 2">
+
+                        <p>
+                          Harga:
+                          <a style="color: green;"> Rp {{ pro.pricePerKG }} </a>
+                        </p>
+
+                        <p>
+                          Stock :
+                          <a style="color: red;">{{ pro.stockKG }} KG </a>
+                        </p>
+
+                        <div class="clearfix"></div>
+
+                        <span v-if="isLoggedIn == ''">
                           <b-alert show variant="danger"
                             >Login sebagai pembeli</b-alert
                           >
                         </span>
-                        <span v-if="isLoggedIn || dataku.type == 1">
-                          <div>
+                        <span v-if="isLoggedIn">
+                          <div class="add">
                             <router-link
                               :to="{
                                 name: 'Produk',
@@ -374,10 +341,10 @@
     <section class="page-section bg-success text-white">
       <div class="container text-center">
         <h2 class="text-white mb-4">
-          Cari Produk Cabai Merah Lebih Banyak di sini!
+          Cari lebih banyak produk
         </h2>
         <router-link to="/shop" class="btn btn-light btn-xl">
-          see more -></router-link
+          see more</router-link
         >
       </div>
     </section>
@@ -530,5 +497,11 @@ export default {
   width: 100px;
   height: 100px;
   object-fit: cover;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 </style>

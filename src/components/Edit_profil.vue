@@ -104,8 +104,8 @@
             Upload foto profil:
             <input type="file" @change="previewImage" accept="image/*" />
           </div>
-          <div class="image-preview" v-if="imageData.length > 0">
-            <img class="preview" :src="imageData" />
+          <div class="image-preview">
+            <img class="gambar" :src="user.photoURL" />
           </div>
         </div>
         <br />
@@ -140,9 +140,11 @@
         <br />
         <div>
           <router-link to="/profil" @click.native="$router.go()">
-            <b-button>Kembali</b-button></router-link
+            <b-button class="mr-1">Kembali</b-button></router-link
           >
-          <b-button type="submit" variant="success">Edit Profil</b-button>
+          <b-button class="mr-1" type="submit" variant="success"
+            >Edit Profil</b-button
+          >
         </div>
       </b-form>
     </div>
@@ -294,6 +296,7 @@ export default {
         .then(response => {
           console.log("Data :", response.data);
           alert("Data profil berhasil diedit!");
+          this.$router.push("/profil", () => this.$router.go(0));
         })
         .catch(function(error) {
           console.log(error);
@@ -314,7 +317,7 @@ export default {
         reader.onload = e => {
           // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
           // Read image as base64 and set to imageData
-          this.imageData = e.target.result;
+          this.user.photoURL = e.target.result;
         };
         // Start the reader job - read file as a data url (base64 format)
         reader.readAsDataURL(input.files[0]);
@@ -323,4 +326,10 @@ export default {
   }
 };
 </script>
->
+<style scoped>
+.gambar {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+}
+</style>

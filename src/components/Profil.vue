@@ -22,7 +22,11 @@
               </b-card>
               <b-card title="Top up saldo">
                 <b-card-text>
-                  <b-button pill variant="info" v-b-modal.modal-prevent-closing
+                  <b-button
+                    class="mr-1"
+                    pill
+                    variant="info"
+                    v-b-modal.modal-prevent-closing
                     >Topup</b-button
                   >
                   <router-link
@@ -31,7 +35,7 @@
                       params: { id: dataku.id }
                     }"
                   >
-                    <b-button pill variant="secondary"
+                    <b-button class="mr-1" pill variant="secondary"
                       >History</b-button
                     ></router-link
                   >
@@ -73,7 +77,7 @@
             </div>
             <div class="col-md-7 contact-left">
               <h4>{{ dataku.name }}</h4>
-              <i class="fas fa-address-book" aria-hidden="true"></i>
+              <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
               <p>Provinsi : {{ dataku.province }}</p>
               <p>Alamat detail : {{ dataku.addressDetail }}</p>
               <p>kode zip : {{ dataku.zipCode }}</p>
@@ -145,7 +149,11 @@
           </b-card>
           <b-card title="Top up saldo">
             <b-card-text>
-              <b-button pill variant="info" v-b-modal.modal-prevent-closing
+              <b-button
+                class="mr-1"
+                pill
+                variant="info"
+                v-b-modal.modal-prevent-closing
                 >Topup</b-button
               >
               <router-link
@@ -154,7 +162,7 @@
                   params: { id: dataku.id }
                 }"
               >
-                <b-button pill variant="secondary"
+                <b-button class="mr-1" pill variant="secondary"
                   >History</b-button
                 ></router-link
               >
@@ -206,7 +214,7 @@
             </div>
             <div class="col-md-7 contact-left">
               <h4>{{ dataku.name }}</h4>
-              <i class="fas fa-address-book" aria-hidden="true"></i>
+              <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
               <p>Provinsi : {{ dataku.province }}</p>
               <p>Alamat detail : {{ dataku.addressDetail }}</p>
               <p>kode zip : {{ dataku.zipCode }}</p>

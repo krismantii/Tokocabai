@@ -50,60 +50,60 @@
       </div>
     </div>
     <div class="tab-head">
-      <nav class="nav justify-content-center">
-        <ul id="active-nav" class="nav tabs">
-          <li class="">
-            <a href="#tab1" class="nav-shop" data-toggle="tab"></a>
-          </li>
-        </ul>
-      </nav>
       <hr />
       <div class="tab-content tab-content-t">
         <div class="tab-pane active text-style" id="tab1">
           <div class=" con-w3l">
             <div class="col-md-3 m-wthree" v-for="pro in produk" :key="pro.id">
               <div class="col-m">
-                <p style="color: orange; ">Toko: {{ dataku.name }}</p>
-                <a
-                  href="#"
-                  data-toggle="modal"
-                  data-target="#myModal7"
-                  class="offer-img"
-                >
-                  <img :src="pro.photoURL" class="img-responsive" alt="" />
-                  <div class="offer">
-                    <p><span>Offer</span></p>
-                  </div>
+                <a class="center">
+                  <img :src="pro.photoURL" class="gambar" alt="" />
                 </a>
                 <div class="mid-1">
                   <div class="women">
                     <h6>
-                      <a style="font-weight: bold;">{{ pro.name }}</a>
+                      <router-link
+                        :to="{
+                          name: 'Produk',
+                          params: { slug: pro.slugName, id: pro.id }
+                        }"
+                      >
+                        <a style="font-weight: bold;">{{ pro.name }}</a>
+                      </router-link>
                     </h6>
                   </div>
-                  <div class="mid-2">
-                    <p>
-                      Harga:
-                      <em class="item_price">Rp. {{ pro.pricePerKG }}</em>
-                    </p>
-                    <div class="block">
-                      <p style="color: red;">Stock : {{ pro.stockKG }} KG</p>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="add">
-                    <button
-                      class="btn btn-danger my-cart-btn my-cart-b"
-                      data-id="7"
-                      data-name="Popcorn"
-                      data-summary="summary 7"
-                      data-price="1.00"
-                      data-quantity="1"
-                      data-image="images/of6.png"
+
+                  <p>
+                    Harga:
+                    <a style="color: green;"> Rp {{ pro.pricePerKG }} </a>
+                  </p>
+
+                  <p>
+                    Stock :
+                    <a style="color: red;">{{ pro.stockKG }} KG </a>
+                  </p>
+
+                  <div class="clearfix"></div>
+
+                  <span v-if="isLoggedIn == ''">
+                    <b-alert show variant="danger"
+                      >Login sebagai pembeli</b-alert
                     >
-                      Detail
-                    </button>
-                  </div>
+                  </span>
+                  <span v-if="isLoggedIn">
+                    <div class="add">
+                      <router-link
+                        :to="{
+                          name: 'Produk',
+                          params: { slug: pro.slugName, id: pro.id }
+                        }"
+                      >
+                        <button class="btn btn-danger my-cart-btn my-cart-b">
+                          Detail
+                        </button>
+                      </router-link>
+                    </div>
+                  </span>
                 </div>
               </div>
             </div>
@@ -122,6 +122,17 @@
 .margin {
   margin-left: 10 px;
 }
+.gambar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 </style>
 <script>
 const token = localStorage.getItem("token");
@@ -133,6 +144,11 @@ export default {
       dataku: [],
       produk: []
     };
+  },
+  computed: {
+    isLoggedIn: function() {
+      return this.$store.getters.isLoggedIn;
+    }
   },
   created() {
     this.loadData();

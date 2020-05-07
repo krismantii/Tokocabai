@@ -186,7 +186,7 @@ export default {
       })
         .then(response => {
           console.log("Data :", response.data);
-          alert("Terimakasih sudah berbelanja di Tokopedia!");
+          alert("Terimakasih sudah berbelanja di Tokocabai!");
           this.order.splice(index, 1);
         })
         .catch(function(error) {

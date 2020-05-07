@@ -41,24 +41,24 @@
           <div class="single-right">
             <h3>{{ produk.name }}</h3>
             <div class="pr-single">
-              <p class="reduced ">Rp {{ produk.pricePerKG }} per/KG</p>
+              <p class="reduced ">Harga: Rp {{ produk.pricePerKG }} per/KG</p>
             </div>
             <div class="Stock">
-              <p>stock: {{ produk.stockKG }} KG</p>
+              <p>Stock: {{ produk.stockKG }} KG</p>
             </div>
             <div class="block block-w3">
               <div class="starbox small ghosting"></div>
             </div>
-            <p class="in-pa">deskripsi barang : {{ produk.description }}.</p>
+            <p class="in-pa">{{ produk.description }}.</p>
             <div class="form-group row">
-              <label for="inputNama3" class="col-sm-2 col-form-label"
-                >Jumlah :</label
-              >
+              <p for="inputNama3" style="margin-left:15px;">Pesan :</p>
               <div class="col-sm-3">
                 <b-form-input
                   id="input-1"
                   v-model="jumlah"
                   type="number"
+                  min="0"
+                  step="any"
                   placeholder=""
                 ></b-form-input>
               </div>

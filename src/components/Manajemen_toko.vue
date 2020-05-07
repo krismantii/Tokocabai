@@ -146,7 +146,9 @@
       id="modal-prevent-closing"
       ref="modal"
       title="Informasi pengiriman produk"
-      @ok="handleOk"
+      ok-only
+      ok-variant="secondary"
+      ok-title="Cancel"
     >
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <b-form-group id="input-group-1" label="Nama :" label-for="input-1">
@@ -332,18 +334,6 @@ export default {
           console.log("error");
           alert("error");
         });
-    },
-    handleOk(bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault();
-      // Trigger submit handler
-      this.handleSubmit();
-    },
-    handleSubmit() {
-      // Hide the modal manually
-      this.$nextTick(() => {
-        this.$bvModal.hide("modal-prevent-closing");
-      });
     }
   }
 };
