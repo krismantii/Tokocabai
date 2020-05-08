@@ -67,20 +67,26 @@
           <span v-if="isLoggedIn">
             <li class="org">
               <router-link
-                to="/Profil"
+                :to="{
+                  name: 'Profil',
+                  params: { token: token }
+                }"
                 @click.native="$router.go()"
                 class="fas fa-user my-cart-icon"
-              ></router-link>
+              >
+              </router-link>
             </li>
           </span>
           <span v-if="isLoggedIn && dataku.type == 1">
             <li class="cart">
               <router-link
-                to="/Keranjang"
+              :to="{
+                  name: 'Keranjang',
+                  params: { token: token }
+                }"
                 @click.native="$router.go()"
                 class="fas fa-shopping-cart my-cart-icon"
-                ><span class="badge badge-notify my-cart-badge"></span
-              ></router-link>
+                ></router-link>
             </li>
           </span>
         </ul>

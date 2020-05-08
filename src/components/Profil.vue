@@ -32,7 +32,7 @@
                   <router-link
                     :to="{
                       name: 'Topup_history',
-                      params: { id: dataku.id }
+                      params: { token: token }
                     }"
                   >
                     <b-button class="mr-1" pill variant="secondary"
@@ -96,17 +96,17 @@
                 <router-link
                   :to="{
                     name: 'Edit_profil',
-                    params: { id: dataku.id }
+                    params: { token: token }
                   }"
-                  class="btn btn-outline-danger"
+                  class="btn btn-outline-danger mr-1"
                   >Edit Profil</router-link
                 >
                 <router-link
                   :to="{
                     name: 'History',
-                    params: { id: dataku.id }
+                    params: { token: token }
                   }"
-                  class="btn btn-outline-secondary"
+                  class="btn btn-outline-secondary mr-1"
                   >History transaksi</router-link
                 >
               </div>
@@ -159,7 +159,7 @@
               <router-link
                 :to="{
                   name: 'Topup_history',
-                  params: { id: dataku.id }
+                  params: { token: token }
                 }"
               >
                 <b-button class="mr-1" pill variant="secondary"
@@ -238,25 +238,29 @@
                   style="float:right;"
                 >
                   <router-link
-                    to="/manajemen_produk"
-                    class="btn btn-outline-success"
+                    :to="{
+                      name: 'Manajemen_produk',
+                      params: { token: token }
+                    }"
                     @click.native="$router.go()"
-                  >
-                    Manajemen Produk</router-link
-                  >
+                    class="btn btn-outline-success mr-1"
+                  >Manajemen Produk
+                  </router-link>
                   <router-link
-                    to="/manajemen_toko"
-                    class="btn btn-outline-secondary"
+                    :to="{
+                      name: 'Manajemen_toko',
+                      params: { token: token }
+                    }"
                     @click.native="$router.go()"
-                  >
-                    Manajemen Transaksi</router-link
-                  >
+                    class="btn btn-outline-secondary mr-1"
+                  >Manajemen Transaksi
+                  </router-link>
                   <router-link
                     :to="{
                       name: 'Edit_profil',
-                      params: { id: dataku.id }
+                      params: { token: token }
                     }"
-                    class="btn btn-outline-danger"
+                    class="btn btn-outline-danger mr-1"
                     >Edit Profil Toko</router-link
                   >
                 </div>

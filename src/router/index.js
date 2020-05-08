@@ -65,22 +65,22 @@ const routes = [
     component: Produk
   },
   {
-    path: "/keranjang",
+    path: "/keranjang/:token",
     name: "Keranjang",
     component: Keranjang
   },
   {
-    path: "/profil",
+    path: "/profil/:token",
     name: "Profil",
     component: Profil
   },
   {
-    path: "/edit_profil/:id",
+    path: "/edit_profil/:token",
     name: "Edit_profil",
     component: Edit_profil
   },
   {
-    path: "/manajemen_toko",
+    path: "/manajemen_toko/:token",
     name: "Manajemen_toko",
     component: Manajemen_toko
   },
@@ -90,7 +90,7 @@ const routes = [
     component: Tambah_produk
   },
   {
-    path: "/manajemen_produk",
+    path: "/manajemen_produk/:token",
     name: "Manajemen_produk",
     component: Manajemen_produk
   },
@@ -118,12 +118,12 @@ const routes = [
     }
   },
   {
-    path: "/topup_history/:id",
+    path: "/topup_history/:token",
     name: "Topup_history",
     component: Topup_history
   },
   {
-    path: "/history/:id",
+    path: "/history/:token",
     name: "History",
     component: History
   }
