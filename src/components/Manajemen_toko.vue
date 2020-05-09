@@ -17,17 +17,32 @@
         <nav class="nav justify-content-center">
           <ul id="active-nav" class="nav tabs">
             <li class="">
-              <a href="#tab1" class="nav-shop" data-toggle="tab"
+              <a
+                href="#tab1"
+                class="nav-shop"
+                data-toggle="tab"
+                v-on:click="shopOrder('waiting_for_seller')"
                 >Barang Di-request</a
               >
             </li>
             <li class="">
-              <a href="#tab2" class="nav-shop" data-toggle="tab"
+              <a
+                href="#tab2"
+                class="nav-shop"
+                data-toggle="tab"
+                v-on:click="shopOrder('on_shipment')"
                 >Barang Dikirim</a
               >
             </li>
             <li class="">
-              <a href="#tab3" class="nav-shop" data-toggle="tab"></a>
+              <a
+                href="#tab3"
+                class="nav-shop"
+                data-toggle="tab"
+                v-on:click="shopOrder('fulfilled')"
+              >
+                Transaksi selesai</a
+              >
             </li>
           </ul>
         </nav>
@@ -41,6 +56,7 @@
                     <th scope="col">Total Harga</th>
                     <th scope="col">Detail pengiriman</th>
                     <th scope="col"></th>
+                    <th scope="col">Cancel order</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -68,10 +84,19 @@
                     <td>
                       <button
                         type="button"
-                        class="btn btn-danger float-left"
+                        class="btn btn-primary"
                         @click="shipOrder(pro.id, index)"
                       >
                         Produk dikirim
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        @click="rejectOrder(pro.id, index)"
+                      >
+                        x
                       </button>
                     </td>
                   </tr>
@@ -89,7 +114,6 @@
                     <th scope="col">Nama Barang - Jumlah diminta</th>
                     <th scope="col">Total Harga</th>
                     <th scope="col">Detail pengiriman</th>
-                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -112,15 +136,6 @@
                         @click="loadData(pro.customerID)"
                       >
                         lihat alamat
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        class="btn btn-danger float-left"
-                        @click="shipOrder(pro.id, index)"
-                      >
-                        Produk dikirim
                       </button>
                     </td>
                   </tr>
@@ -234,17 +249,17 @@ export default {
     };
   },
   created() {
-    this.shopOrder();
+    this.shopOrder("waiting_for_seller");
   },
   methods: {
-    shopOrder() {
+    shopOrder(event) {
       axios({
         method: "post",
         url: "http://localhost:4000/query",
         data: {
           query: `
                   {
-            shopOrders(token: "${token}") {
+             shopOrders(status: "${event}") {
               id
               customerID
               totalPrice
@@ -328,6 +343,31 @@ export default {
           console.log("Data :", response.data);
           alert("status berhasil dipindah");
           this.order.splice(index, 1);
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+          alert("error");
+        });
+    },
+    rejectOrder(data, index) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            mutation{
+              rejectOrder(orderID: ${data}){
+                id
+              }
+            }
+        `
+        }
+      })
+        .then(response => {
+          alert("Order berhasil dihapus");
+          this.order.splice(index, 1);
+          console.log(response.data);
         })
         .catch(function(error) {
           console.log(error);

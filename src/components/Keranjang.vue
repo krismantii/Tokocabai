@@ -293,7 +293,10 @@ export default {
           if (response.data.errors == null) {
             this.check_out = response.data.data.checkout;
             alert("Produk berhasil dibeli");
-            this.$router.push("/keranjang", () => this.$router.go(0));
+            this.$router.push(
+              { name: "Keranjang", params: { token: token } },
+              this.$router.go(0)
+            );
           }
           alert("error");
         })
