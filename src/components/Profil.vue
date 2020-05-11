@@ -244,7 +244,7 @@
                     }"
                     @click.native="$router.go()"
                     class="btn btn-outline-success mr-1"
-                  >Manajemen Produk
+                    >Manajemen Produk
                   </router-link>
                   <router-link
                     :to="{
@@ -253,7 +253,7 @@
                     }"
                     @click.native="$router.go()"
                     class="btn btn-outline-secondary mr-1"
-                  >Manajemen Transaksi
+                    >Manajemen Transaksi
                   </router-link>
                   <router-link
                     :to="{
@@ -336,7 +336,6 @@ export default {
         .then(response => {
           console.log("Data :", response.data);
           this.dataku = response.data.data.getUserInfo;
-          this.customerOrder();
         })
         .catch(function(error) {
           console.log(error);
@@ -380,7 +379,10 @@ export default {
         .then(response => {
           console.log("Data saldo :", response.data);
           this.saldo_user = response.data.data.topup;
-          this.$router.push("/profil", () => this.$router.go(0));
+          this.$router.push(
+            { name: "Profil", params: { token: token } },
+            this.$router.go(0)
+          );
         })
         .catch(function(error) {
           console.log(error);

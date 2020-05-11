@@ -105,7 +105,7 @@
             <input type="file" @change="previewImage" accept="image/*" />
           </div>
           <div class="image-preview">
-            <img class="gambar" :src="user.photoURL" />
+            <img class="gambar" :src="imageData" />
           </div>
         </div>
         <br />
@@ -296,7 +296,10 @@ export default {
         .then(response => {
           console.log("Data :", response.data);
           alert("Data profil berhasil diedit!");
-          this.$router.push("/profil", () => this.$router.go(0));
+          this.$router.push(
+            { name: "Profil", params: { token: token } },
+            () => () => this.$router.go(0)
+          );
         })
         .catch(function(error) {
           console.log(error);
@@ -317,7 +320,7 @@ export default {
         reader.onload = e => {
           // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
           // Read image as base64 and set to imageData
-          this.user.photoURL = e.target.result;
+          this.imageData = e.target.result;
         };
         // Start the reader job - read file as a data url (base64 format)
         reader.readAsDataURL(input.files[0]);

@@ -230,7 +230,10 @@ export default {
         data: {
           query: `
             query{
-            carts(token:"${token}" ){
+            carts(params:{
+                  limit: 10
+                  page: 1
+                }){
               id
               product{
                 id
