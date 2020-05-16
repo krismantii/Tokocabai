@@ -181,8 +181,12 @@ export default {
         }
       })
         .then(response => {
-          console.log(response.data);
+          console.log("data produk baru :", response.data);
           alert("Produk berhasil ditambahkan!");
+          this.$router.push(
+            { name: "Manajemen_produk", params: { token: token } },
+            () => () => this.$router.go(0)
+          );
         })
         .catch(function(error) {
           console.log(error);

@@ -23,10 +23,17 @@
                   <b-form-input
                     id="input-1"
                     v-model="form.username"
+                    :state="validation_username"
                     type="text"
                     required
                     placeholder="Masukan username"
                   ></b-form-input>
+                  <b-form-invalid-feedback :state="validation_username">
+                    min 6 karakter.
+                  </b-form-invalid-feedback>
+                  <b-form-valid-feedback :state="validation_username">
+                    Looks Good.
+                  </b-form-valid-feedback>
                 </b-form-group>
                 <b-form-group
                   id="input-group-1"
@@ -50,10 +57,17 @@
                   <b-form-input
                     id="input-2"
                     v-model="form.password"
+                    :state="validation_password"
                     type="password"
                     required
                     placeholder="masukan password"
                   ></b-form-input>
+                  <b-form-invalid-feedback :state="validation_password">
+                    min 6 karakter.
+                  </b-form-invalid-feedback>
+                  <b-form-valid-feedback :state="validation_password">
+                    Looks Good.
+                  </b-form-valid-feedback>
                 </b-form-group>
                 <b-form-group
                   id="input-group-1"
@@ -152,6 +166,14 @@ export default {
       ],
       show: true
     };
+  },
+  computed: {
+    validation_username() {
+      return this.form.username.length > 5;
+    },
+    validation_password() {
+      return this.form.password.length > 5;
+    }
   },
   methods: {
     register() {

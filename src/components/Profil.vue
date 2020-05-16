@@ -161,6 +161,7 @@
                   name: 'Topup_history',
                   params: { token: token }
                 }"
+                @click.native="$router.go()"
               >
                 <b-button class="mr-1" pill variant="secondary"
                   >History</b-button

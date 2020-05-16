@@ -51,10 +51,10 @@
               <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav>
                   <b-nav-item-dropdown text="Filter pencarian" right>
-                    <b-dropdown-item v-on:click="filterHarga('asc')"
+                    <b-dropdown-item v-on:click="filterHarga('asc', kategori)"
                       >Harga Termurah</b-dropdown-item
                     >
-                    <b-dropdown-item v-on:click="filterHarga('desc')"
+                    <b-dropdown-item v-on:click="filterHarga('desc', kategori)"
                       >Harga Termahal</b-dropdown-item
                     >
                     <span v-if="isLoggedIn">
@@ -320,7 +320,7 @@ export default {
       dataku: [],
       barang: [],
       shop: [],
-      yey: [],
+      kategori: "",
       category: [
         { value: "Cabai Merah Keriting", text: "Berdasarkan provinsi" },
         { value: "Cabai Merah Besar", text: "Harga termurah" },
@@ -366,6 +366,8 @@ export default {
         .then(response => {
           console.log("Data produk :", response.data);
           this.produk = response.data.data.searchProducts;
+          this.kategori = "Cabai Merah Besar";
+          console.log("kategori:", this.kategori);
           this.loadData();
         })
         .catch(function(error) {
@@ -399,7 +401,8 @@ export default {
         .then(response => {
           console.log("Data filter category :", response.data);
           this.produk = response.data.data.searchProducts;
-          console.log("produk data:", this.barang);
+          this.kategori = event;
+          console.log("kategori:", this.kategori);
         })
         .catch(function(error) {
           console.log(error);
@@ -438,7 +441,7 @@ export default {
           console.log("error");
         });
     },
-    filterProvince(event) {
+    filterProvince(event, kategori) {
       axios({
         method: "post",
         url: "http://localhost:4000/query",
@@ -447,6 +450,7 @@ export default {
             query{
                 searchProducts(params:{
                   province: "${event}"
+                  category: "${kategori}"
                 }
                 ){
                   id
@@ -464,29 +468,32 @@ export default {
         .then(response => {
           console.log("Data produk :", response.data);
           this.produk = response.data.data.searchProducts;
+          console.log("kategori:", this.kategori);
         })
         .catch(function(error) {
           console.log(error);
           console.log("error");
         });
     },
-    filterHarga(event) {
+    filterHarga(event, kategori) {
       axios({
         method: "post",
         url: "http://localhost:4000/query",
         data: {
           query: `
-                  {
-          searchProducts(params: {orderType: "${event}"}) {
-                  id
-                  name
-                  pricePerKG
-                  photoURL
-                  stockKG
-                  category
-                  slugName
+            {
+            searchProducts(params: { orderType: "${event}"
+            orderBy: "pricePerKG"
+            category:"${kategori}"}) {
+              id
+              name
+              pricePerKG
+              photoURL
+              stockKG
+              category
+              slugName
+            }
           }
-        }
         `
         }
       })

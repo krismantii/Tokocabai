@@ -62,6 +62,7 @@
           <div class="col-sm-10">
             <b-form-input
               v-model="pro.AmountKG"
+              v-on:change="updateCartQuantity(pro.id, pro.AmountKG)"
               type="number"
               min="0"
               step="any"
@@ -249,16 +250,11 @@ export default {
           }
         `
         }
-      })
-        .then(response => {
-          console.log("Data cart:", response.data);
-          this.cart = response.data.data.carts;
-          this.loadData();
-        })
-        .catch(function(error) {
-          console.log(error);
-          console.log("error");
-        });
+      }).then(response => {
+        console.log("Data cart:", response.data);
+        this.cart = response.data.data.carts;
+        this.loadData();
+      });
     },
     checkout() {
       var result = JSON.stringify(this.check.map(a => a.id));
@@ -393,6 +389,38 @@ export default {
           console.log(error);
           console.log("error");
         });
+    },
+    updateCartQuantity(cartid, newquantity) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+           mutation{
+            updateCartQuantity(params:{
+              cartID: ${parseInt(cartid)}
+              newQuantityKG: ${parseFloat(newquantity)}
+            }){
+              id
+              product{
+                id
+                photoURL
+                pricePerKG
+                name
+                shopID
+                slugName
+              }
+              userID
+              AmountKG
+            }
+          }
+        `
+        }
+      }).then(response => {
+        console.log("update quantity:", response.data);
+        this.cart = response.data.data.updateCartQuantity;
+        this.Cart_user();
+      });
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing

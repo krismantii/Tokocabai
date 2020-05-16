@@ -259,26 +259,21 @@ export default {
         data: {
           query: `
                   {
-             shopOrders(status: "${event}") {
-              id
-              customerID
-              totalPrice
-              status
-              products {
-                id
-                name
-                boughtKG
-                shopID
-                pricePerKG
-                photoURL
-              }
-              payment {
-                createdAt
-                amount
-              }
+          shopOrders(params: {status: "${event}"}) {
+            id
+            customerID
+            status
+            totalPrice
+            payment {
+              createdAt
             }
+            products{
+            name
+            boughtKG
+            pricePerKG
           }
-        `
+          }
+        }`
         }
       })
         .then(response => {

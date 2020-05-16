@@ -44,7 +44,7 @@
       <tbody>
         <tr v-for="(pro, index) in produk" :key="pro.id">
           <td>{{ pro.createdAt }}</td>
-          <td><img :src="pro.photoURL" alt="" /></td>
+          <td><img :src="pro.photoURL" class="gambar" alt="" /></td>
           <td>{{ pro.name }}</td>
           <td>{{ pro.category }}</td>
           <td>{{ pro.stockKG }}</td>
@@ -177,3 +177,10 @@ export default {
   }
 };
 </script>
+<style scoped>
+.gambar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+</style>

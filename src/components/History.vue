@@ -281,7 +281,7 @@ export default {
         data: {
           query: `
            query{
-            customerOrders(status: "${event}"){
+            customerOrders(params: {status: "${event}"}){
               id
               customerID
               totalPrice
