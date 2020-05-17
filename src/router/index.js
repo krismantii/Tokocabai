@@ -18,6 +18,7 @@ import Resource from "@/components/Resources.vue";
 import Shop_detail from "@/components/Shop_detail.vue";
 import Topup_history from "@/components/Topup_history.vue";
 import History from "@/components/History.vue";
+import Review from "@/components/Review.vue";
 import store from "@/store/index.js";
 Vue.use(VueRouter);
 
@@ -60,7 +61,7 @@ const routes = [
     }
   },
   {
-    path: "/produk/:slug/:id",
+    path: "/produk/:slug/:id/:shopid",
     name: "Produk",
     component: Produk
   },
@@ -78,6 +79,11 @@ const routes = [
     path: "/edit_profil/:token",
     name: "Edit_profil",
     component: Edit_profil
+  },
+  {
+    path: "/review/:produkid/:shopid/:token",
+    name: "Review",
+    component: Review
   },
   {
     path: "/manajemen_toko/:token",

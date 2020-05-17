@@ -419,7 +419,10 @@ export default {
       }).then(response => {
         console.log("update quantity:", response.data);
         this.cart = response.data.data.updateCartQuantity;
-        this.Cart_user();
+        this.$router.push(
+          { name: "Keranjang", params: { token: token } },
+          this.$router.go(0)
+        );
       });
     },
     handleOk(bvModalEvt) {

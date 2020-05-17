@@ -106,7 +106,11 @@
                           <router-link
                             :to="{
                               name: 'Produk',
-                              params: { slug: pro.slugName, id: pro.id }
+                              params: {
+                                slug: pro.slugName,
+                                id: pro.id,
+                                shopid: pro.shopID
+                              }
                             }"
                           >
                             <a style="font-weight: bold;">{{ pro.name }}</a>
@@ -136,7 +140,11 @@
                           <router-link
                             :to="{
                               name: 'Produk',
-                              params: { slug: pro.slugName, id: pro.id }
+                              params: {
+                                slug: pro.slugName,
+                                id: pro.id,
+                                shopid: pro.shopID
+                              }
                             }"
                           >
                             <button
@@ -171,7 +179,11 @@
                           <router-link
                             :to="{
                               name: 'Produk',
-                              params: { slug: pro.slugName, id: pro.id }
+                              params: {
+                                slug: pro.slugName,
+                                id: pro.id,
+                                shopid: pro.shopID
+                              }
                             }"
                           >
                             <a style="font-weight: bold;">{{ pro.name }}</a>
@@ -201,7 +213,11 @@
                           <router-link
                             :to="{
                               name: 'Produk',
-                              params: { slug: pro.slugName, id: pro.id }
+                              params: {
+                                slug: pro.slugName,
+                                id: pro.id,
+                                shopid: pro.shopID
+                              }
                             }"
                           >
                             <button
@@ -352,6 +368,7 @@ export default {
                 }
                 ){
                   id
+                  shopID
                   name
                   pricePerKG
                   photoURL
@@ -387,6 +404,7 @@ export default {
                 }
                 ){
                   id
+                  shopID
                   name
                   pricePerKG
                   photoURL
@@ -421,6 +439,7 @@ export default {
                 }
                 ){
                   id
+                  shopID
                   name
                   pricePerKG
                   photoURL
@@ -454,6 +473,7 @@ export default {
                 }
                 ){
                   id
+                  shopID
                   name
                   pricePerKG
                   photoURL
@@ -486,6 +506,7 @@ export default {
             orderBy: "pricePerKG"
             category:"${kategori}"}) {
               id
+              shopID
               name
               pricePerKG
               photoURL

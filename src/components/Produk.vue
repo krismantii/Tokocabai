@@ -147,114 +147,29 @@
                 </div>
               </div>
             </div>
-            <div class="review_list">
+            <div v-for="re in review" :key="re.id">
               <div>
                 <div>
-                  <div class="d-flex">
+                  <div class="mb-2">
                     <b-avatar src="https://placekitten.com/300/300"></b-avatar>
+                    <h5 class="inline">Blake Ruiz</h5>
                   </div>
                   <div class="media-body">
-                    <h4>Blake Ruiz</h4>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
+                    <star-rating
+                      v-bind:read-only=true
+                      inactive-color="#000"
+                      active-color="yellow"
+                      v-bind:star-size="15"
+                      v-model="re.rating"
+                    >
+                    </star-rating>
                   </div>
                 </div>
+                <h5>{{ re.title }}</h5>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo
+                  {{ re.content }}
                 </p>
               </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="review_box">
-              <h4>Add a Review</h4>
-              <p>Your Rating:</p>
-              <ul class="list">
-                <li>
-                  <a href="#">
-                    <i class="fas fa-star"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i class="fas fa-star"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i class="fas fa-star"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i class="fas fa-star"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i class="fas fa-star"></i>
-                  </a>
-                </li>
-              </ul>
-              <p>Outstanding</p>
-              <form
-                class="row contact_form"
-                action="contact_process.php"
-                method="post"
-                novalidate="novalidate"
-              >
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="name"
-                      placeholder="Your Full name"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <input
-                      type="email"
-                      class="form-control"
-                      name="email"
-                      placeholder="Email Address"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="number"
-                      placeholder="Phone Number"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <textarea
-                      class="form-control"
-                      name="message"
-                      rows="1"
-                      placeholder="Review"
-                    ></textarea>
-                  </div>
-                </div>
-                <div class="col-md-12 text-right">
-                  <button type="submit" value="submit" class="btn_3">
-                    Submit Now
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
@@ -265,8 +180,12 @@
 
 <script>
 const token = localStorage.getItem("token");
+import StarRating from "vue-star-rating";
 import axios from "axios";
 export default {
+  components: {
+    StarRating
+  },
   name: "Produk",
   data() {
     return {
@@ -277,7 +196,8 @@ export default {
       token,
       shop_id: null,
       cart: [],
-      jumlah: null
+      jumlah: null,
+      review: []
     };
   },
   computed: {
@@ -369,6 +289,7 @@ export default {
         .then(response => {
           console.log("Data :", response.data);
           this.toko = response.data.data.getUserByID;
+          this.reviews();
         })
         .catch(function(error) {
           console.log(error);
@@ -409,6 +330,37 @@ export default {
         })
         .catch(function(error) {
           alert("Data tidak sesuai");
+          console.log(error);
+          console.log("error");
+        });
+    },
+    reviews() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+          query{
+          reviews(params:{
+            shopID: "${this.$route.params.shopid}"
+            productID: "${this.$route.params.id}"
+          }){
+            id
+            title
+            content
+            photoURL
+            rating
+            createdAt
+          }
+        }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data review:", response.data);
+          this.review = response.data.data.reviews;
+        })
+        .catch(function(error) {
           console.log(error);
           console.log("error");
         });

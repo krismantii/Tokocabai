@@ -178,18 +178,29 @@
                         <i class="fas fa-tag"></i>harga produk : Rp
                         {{ produk.pricePerKG }}
                       </p>
+                      <router-link
+                        :to="{
+                          name: 'Review',
+                          params: {
+                            produkid: produk.id,
+                            shopid: produk.shopID,
+                            token: token
+                          }
+                        }"
+                        @click.native="$router.go()"
+                      >
+                        <b-button
+                          pill
+                          variant="danger"
+                          style="margin-left: 10%"
+                          v-if="pro.status == 'fulfilled'"
+                          >Review produk</b-button
+                        >
+                      </router-link>
                       <br />
                       <br />
                       <br />
                     </span>
-                    <b-button
-                      pill
-                      variant="danger"
-                      style="margin-left: 10%"
-                      @click="fulfillOrder(pro.id, index)"
-                      v-if="pro.status == 'on_shipment'"
-                      >Produk telah sampai</b-button
-                    >
                     <h5 style="text-align: right; color:green;">
                       Total Bayar: Rp {{ pro.totalPrice }}
                     </h5>
