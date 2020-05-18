@@ -154,7 +154,11 @@
                             <router-link
                               :to="{
                                 name: 'Produk',
-                                params: { slug: pro.slugName, id: pro.id ,shopid: pro.shopID }
+                                params: {
+                                  slug: pro.slugName,
+                                  id: pro.id,
+                                  shopid: pro.shopID
+                                }
                               }"
                             >
                               <a style="font-weight: bold;">{{ pro.name }}</a>
@@ -184,7 +188,11 @@
                             <router-link
                               :to="{
                                 name: 'Produk',
-                                params: { slug: pro.slugName, id: pro.id ,shopid: pro.shopID }
+                                params: {
+                                  slug: pro.slugName,
+                                  id: pro.id,
+                                  shopid: pro.shopID
+                                }
                               }"
                             >
                               <button
@@ -219,7 +227,11 @@
                             <router-link
                               :to="{
                                 name: 'Produk',
-                                params: { slug: pro.slugName, id: pro.id ,shopid: pro.shopID }
+                                params: {
+                                  slug: pro.slugName,
+                                  id: pro.id,
+                                  shopid: pro.shopID
+                                }
                               }"
                             >
                               <a style="font-weight: bold;">{{ pro.name }}</a>
@@ -249,7 +261,11 @@
                             <router-link
                               :to="{
                                 name: 'Produk',
-                                params: { slug: pro.slugName, id: pro.id ,shopid: pro.shopID  }
+                                params: {
+                                  slug: pro.slugName,
+                                  id: pro.id,
+                                  shopid: pro.shopID
+                                }
                               }"
                             >
                               <button
@@ -268,7 +284,7 @@
               </div>
               <div class="tab-pane  text-style" id="tab3">
                 <div class=" con-w3l">
-                   <div
+                  <div
                     class="col-md-3 m-wthree"
                     v-for="pro in produk"
                     :key="pro.id"
@@ -283,7 +299,11 @@
                             <router-link
                               :to="{
                                 name: 'Produk',
-                                params: { slug: pro.slugName, id: pro.id ,shopid: pro.shopID }
+                                params: {
+                                  slug: pro.slugName,
+                                  id: pro.id,
+                                  shopid: pro.shopID
+                                }
                               }"
                             >
                               <a style="font-weight: bold;">{{ pro.name }}</a>
@@ -313,7 +333,11 @@
                             <router-link
                               :to="{
                                 name: 'Produk',
-                                params: { slug: pro.slugName, id: pro.id ,shopid: pro.shopID }
+                                params: {
+                                  slug: pro.slugName,
+                                  id: pro.id,
+                                  shopid: pro.shopID
+                                }
                               }"
                             >
                               <button
@@ -396,31 +420,35 @@ export default {
     }
   },
   created() {
-    this.loadData();
+    this.loadProduk();
   },
   methods: {
-    filterSearch() {
+     loadProduk() {
       axios({
         method: "post",
         url: "http://localhost:4000/query",
         data: {
           query: `
-            {
-            searchProducts(params: {limit:4, category: "Cabai Merah Besar"}) {
-              id
-              name
-              pricePerKG
-              photoURL
-              stockKG
-              category
-              slugName
-            }
-          }
+            query{
+                searchProducts(params:{
+                  category: "Cabai Merah Besar"
+                }
+                ){
+                  id
+                  shopID
+                  name
+                  pricePerKG
+                  photoURL
+                  stockKG
+                  category
+                  slugName
+                }
+              }
         `
         }
       })
         .then(response => {
-          console.log("Data search :", response.data);
+          console.log("Data produk :", response.data);
           this.produk = response.data.data.searchProducts;
         })
         .catch(function(error) {
@@ -434,50 +462,28 @@ export default {
         url: "http://localhost:4000/query",
         data: {
           query: `
-            {
-            searchProducts(params: {limit:4, category: "${event}"}) {
-              id
-              name
-              pricePerKG
-              photoURL
-              stockKG
-              category
-              slugName
-            }
-          }
-        `
-        }
-      })
-        .then(response => {
-          console.log("Data search :", response.data);
-          this.produk = response.data.data.searchProducts;
-        })
-        .catch(function(error) {
-          console.log(error);
-          console.log("error");
-        });
-    },
-    loadData() {
-      axios({
-        method: "post",
-        url: "http://localhost:4000/query",
-        data: {
-          query: `
             query{
-                getUserInfo(token:
-                  "${token}"
+                searchProducts(params:{
+                  category: "${event}"
+                }
                 ){
                   id
-                  province
+                  shopID
+                  name
+                  pricePerKG
+                  photoURL
+                  stockKG
+                  category
+                  slugName
                 }
               }
         `
         }
       })
         .then(response => {
-          console.log("Data :", response.data);
-          this.dataku = response.data.data.getUserInfo;
-          this.filterSearch();
+          console.log("Data filter category :", response.data);
+          this.produk = response.data.data.searchProducts;
+          this.kategori = event;
         })
         .catch(function(error) {
           console.log(error);

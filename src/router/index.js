@@ -9,6 +9,7 @@ import Produk from "@/components/Produk.vue";
 import Profil from "@/components/Profil.vue";
 import Edit_profil from "@/components/Edit_profil.vue";
 import Edit_produk from "@/components/Edit_produk.vue";
+import Edit_review from "@/components/Edit_review.vue";
 import Manajemen_toko from "@/components/Manajemen_toko.vue";
 import Manajemen_produk from "@/components/Manajemen_produk.vue";
 import Tambah_produk from "@/components/Tambah_produk.vue";
@@ -79,6 +80,11 @@ const routes = [
     path: "/edit_profil/:token",
     name: "Edit_profil",
     component: Edit_profil
+  },
+  {
+    path: "/edit_review/:id/:token",
+    name: "Edit_review",
+    component: Edit_review
   },
   {
     path: "/review/:produkid/:shopid/:token",

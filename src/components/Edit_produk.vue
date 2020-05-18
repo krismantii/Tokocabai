@@ -191,7 +191,7 @@ export default {
           console.log("error");
         });
     },
-    loadData() {
+    loadDataProduk() {
       axios({
         method: "post",
         url: "http://localhost:4000/query",
@@ -235,7 +235,7 @@ export default {
       })
         .then(response => {
           this.user = response.data.data.getUserInfo;
-          this.loadData();
+          this.loadDataProduk();
         })
         .catch(function(error) {
           console.log(error);

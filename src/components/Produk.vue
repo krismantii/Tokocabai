@@ -86,6 +86,7 @@
       <br />
       <br />
       <br />
+      {{ testku }}
       <div
         class="tab-pane fade show active"
         id="review"
@@ -147,29 +148,50 @@
                 </div>
               </div>
             </div>
-            <div v-for="re in review" :key="re.id">
+            <div v-for="(re, index) in review" :key="re.id">
               <div>
                 <div>
-                  <div class="mb-2">
-                    <b-avatar src="https://placekitten.com/300/300"></b-avatar>
-                    <h5 class="inline">Blake Ruiz</h5>
+                  <div class="mb-2" v-for="rev in reviewers" :key="rev.id">
+                    <div v-if="rev.id === re.userID">
+                      <b-avatar :src="rev.photoURL"></b-avatar>
+                      <h5 class="inline">{{ rev.name }}</h5>
+                      <router-link
+                        :to="{
+                          name: 'Edit_review',
+                          params: { id: re.id, token: token }
+                        }"
+                        @click.native="$router.go()"
+                        class="fas fa-edit"
+                        style="color: grey;"
+                      ></router-link>
+                      <button
+                        class="fas fa-trash-alt"
+                        @click="deleteReview(re.id, re.userID, index)"
+                      ></button>
+                    </div>
                   </div>
-                  <div class="media-body">
-                    <star-rating
-                      v-bind:read-only=true
-                      inactive-color="#000"
-                      active-color="yellow"
-                      v-bind:star-size="15"
-                      v-model="re.rating"
-                    >
-                    </star-rating>
-                  </div>
+                </div>
+                <div class="media-body">
+                  <star-rating
+                    v-bind:read-only="true"
+                    inactive-color="#000"
+                    active-color="yellow"
+                    v-bind:star-size="10"
+                    v-model="re.rating"
+                  >
+                  </star-rating>
                 </div>
                 <h5>{{ re.title }}</h5>
                 <p>
                   {{ re.content }}
                 </p>
+                <a style="font-size:11px;"> {{ re.createdAt }}</a>
               </div>
+              <img class="gambar" :src="re.photoURL" />
+              <br />
+              <br />
+              <br />
+              <br />
             </div>
           </div>
         </div>
@@ -194,15 +216,20 @@ export default {
       produk: [],
       toko: [],
       token,
+      nama: "",
       shop_id: null,
       cart: [],
       jumlah: null,
-      review: []
+      review: [],
+      reviewers: []
     };
   },
   computed: {
     isLoggedIn: function() {
       return this.$store.getters.isLoggedIn;
+    },
+    testku: function() {
+      return this.user_review(this.review);
     }
   },
   created() {
@@ -296,6 +323,34 @@ export default {
           console.log("error");
         });
     },
+    user_review(event) {
+      for (let i = 0; i < event.length; i++) {
+        axios({
+          method: "post",
+          url: "http://localhost:4000/query",
+          data: {
+            query: `
+            query{
+                getUserByID(userID:
+                  ${parseInt(event[i].userID)}
+                ){
+                  id
+                  name
+                  photoURL
+                }
+              }
+        `
+          }
+        })
+          .then(response => {
+            this.reviewers.push(response.data.data.getUserByID);
+          })
+          .catch(function(error) {
+            console.log(error);
+            console.log("error");
+          });
+      }
+    },
     createCart() {
       axios({
         method: "post",
@@ -346,6 +401,7 @@ export default {
             productID: "${this.$route.params.id}"
           }){
             id
+            userID
             title
             content
             photoURL
@@ -364,6 +420,34 @@ export default {
           console.log(error);
           console.log("error");
         });
+    },
+    deleteReview(id, userid, index) {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+          mutation{
+          deleteReview(params: {
+            id: "${id}"
+            userID: "${userid}"
+          }){
+            success
+          }
+        }
+        `
+        }
+      })
+        .then(response => {
+          alert("Data berhasil dihapus");
+          this.review.splice(index, 1);
+          console.log("Data hapus review :", response.data);
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+          alert("error");
+        });
     }
   }
 };
@@ -373,4 +457,9 @@ export default {
 @import "../assets/Shop/style.css";
 @import "../assets/Shop/font-awesome.css";
 @import "../assets/Shop/css_tambahan.css";
+.gambar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
 </style>
