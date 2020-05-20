@@ -423,7 +423,7 @@ export default {
     this.loadProduk();
   },
   methods: {
-     loadProduk() {
+    loadProduk() {
       axios({
         method: "post",
         url: "http://localhost:4000/query",

@@ -56,9 +56,12 @@
       </div>
       <br />
       <br />
-      <b-button type="submit" variant="danger" class="m-1">
-        Edit
+      <b-button variant="danger" class="m-1">
+        Hapus review
       </b-button>
+      <b-button class="mr-1" type="submit" variant="success"
+        >Edit review</b-button
+      >
     </b-form>
   </div>
 </template>
@@ -74,6 +77,7 @@ export default {
   data() {
     return {
       review: [],
+      produk: [],
       token,
       user: [],
       gambar: null,
@@ -164,6 +168,7 @@ export default {
       })
         .then(response => {
           this.user = response.data.data.getUserInfo;
+          // this.reviews();
         })
         .catch(function(error) {
           console.log(error);
@@ -182,6 +187,7 @@ export default {
           }){
             id
             userID
+            productID
             title
             content
             photoURL
@@ -195,6 +201,77 @@ export default {
         .then(response => {
           console.log("Data review:", response.data);
           this.form = response.data.data.reviews;
+          this.loadProduk();
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    deleteReview() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+          mutation{
+          deleteReview(params: {
+            id: "${this.form.id}"
+            userID: "${this.form.userID}"
+          }){
+            success
+          }
+        }
+        `
+        }
+      })
+        .then(response => {
+          alert("Data review berhasil dihapus");
+          console.log("Data hapus review :", response.data);
+          this.$router.push(
+            {
+              name: "Produk",
+              params: {
+                slug: this.produk.slugName,
+                id: this.produk.id,
+                shopid: this.produk.shopID
+              }
+            },
+            () => this.$router.go(0)
+          );
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+          alert("error");
+        });
+    },
+    loadProduk() {
+      axios({
+        method: "post",
+        url: "http://localhost:4000/query",
+        data: {
+          query: `
+            {
+            product(params: {
+              id: ${this.form.productID}
+            }) {
+              id
+              shopID
+              name
+              pricePerKG
+              stockKG
+              description
+              photoURL
+              slugName
+            }
+          }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data produk:", response.data);
+          this.produk = response.data.data.product;
         })
         .catch(function(error) {
           console.log(error);

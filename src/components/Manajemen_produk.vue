@@ -45,7 +45,20 @@
         <tr v-for="(pro, index) in produk" :key="pro.id">
           <td>{{ pro.createdAt }}</td>
           <td><img :src="pro.photoURL" class="gambar" alt="" /></td>
-          <td>{{ pro.name }}</td>
+          <td>
+            <router-link
+              :to="{
+                name: 'Produk',
+                params: {
+                  slug: pro.slugName,
+                  id: pro.id,
+                  shopid: pro.shopID
+                }
+              }"
+            >
+              <a style="font-weight: bold;">{{ pro.name }}</a>
+            </router-link>
+          </td>
           <td>{{ pro.category }}</td>
           <td>{{ pro.stockKG }}</td>
           <td>Rp {{ pro.pricePerKG }}</td>
@@ -99,6 +112,7 @@ export default {
             }){
               id
               name
+              shopID
               pricePerKG
               stockKG
               category

@@ -251,7 +251,11 @@
                           <router-link
                             :to="{
                               name: 'Produk',
-                              params: { slug: pro.slugName, id: pro.id }
+                              params: {
+                                slug: pro.slugName,
+                                id: pro.id,
+                                shopid: pro.shopID
+                              }
                             }"
                           >
                             <a style="font-weight: bold;">{{ pro.name }}</a>
@@ -281,14 +285,14 @@
                           <router-link
                             :to="{
                               name: 'Produk',
-                              params: { slug: pro.slugName, id: pro.id }
+                              params: {
+                                slug: pro.slugName,
+                                id: pro.id,
+                                shopid: pro.shopID
+                              }
                             }"
                           >
-                            <button
-                              class="btn btn-danger my-cart-btn my-cart-b"
-                            >
-                              Detail
-                            </button>
+                            <a style="font-weight: bold;">{{ pro.name }}</a>
                           </router-link>
                         </div>
                       </span>

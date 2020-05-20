@@ -18,7 +18,7 @@
         <router-link
           :to="{
             name: 'Shop_detail',
-            params: { id: produk.shopID }
+            params: { id: toko.id }
           }"
         >
           <h4 class="inline">{{ toko.name }}</h4></router-link
@@ -59,6 +59,7 @@
                   type="number"
                   min="0"
                   step="any"
+                  required
                   placeholder=""
                 ></b-form-input>
               </div>
@@ -86,7 +87,7 @@
       <br />
       <br />
       <br />
-      {{ testku }}
+      {{ data_review_user }}
       <div
         class="tab-pane fade show active"
         id="review"
@@ -148,7 +149,7 @@
                 </div>
               </div>
             </div>
-            <div v-for="(re, index) in review" :key="re.id">
+            <div v-for="re in review" :key="re.id">
               <div>
                 <div>
                   <div class="mb-2" v-for="rev in reviewers" :key="rev.id">
@@ -162,12 +163,9 @@
                         }"
                         @click.native="$router.go()"
                         class="fas fa-edit"
-                        style="color: grey;"
+                        style="color: grey; margin-left: 10px;"
+                        v-if="dataku.id === re.userID"
                       ></router-link>
-                      <button
-                        class="fas fa-trash-alt"
-                        @click="deleteReview(re.id, re.userID, index)"
-                      ></button>
                     </div>
                   </div>
                 </div>
@@ -228,7 +226,7 @@ export default {
     isLoggedIn: function() {
       return this.$store.getters.isLoggedIn;
     },
-    testku: function() {
+    data_review_user: function() {
       return this.user_review(this.review);
     }
   },
@@ -419,34 +417,6 @@ export default {
         .catch(function(error) {
           console.log(error);
           console.log("error");
-        });
-    },
-    deleteReview(id, userid, index) {
-      axios({
-        method: "post",
-        url: "http://localhost:4000/query",
-        data: {
-          query: `
-          mutation{
-          deleteReview(params: {
-            id: "${id}"
-            userID: "${userid}"
-          }){
-            success
-          }
-        }
-        `
-        }
-      })
-        .then(response => {
-          alert("Data berhasil dihapus");
-          this.review.splice(index, 1);
-          console.log("Data hapus review :", response.data);
-        })
-        .catch(function(error) {
-          console.log(error);
-          console.log("error");
-          alert("error");
         });
     }
   }
