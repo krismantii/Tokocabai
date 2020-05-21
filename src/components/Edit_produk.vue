@@ -80,7 +80,7 @@
             Upload foto produk:
             <input type="file" @change="previewImage" accept="image/*" />
           </div>
-          <div >
+          <div>
             <img v-if="produk.photoURL" :src="produk.photoURL" />
           </div>
         </div>
@@ -181,15 +181,17 @@ export default {
         method: "post",
         url: "http://localhost:4000/query",
         data: formData
-      })
-        .then(response => {
-          console.log("Data :", response.data);
+      }).then(response => {
+        console.log("Data :", response.data);
+        if (response.data.errors == null) {
           alert("Data produk berhasil diedit!");
-        })
-        .catch(function(error) {
-          console.log(error);
-          console.log("error");
-        });
+          this.$router.push(
+            { name: "Manajemen_produk", params: { token: token } },
+            this.$router.go(0)
+          );
+        }
+        alert("Data masih belum benar");
+      });
     },
     loadDataProduk() {
       axios({

@@ -130,7 +130,6 @@
           label-for="input-1"
         >
           <b-form-input
-            v-validate="'required'"
             ref="password"
             v-model="dataku.newPassword"
             type="password"
@@ -144,11 +143,16 @@
         >
           <b-form-input
             id="input-1"
-            v-validate="'required|confirmed:password'"
             v-model="dataku.newPassword2"
+            :state="validation_pw"
             type="password"
             placeholder=""
           ></b-form-input>
+          <b-form-invalid-feedback :state="validation_pw">
+            min 6 karakter.
+          </b-form-invalid-feedback>
+          <b-form-valid-feedback :state="validation_pw">
+          </b-form-valid-feedback>
         </b-form-group>
         <hr />
         <br />
@@ -220,6 +224,14 @@ export default {
       ],
       show: true
     };
+  },
+  computed: {
+    validation_pw() {
+      return (
+        this.dataku.newPassword2.length > 5 &&
+        this.dataku.newPassword === this.dataku.newPassword2
+      );
+    }
   },
   created() {
     this.loadUser();

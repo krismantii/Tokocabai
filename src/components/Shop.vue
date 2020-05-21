@@ -113,20 +113,29 @@
                               }
                             }"
                           >
-                            <a style="font-weight: bold;">{{ pro.name }}</a>
+                            <div
+                              class="text-truncate"
+                              style="font-weight: bold; max-width: 150px;"
+                            >
+                              {{ pro.name }}
+                            </div>
                           </router-link>
                         </h6>
                       </div>
 
-                      <p>
+                      <div>
                         Harga:
-                        <a style="color: green;"> Rp {{ pro.pricePerKG }} </a>
-                      </p>
+                        <div class="text-truncate inline" style="color: green;">
+                          Rp {{ pro.pricePerKG }}
+                        </div>
+                      </div>
 
-                      <p>
+                      <div>
                         Stock :
-                        <a style="color: red;">{{ pro.stockKG }} KG </a>
-                      </p>
+                        <div class="text-truncate inline" style="color: red;">
+                          {{ pro.stockKG }} KG
+                        </div>
+                      </div>
 
                       <div class="clearfix"></div>
 
@@ -186,20 +195,29 @@
                               }
                             }"
                           >
-                            <a style="font-weight: bold;">{{ pro.name }}</a>
+                            <div
+                              class="text-truncate"
+                              style="font-weight: bold; max-width: 150px;"
+                            >
+                              {{ pro.name }}
+                            </div>
                           </router-link>
                         </h6>
                       </div>
 
-                      <p>
+                      <div>
                         Harga:
-                        <a style="color: green;"> Rp {{ pro.pricePerKG }} </a>
-                      </p>
+                        <div class="text-truncate inline" style="color: green;">
+                          Rp {{ pro.pricePerKG }}
+                        </div>
+                      </div>
 
-                      <p>
+                      <div>
                         Stock :
-                        <a style="color: red;">{{ pro.stockKG }} KG </a>
-                      </p>
+                        <div class="text-truncate inline" style="color: red;">
+                          {{ pro.stockKG }} KG
+                        </div>
+                      </div>
 
                       <div class="clearfix"></div>
 
@@ -258,20 +276,29 @@
                               }
                             }"
                           >
-                            <a style="font-weight: bold;">{{ pro.name }}</a>
+                            <div
+                              class="text-truncate"
+                              style="font-weight: bold; max-width: 150px;"
+                            >
+                              {{ pro.name }}
+                            </div>
                           </router-link>
                         </h6>
                       </div>
 
-                      <p>
+                      <div>
                         Harga:
-                        <a style="color: green;"> Rp {{ pro.pricePerKG }} </a>
-                      </p>
+                        <div class="text-truncate inline" style="color: green;">
+                          Rp {{ pro.pricePerKG }}
+                        </div>
+                      </div>
 
-                      <p>
+                      <div>
                         Stock :
-                        <a style="color: red;">{{ pro.stockKG }} KG </a>
-                      </p>
+                        <div class="text-truncate inline" style="color: red;">
+                          {{ pro.stockKG }} KG
+                        </div>
+                      </div>
 
                       <div class="clearfix"></div>
 
@@ -292,7 +319,11 @@
                               }
                             }"
                           >
-                            <a style="font-weight: bold;">{{ pro.name }}</a>
+                            <button
+                              class="btn btn-danger my-cart-btn my-cart-b"
+                            >
+                              Detail
+                            </button>
                           </router-link>
                         </div>
                       </span>
@@ -507,7 +538,7 @@ export default {
           query: `
             {
             searchProducts(params: { orderType: "${event}"
-            orderBy: "pricePerKG"
+            orderBy: "price_per_kg"
             category:"${kategori}"}) {
               id
               shopID

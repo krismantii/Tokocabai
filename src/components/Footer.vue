@@ -3,7 +3,8 @@
   <footer id="footer" class="bg-light py-5">
     <div class="container">
       <div class="small text-center text-muted">
-        Copyright &copy; 2020 - Tokocabai
+        <i style="color:red;" class="fas fa-pepper-hot"></i> &copy; 2020 -
+        Tokocabai <i style="color:red;" class="fas fa-pepper-hot"></i>
       </div>
     </div>
   </footer>

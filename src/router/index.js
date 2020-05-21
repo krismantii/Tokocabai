@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
@@ -142,7 +143,10 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return { x: 0, y: 0 };
+  }
 });
 
 router.beforeEach((to, from, next) => {

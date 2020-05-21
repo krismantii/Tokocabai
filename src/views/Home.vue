@@ -161,20 +161,30 @@
                                 }
                               }"
                             >
-                              <a style="font-weight: bold;">{{ pro.name }}</a>
+                              <div
+                                class="text-truncate"
+                                style="font-weight: bold; max-width: 150px;"
+                              >
+                                {{ pro.name }}
+                              </div>
                             </router-link>
                           </h6>
                         </div>
 
-                        <p>
+                        <div>
                           Harga:
-                          <a style="color: green;"> Rp {{ pro.pricePerKG }} </a>
-                        </p>
+                          <div
+                            class="text-truncate inline"
+                            style="color: green;"
+                          >
+                            Rp {{ pro.pricePerKG }}
+                          </div>
+                        </div>
 
-                        <p>
+                        <div>
                           Stock :
-                          <a style="color: red;">{{ pro.stockKG }} KG </a>
-                        </p>
+                          <div class="text-truncate inline" style="color: red;">{{ pro.stockKG }} KG </div>
+                        </div>
 
                         <div class="clearfix"></div>
 
@@ -234,20 +244,30 @@
                                 }
                               }"
                             >
-                              <a style="font-weight: bold;">{{ pro.name }}</a>
+                              <div
+                                class="text-truncate"
+                                style="font-weight: bold; max-width: 150px;"
+                              >
+                                {{ pro.name }}
+                              </div>
                             </router-link>
                           </h6>
                         </div>
 
-                        <p>
+                        <div>
                           Harga:
-                          <a style="color: green;"> Rp {{ pro.pricePerKG }} </a>
-                        </p>
+                          <div
+                            class="text-truncate inline"
+                            style="color: green;"
+                          >
+                            Rp {{ pro.pricePerKG }}
+                          </div>
+                        </div>
 
-                        <p>
+                        <div>
                           Stock :
-                          <a style="color: red;">{{ pro.stockKG }} KG </a>
-                        </p>
+                          <div class="text-truncate inline" style="color: red;">{{ pro.stockKG }} KG </div>
+                        </div>
 
                         <div class="clearfix"></div>
 
@@ -306,20 +326,30 @@
                                 }
                               }"
                             >
-                              <a style="font-weight: bold;">{{ pro.name }}</a>
+                              <div
+                                class="text-truncate"
+                                style="font-weight: bold; max-width: 150px;"
+                              >
+                                {{ pro.name }}
+                              </div>
                             </router-link>
                           </h6>
                         </div>
 
-                        <p>
+                        <div>
                           Harga:
-                          <a style="color: green;"> Rp {{ pro.pricePerKG }} </a>
-                        </p>
+                          <div
+                            class="text-truncate inline"
+                            style="color: green;"
+                          >
+                            Rp {{ pro.pricePerKG }}
+                          </div>
+                        </div>
 
-                        <p>
+                        <div>
                           Stock :
-                          <a style="color: red;">{{ pro.stockKG }} KG </a>
-                        </p>
+                          <div class="text-truncate inline" style="color: red;">{{ pro.stockKG }} KG </div>
+                        </div>
 
                         <div class="clearfix"></div>
 
