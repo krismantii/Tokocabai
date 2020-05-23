@@ -50,13 +50,13 @@
           Upload foto produk:
           <input type="file" @change="previewImage" accept="image/*" />
         </div>
-        <div class="image-preview" v-if="imageData.length > 0">
-          <img class="preview" :src="imageData" />
+        <div class="image-preview">
+          <img class="preview" :src="form.photoURL" />
         </div>
       </div>
       <br />
       <br />
-      <b-button variant="danger" class="m-1">
+      <b-button variant="danger" class="m-1" @click="deleteReview()">
         Hapus review
       </b-button>
       <b-button class="mr-1" type="submit" variant="success"
@@ -80,12 +80,12 @@ export default {
       produk: [],
       token,
       user: [],
-      gambar: null,
+      image: null,
       imageData: "",
       form: {
         title: "",
         content: "",
-        photo: null,
+        photoURL: null,
         rating: null
       },
       show: true
@@ -98,9 +98,10 @@ export default {
     edit_review() {
       const formData = new FormData();
       const query = {
-        query: `mutation updateReview($userID: String!,$shopID: String!,$productID: String!,$title: String!, 
+        query: `mutation updateReview($id: String!,$userID: String!,$shopID: String!,$productID: String!,$title: String!, 
         $content: String!, $rating: Float!, $photo: Upload){
             updateReview(params:{
+                id: $id
                 userID: $userID
                 shopID: $shopID
                 productID: $productID
@@ -115,6 +116,7 @@ export default {
             }
         `,
         variables: {
+          id: this.$route.params.id,
           userID: this.user.id,
           shopID: this.$route.params.shopid,
           productID: this.$route.params.produkid,
@@ -129,7 +131,7 @@ export default {
         "0": ["variables.photo"]
       };
       formData.append("map", JSON.stringify(map));
-      const file = this.gambar;
+      const file = this.image;
       formData.append("0", file);
       axios({
         method: "post",
@@ -140,15 +142,16 @@ export default {
         }
       })
         .then(response => {
-          console.log("data review :", response.data);
-          alert("review berhasil diupdate!");
-          this.review = response.data;
+          console.log("data review baru:", response.data);
+          if (response.data.errors == null) {
+            alert("Data review berhasil diedit!");
+            this.$router.push(
+              { name: "History", params: { token: token } },
+              () => this.$router.go(0)
+            );
+          }
+          alert("Data review gagal diedit!");
         })
-        .catch(function(error) {
-          console.log(error);
-          console.log("error");
-          alert("Data tidak sesuai!");
-        });
     },
     loadUser() {
       axios({
@@ -168,7 +171,7 @@ export default {
       })
         .then(response => {
           this.user = response.data.data.getUserInfo;
-          // this.reviews();
+          this.reviews();
         })
         .catch(function(error) {
           console.log(error);
@@ -181,10 +184,8 @@ export default {
         url: "http://localhost:4000/query",
         data: {
           query: `
-          query{
-          reviews(params:{
-            id: "${this.$route.params.id}"
-          }){
+                  {
+          review(reviewId: ${this.$route.params.id}) {
             id
             userID
             productID
@@ -200,8 +201,7 @@ export default {
       })
         .then(response => {
           console.log("Data review:", response.data);
-          this.form = response.data.data.reviews;
-          this.loadProduk();
+          this.form = response.data.data.review;
         })
         .catch(function(error) {
           console.log(error);
@@ -216,8 +216,8 @@ export default {
           query: `
           mutation{
           deleteReview(params: {
-            id: "${this.form.id}"
-            userID: "${this.form.userID}"
+            id: "${this.$route.params.id}"
+            userID: "${this.user.id}"
           }){
             success
           }
@@ -226,76 +226,17 @@ export default {
         }
       })
         .then(response => {
-          alert("Data review berhasil dihapus");
+          alert("Data review berhasil dihapus!");
           console.log("Data hapus review :", response.data);
-          this.$router.push(
-            {
-              name: "Produk",
-              params: {
-                slug: this.produk.slugName,
-                id: this.produk.id,
-                shopid: this.produk.shopID
-              }
-            },
-            () => this.$router.go(0)
-          );
+          this.$router.push({ name: "History", params: { token: token } }, () =>
+            this.$router.go(0)
+            );
         })
-        .catch(function(error) {
-          console.log(error);
-          console.log("error");
-          alert("error");
-        });
-    },
-    loadProduk() {
-      axios({
-        method: "post",
-        url: "http://localhost:4000/query",
-        data: {
-          query: `
-            {
-            product(params: {
-              id: ${this.form.productID}
-            }) {
-              id
-              shopID
-              name
-              pricePerKG
-              stockKG
-              description
-              photoURL
-              slugName
-            }
-          }
-        `
-        }
-      })
-        .then(response => {
-          console.log("Data produk:", response.data);
-          this.produk = response.data.data.product;
-        })
-        .catch(function(error) {
-          console.log(error);
-          console.log("error");
-        });
     },
     previewImage: function(event) {
-      var file = event.target.files[0];
-      this.gambar = file;
-      // Reference to the DOM input element
-      var input = event.target;
-      // Ensure that you have a file before attempting to read it
-      if (input.files && input.files[0]) {
-        // create a new FileReader to read this image and convert to base64 format
-        var reader = new FileReader();
-        // Define a callback function to run, when FileReader finishes its job
-        reader.onload = e => {
-          // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
-          // Read image as base64 and set to imageData
-          this.imageData = e.target.result;
-        };
-        // Start the reader job - read file as a data url (base64 format)
-        reader.readAsDataURL(input.files[0]);
-      }
+      const file = event.target.files[0];
+      this.image = file;
+      this.form.photoURL = URL.createObjectURL(file);
     }
   }
 };

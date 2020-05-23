@@ -172,7 +172,7 @@
                         </div>
 
                         <div>
-                          Harga:
+                          Harga :
                           <div
                             class="text-truncate inline"
                             style="color: green;"
@@ -255,7 +255,7 @@
                         </div>
 
                         <div>
-                          Harga:
+                          Harga :
                           <div
                             class="text-truncate inline"
                             style="color: green;"
@@ -337,7 +337,7 @@
                         </div>
 
                         <div>
-                          Harga:
+                          Harga :
                           <div
                             class="text-truncate inline"
                             style="color: green;"

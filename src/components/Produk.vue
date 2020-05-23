@@ -159,7 +159,12 @@
                       <router-link
                         :to="{
                           name: 'Edit_review',
-                          params: { id: re.id, token: token }
+                          params: {
+                            id: re.id,
+                            shopid: $route.params.shopid,
+                            produkid: $route.params.id,
+                            token: token
+                          }
                         }"
                         @click.native="$router.go()"
                         class="fas fa-edit"

@@ -83,7 +83,7 @@ const routes = [
     component: Edit_profil
   },
   {
-    path: "/edit_review/:id/:token",
+    path: "/edit_review/:id/:shopid/:produkid/:token",
     name: "Edit_review",
     component: Edit_review
   },

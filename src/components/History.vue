@@ -64,11 +64,22 @@
                   </h5>
                   <div class="card-body">
                     <span v-for="(produk, index) in pro.products" :key="index">
+                      <router-link
+                            :to="{
+                              name: 'Produk',
+                              params: {
+                                slug: produk.slugName,
+                                id: produk.id,
+                                shopid: produk.shopID
+                              }
+                            }"
+                          >
                       <img
                         :src="produk.photoURL || 'images/default.png'"
                         class="gambar"
                         alt=""
                       />
+                      </router-link>
                       <h5
                         class="card-text"
                         style="margin-top: -100px; margin-left:110px; color:green;"
@@ -114,16 +125,30 @@
                   </h5>
                   <div class="card-body">
                     <span v-for="(produk, index) in pro.products" :key="index">
+                      <router-link
+                            :to="{
+                              name: 'Produk',
+                              params: {
+                                slug: produk.slugName,
+                                id: produk.id,
+                                shopid: produk.shopID
+                              }
+                            }"
+                          >
                       <img
                         :src="produk.photoURL || 'images/default.png'"
                         class="gambar"
                         alt=""
                       />
+                      </router-link>
                       <h5
                         class="card-text"
                         style="margin-top: -100px; margin-left:110px; color:green;"
                       >
-                        {{ produk.name }} X {{ produk.boughtKG }}KG
+                        
+                          {{ produk.name }}
+                        
+                        X {{ produk.boughtKG }}KG
                       </h5>
                       <p class="card-text" style=" margin-left:110px">
                         <i class="fas fa-tag"></i>harga produk : Rp
@@ -163,16 +188,28 @@
                   </h5>
                   <div class="card-body">
                     <span v-for="(produk, index) in pro.products" :key="index">
+                      <router-link
+                            :to="{
+                              name: 'Produk',
+                              params: {
+                                slug: produk.slugName,
+                                id: produk.id,
+                                shopid: produk.shopID
+                              }
+                            }"
+                          >
                       <img
                         :src="produk.photoURL || 'images/default.png'"
                         class="gambar"
                         alt=""
                       />
+                      </router-link>
                       <h5
                         class="card-text"
                         style="margin-top: -100px; margin-left:110px; color:green;"
                       >
-                        {{ produk.name }} X {{ produk.boughtKG }}KG
+                          {{ produk.name }}
+                        X {{ produk.boughtKG }}KG
                       </h5>
                       <p class="card-text" style=" margin-left:110px">
                         <i class="fas fa-tag"></i>harga produk : Rp
@@ -224,16 +261,29 @@
                   </h5>
                   <div class="card-body">
                     <span v-for="(produk, index) in pro.products" :key="index">
+                      <router-link
+                            :to="{
+                              name: 'Produk',
+                              params: {
+                                slug: produk.slugName,
+                                id: produk.id,
+                                shopid: produk.shopID
+                              }
+                            }"
+                          >
                       <img
                         :src="produk.photoURL || 'images/default.png'"
                         class="gambar"
                         alt=""
                       />
+                      </router-link>
+
                       <h5
                         class="card-text"
                         style="margin-top: -100px; margin-left:110px; color:green;"
                       >
-                        {{ produk.name }} X {{ produk.boughtKG }}KG
+                          {{ produk.name }}
+                        X {{ produk.boughtKG }}KG
                       </h5>
                       <p class="card-text" style=" margin-left:110px">
                         <i class="fas fa-tag"></i>harga produk : Rp
@@ -304,6 +354,7 @@ export default {
                 boughtKG
                 photoURL
                 pricePerKG
+                slugName
               }
               payment{
                 createdAt
