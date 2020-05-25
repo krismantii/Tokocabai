@@ -46,6 +46,16 @@
         <div class="col-md-7 single-top-left ">
           <div class="single-right">
             <h3>{{ produk.name }}</h3>
+            <star-rating
+              v-bind:read-only="true"
+              v-bind:increment="0.5"
+              v-bind:show-rating="false"
+              inactive-color="#000"
+              active-color="yellow"
+              v-bind:star-size="20"
+              v-model="produk.averageRating"
+            >
+            </star-rating>
             <div class="pr-single">
               <p class="reduced ">Harga: Rp {{ produk.pricePerKG }} per/KG</p>
             </div>
