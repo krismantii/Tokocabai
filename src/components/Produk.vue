@@ -9,6 +9,12 @@
       </div>
     </div>
     <div class="container">
+      <span v-if="isLoggedIn == ''">
+        <b-alert show dismissible>
+          Login untuk bisa akses semua fitur di website Tokocabai~
+          <b>&rArr;</b>
+        </b-alert>
+      </span>
       <div class="mb-2">
         <b-avatar
           variant="success"
@@ -50,25 +56,22 @@
               <div class="starbox small ghosting"></div>
             </div>
             <p class="in-pa">{{ produk.description }}.</p>
-            <div class="form-group row">
-              <p for="inputNama3" style="margin-left:15px;">Pesan :</p>
-              <div class="col-sm-3">
-                <b-form-input
-                  id="input-1"
-                  v-model="jumlah"
-                  type="number"
-                  min="0"
-                  step="any"
-                  required
-                  placeholder=""
-                ></b-form-input>
-              </div>
-              <p>KG</p>
-            </div>
-            <span v-if="isLoggedIn == ''">
-              <b-alert show variant="danger">Login sebagai pembeli</b-alert>
-            </span>
             <span v-if="isLoggedIn && dataku.type == 1">
+              <div class="form-group row">
+                <p for="inputNama3" style="margin-left:15px;">Pesan :</p>
+                <div class="col-sm-3">
+                  <b-form-input
+                    id="input-1"
+                    v-model="jumlah"
+                    type="number"
+                    min="0"
+                    step="any"
+                    required
+                    placeholder=""
+                  ></b-form-input>
+                </div>
+                <p>KG</p>
+              </div>
               <div class="add" style="float: left;">
                 <button
                   class="btn btn-danger my-cart-btn my-cart-b"
@@ -88,6 +91,7 @@
       <br />
       <br />
       {{ data_review_user }}
+      {{ jumlah_review }}
       <div
         class="tab-pane fade show active"
         id="review"
@@ -100,13 +104,13 @@
               <div class="col-6">
                 <div class="box_total">
                   <h5>Overall</h5>
-                  <h4>4.0</h4>
-                  <h6>(03 Reviews)</h6>
+                  <h4>{{ produk.averageRating }}</h4>
+                  <h6>({{ produk.totalReviews }} Reviews)</h6>
                 </div>
               </div>
               <div class="col-6">
                 <div class="rating_list">
-                  <h3>Based on 3 Reviews</h3>
+                  <h3>Based on {{ produk.totalReviews }} Reviews</h3>
                   <ul class="list">
                     <li>
                       <a href="#"
@@ -115,7 +119,7 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i> 01</a
+                        <i class="fas fa-star"></i> ({{ count.count5 }})</a
                       >
                     </li>
                     <li>
@@ -124,7 +128,7 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i> 01</a
+                        <i class="fas fa-star"></i> ({{ count.count4 }})</a
                       >
                     </li>
                     <li>
@@ -132,27 +136,32 @@
                         >3 Star
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i> 01</a
+                        <i class="fas fa-star"></i> ({{ count.count3 }})</a
                       >
                     </li>
                     <li>
                       <a href="#"
                         >2 Star
                         <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i> 01</a
+                        <i class="fas fa-star"></i> ({{ count.count2 }})</a
                       >
                     </li>
                     <li>
-                      <a href="#">1 Star <i class="fas fa-star"></i> 01</a>
+                      <a href="#"
+                        >1 Star <i class="fas fa-star"></i> ({{
+                          count.count1
+                        }})</a
+                      >
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
+            {{ deldataduplicate }}
             <div v-for="re in review" :key="re.id">
               <div>
                 <div>
-                  <div class="mb-2" v-for="rev in reviewers" :key="rev.id">
+                  <div class="mb-2" v-for="rev in uniqueArray" :key="rev.id">
                     <div v-if="rev.id === re.userID">
                       <b-avatar :src="rev.photoURL"></b-avatar>
                       <h5 class="inline">{{ rev.name }}</h5>
@@ -190,9 +199,9 @@
                 </p>
                 <a style="font-size:11px;"> {{ re.createdAt }}</a>
               </div>
-              <img class="gambar" :src="re.photoURL" />
-              <br />
-              <br />
+              <div v-if="re.photoURL !== null">
+                <img style="width:100px; height:100px" :src="re.photoURL" />
+              </div>
               <br />
               <br />
             </div>
@@ -224,7 +233,15 @@ export default {
       cart: [],
       jumlah: null,
       review: [],
-      reviewers: []
+      reviewers: [],
+      uniqueArray: [],
+      count: {
+        count1: 0,
+        count2: 0,
+        count3: 0,
+        count4: 0,
+        count5: 0
+      }
     };
   },
   computed: {
@@ -233,6 +250,12 @@ export default {
     },
     data_review_user: function() {
       return this.user_review(this.review);
+    },
+    deldataduplicate: function() {
+      return this.del(this.reviewers);
+    },
+    jumlah_review: function() {
+      return this.review_count(this.review);
     }
   },
   created() {
@@ -255,13 +278,15 @@ export default {
               stockKG
               description
               photoURL
+              totalReviews
+              averageRating
             }
           }
         `
         }
       })
         .then(response => {
-          console.log("Data :", response.data);
+          console.log("Data produk:", response.data);
           this.produk = response.data.data.product;
           this.loadToko();
         })
@@ -354,6 +379,21 @@ export default {
           });
       }
     },
+    review_count(event) {
+      for (let i = 0; i < event.length; i++) {
+        if (event[i].rating == 5) {
+          this.count.count5++;
+        } else if (event[i].rating == 4) {
+          this.count.count4++;
+        } else if (event[i].rating == 3) {
+          this.count.count3++;
+        } else if (event[i].rating == 2) {
+          this.count.count2++;
+        } else if (event[i].rating == 1) {
+          this.count.count1++;
+        }
+      }
+    },
     createCart() {
       axios({
         method: "post",
@@ -391,6 +431,13 @@ export default {
           console.log(error);
           console.log("error");
         });
+    },
+    del(event) {
+      const jsonObject = event.map(JSON.stringify);
+      console.log(jsonObject);
+      const uniqueSet = new Set(jsonObject);
+      this.uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+      console.log(this.uniqueArray);
     },
     reviews() {
       axios({
@@ -432,9 +479,12 @@ export default {
 @import "../assets/Shop/style.css";
 @import "../assets/Shop/font-awesome.css";
 @import "../assets/Shop/css_tambahan.css";
-.gambar {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
+img[src=""],
+img:not([src]) {
+  display: none;
+}
+
+img[src="*"] {
+  opacity: 1;
 }
 </style>

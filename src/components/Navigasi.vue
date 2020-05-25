@@ -18,25 +18,6 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
-          <li class="nav-item">
-            <router-link
-              to="/shop"
-              @click.native="$router.go()"
-              class="nav-link"
-            >
-              Shop</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link to="/" class="nav-link"> Promo</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/" class="nav-link"> Chat</router-link>
-          </li>
-        </ul>
-      </div>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <span v-if="isLoggedIn">
             <li class="nav-item">
               <button @click="logout" class="nav-link">Logout</button>

@@ -34,7 +34,8 @@
               berbagai produk cabai merah segar langsung dari petani lokal.
               Aplikasi ini diharapkan mampu mensejahterakan petani lokal di
               Indonesia dengan memperpendek rantai distribusi produk cabai yang
-              panjang untuk bisa sampai ke tangan konsumen. Ayo ikut andil dalam
+              panjang. Hal tersebut dapat memberikan kesempatan petani untuk
+              mendapat harga jual yang lebih bagus. Ayo ikut andil dalam
               mensejahterakan petani lokal di Indonesia!
             </p>
             <a class="btn btn-light btn-xl js-scroll-trigger" href="#services"
@@ -81,7 +82,7 @@
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
               <i class="fas fa-4x fa-heart text-danger mb-4"></i>
-              <h3 class="h4 mb-2">Segar</h3>
+              <h3 class="h4 mb-2">Berkualitas</h3>
               <p class="text-muted mb-0">
                 Cabai di produksi sepenuh hati oleh petani lokal
               </p>
@@ -96,7 +97,7 @@
       <div class="content-top">
         <div class="container">
           <div class="spec">
-            <h3>Special Offers</h3>
+            <h3>Shop</h3>
             <div class="ser-t">
               <b></b>
               <span><i></i></span>
@@ -139,248 +140,269 @@
             <div class="tab-content tab-content-t">
               <div class="tab-pane active text-style" id="tab1">
                 <div class=" con-w3l">
-                  <div
-                    class="col-md-3 m-wthree"
-                    v-for="pro in produk"
-                    :key="pro.id"
-                  >
-                    <div class="col-m">
-                      <a class="center">
-                        <img :src="pro.photoURL" class="gambar" alt="" />
-                      </a>
-                      <div class="mid-1">
-                        <div class="women">
-                          <h6>
-                            <router-link
-                              :to="{
-                                name: 'Produk',
-                                params: {
-                                  slug: pro.slugName,
-                                  id: pro.id,
-                                  shopid: pro.shopID
-                                }
-                              }"
-                            >
-                              <div
-                                class="text-truncate"
-                                style="font-weight: bold; max-width: 150px;"
-                              >
-                                {{ pro.name }}
-                              </div>
-                            </router-link>
-                          </h6>
+                   <div
+                  class="col-md-3 m-wthree"
+                  v-for="pro in produk"
+                  :key="pro.id"
+                >
+                  <div class="col-m">
+                    <a class="center">
+                      <img :src="pro.photoURL" class="gambar" alt="" />
+                    </a>
+                    <br />
+                    <div style="float:right;">
+                      <star-rating
+                        v-bind:increment="0.5"
+                        v-bind:show-rating="false"
+                        v-bind:read-only="true"
+                        inactive-color="#000"
+                        active-color="yellow"
+                        v-bind:star-size="10"
+                        v-model="pro.averageRating"
+                      >
+                      </star-rating>
+                    </div>
+
+                    <h6>
+                      <router-link
+                        :to="{
+                          name: 'Produk',
+                          params: {
+                            slug: pro.slugName,
+                            id: pro.id,
+                            shopid: pro.shopID
+                          }
+                        }"
+                      >
+                        <div
+                          class="text-truncate"
+                          style="font-weight: bold; max-width: 150px;"
+                        >
+                          {{ pro.name }}
                         </div>
+                      </router-link>
+                    </h6>
 
-                        <div>
-                          Harga :
-                          <div
-                            class="text-truncate inline"
-                            style="color: green;"
-                          >
-                            Rp {{ pro.pricePerKG }}
-                          </div>
-                        </div>
-
-                        <div>
-                          Stock :
-                          <div class="text-truncate inline" style="color: red;">{{ pro.stockKG }} KG </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-
-                        <span v-if="isLoggedIn == ''">
-                          <b-alert show variant="danger"
-                            >Login sebagai pembeli</b-alert
-                          >
-                        </span>
-                        <span v-if="isLoggedIn">
-                          <div class="add">
-                            <router-link
-                              :to="{
-                                name: 'Produk',
-                                params: {
-                                  slug: pro.slugName,
-                                  id: pro.id,
-                                  shopid: pro.shopID
-                                }
-                              }"
-                            >
-                              <button
-                                class="btn btn-danger my-cart-btn my-cart-b"
-                              >
-                                Detail
-                              </button>
-                            </router-link>
-                          </div>
-                        </span>
+                    <div>
+                      Harga :
+                      <div class="text-truncate inline" style="color: green;">
+                        Rp {{ pro.pricePerKG }}
                       </div>
                     </div>
+
+                    <div>
+                      Stock :
+                      <div class="text-truncate inline" style="color: red;">
+                        {{ pro.stockKG }} KG
+                      </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <span v-if="isLoggedIn == ''">
+                      <b-alert show variant="danger"
+                        >Login sebagai pembeli</b-alert
+                      >
+                    </span>
+                    <span v-if="isLoggedIn">
+                      <div class="add">
+                        <router-link
+                          :to="{
+                            name: 'Produk',
+                            params: {
+                              slug: pro.slugName,
+                              id: pro.id,
+                              shopid: pro.shopID
+                            }
+                          }"
+                        >
+                          <button class="btn btn-danger my-cart-btn my-cart-b">
+                            Detail
+                          </button>
+                        </router-link>
+                      </div>
+                    </span>
                   </div>
+                </div>
                   <div class="clearfix"></div>
                 </div>
               </div>
 
               <div class="tab-pane  text-style" id="tab2">
                 <div class=" con-w3l">
-                  <div
-                    class="col-md-3 m-wthree"
-                    v-for="pro in produk"
-                    :key="pro.id"
-                  >
-                    <div class="col-m">
-                      <a class="center">
-                        <img :src="pro.photoURL" class="gambar" alt="" />
-                      </a>
-                      <div class="mid-1">
-                        <div class="women">
-                          <h6>
-                            <router-link
-                              :to="{
-                                name: 'Produk',
-                                params: {
-                                  slug: pro.slugName,
-                                  id: pro.id,
-                                  shopid: pro.shopID
-                                }
-                              }"
-                            >
-                              <div
-                                class="text-truncate"
-                                style="font-weight: bold; max-width: 150px;"
-                              >
-                                {{ pro.name }}
-                              </div>
-                            </router-link>
-                          </h6>
+                   <div
+                  class="col-md-3 m-wthree"
+                  v-for="pro in produk"
+                  :key="pro.id"
+                >
+                  <div class="col-m">
+                    <a class="center">
+                      <img :src="pro.photoURL" class="gambar" alt="" />
+                    </a>
+                    <br />
+                    <div style="float:right;">
+                      <star-rating
+                        v-bind:increment="0.5"
+                        v-bind:show-rating="false"
+                        v-bind:read-only="true"
+                        inactive-color="#000"
+                        active-color="yellow"
+                        v-bind:star-size="10"
+                        v-model="pro.averageRating"
+                      >
+                      </star-rating>
+                    </div>
+
+                    <h6>
+                      <router-link
+                        :to="{
+                          name: 'Produk',
+                          params: {
+                            slug: pro.slugName,
+                            id: pro.id,
+                            shopid: pro.shopID
+                          }
+                        }"
+                      >
+                        <div
+                          class="text-truncate"
+                          style="font-weight: bold; max-width: 150px;"
+                        >
+                          {{ pro.name }}
                         </div>
+                      </router-link>
+                    </h6>
 
-                        <div>
-                          Harga :
-                          <div
-                            class="text-truncate inline"
-                            style="color: green;"
-                          >
-                            Rp {{ pro.pricePerKG }}
-                          </div>
-                        </div>
-
-                        <div>
-                          Stock :
-                          <div class="text-truncate inline" style="color: red;">{{ pro.stockKG }} KG </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-
-                        <span v-if="isLoggedIn == ''">
-                          <b-alert show variant="danger"
-                            >Login sebagai pembeli</b-alert
-                          >
-                        </span>
-                        <span v-if="isLoggedIn">
-                          <div class="add">
-                            <router-link
-                              :to="{
-                                name: 'Produk',
-                                params: {
-                                  slug: pro.slugName,
-                                  id: pro.id,
-                                  shopid: pro.shopID
-                                }
-                              }"
-                            >
-                              <button
-                                class="btn btn-danger my-cart-btn my-cart-b"
-                              >
-                                Detail
-                              </button>
-                            </router-link>
-                          </div>
-                        </span>
+                    <div>
+                      Harga :
+                      <div class="text-truncate inline" style="color: green;">
+                        Rp {{ pro.pricePerKG }}
                       </div>
                     </div>
+
+                    <div>
+                      Stock :
+                      <div class="text-truncate inline" style="color: red;">
+                        {{ pro.stockKG }} KG
+                      </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <span v-if="isLoggedIn == ''">
+                      <b-alert show variant="danger"
+                        >Login sebagai pembeli</b-alert
+                      >
+                    </span>
+                    <span v-if="isLoggedIn">
+                      <div class="add">
+                        <router-link
+                          :to="{
+                            name: 'Produk',
+                            params: {
+                              slug: pro.slugName,
+                              id: pro.id,
+                              shopid: pro.shopID
+                            }
+                          }"
+                        >
+                          <button class="btn btn-danger my-cart-btn my-cart-b">
+                            Detail
+                          </button>
+                        </router-link>
+                      </div>
+                    </span>
                   </div>
+                </div>
                   <div class="clearfix"></div>
                 </div>
               </div>
               <div class="tab-pane  text-style" id="tab3">
                 <div class=" con-w3l">
-                  <div
-                    class="col-md-3 m-wthree"
-                    v-for="pro in produk"
-                    :key="pro.id"
-                  >
-                    <div class="col-m">
-                      <a class="center">
-                        <img :src="pro.photoURL" class="gambar" alt="" />
-                      </a>
-                      <div class="mid-1">
-                        <div class="women">
-                          <h6>
-                            <router-link
-                              :to="{
-                                name: 'Produk',
-                                params: {
-                                  slug: pro.slugName,
-                                  id: pro.id,
-                                  shopid: pro.shopID
-                                }
-                              }"
-                            >
-                              <div
-                                class="text-truncate"
-                                style="font-weight: bold; max-width: 150px;"
-                              >
-                                {{ pro.name }}
-                              </div>
-                            </router-link>
-                          </h6>
+                   <div
+                  class="col-md-3 m-wthree"
+                  v-for="pro in produk"
+                  :key="pro.id"
+                >
+                  <div class="col-m">
+                    <a class="center">
+                      <img :src="pro.photoURL" class="gambar" alt="" />
+                    </a>
+                    <br />
+                    <div style="float:right;">
+                      <star-rating
+                        v-bind:increment="0.5"
+                        v-bind:show-rating="false"
+                        v-bind:read-only="true"
+                        inactive-color="#000"
+                        active-color="yellow"
+                        v-bind:star-size="10"
+                        v-model="pro.averageRating"
+                      >
+                      </star-rating>
+                    </div>
+
+                    <h6>
+                      <router-link
+                        :to="{
+                          name: 'Produk',
+                          params: {
+                            slug: pro.slugName,
+                            id: pro.id,
+                            shopid: pro.shopID
+                          }
+                        }"
+                      >
+                        <div
+                          class="text-truncate"
+                          style="font-weight: bold; max-width: 150px;"
+                        >
+                          {{ pro.name }}
                         </div>
+                      </router-link>
+                    </h6>
 
-                        <div>
-                          Harga :
-                          <div
-                            class="text-truncate inline"
-                            style="color: green;"
-                          >
-                            Rp {{ pro.pricePerKG }}
-                          </div>
-                        </div>
-
-                        <div>
-                          Stock :
-                          <div class="text-truncate inline" style="color: red;">{{ pro.stockKG }} KG </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-
-                        <span v-if="isLoggedIn == ''">
-                          <b-alert show variant="danger"
-                            >Login sebagai pembeli</b-alert
-                          >
-                        </span>
-                        <span v-if="isLoggedIn">
-                          <div class="add">
-                            <router-link
-                              :to="{
-                                name: 'Produk',
-                                params: {
-                                  slug: pro.slugName,
-                                  id: pro.id,
-                                  shopid: pro.shopID
-                                }
-                              }"
-                            >
-                              <button
-                                class="btn btn-danger my-cart-btn my-cart-b"
-                              >
-                                Detail
-                              </button>
-                            </router-link>
-                          </div>
-                        </span>
+                    <div>
+                      Harga :
+                      <div class="text-truncate inline" style="color: green;">
+                        Rp {{ pro.pricePerKG }}
                       </div>
                     </div>
+
+                    <div>
+                      Stock :
+                      <div class="text-truncate inline" style="color: red;">
+                        {{ pro.stockKG }} KG
+                      </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <span v-if="isLoggedIn == ''">
+                      <b-alert show variant="danger"
+                        >Login sebagai pembeli</b-alert
+                      >
+                    </span>
+                    <span v-if="isLoggedIn">
+                      <div class="add">
+                        <router-link
+                          :to="{
+                            name: 'Produk',
+                            params: {
+                              slug: pro.slugName,
+                              id: pro.id,
+                              shopid: pro.shopID
+                            }
+                          }"
+                        >
+                          <button class="btn btn-danger my-cart-btn my-cart-b">
+                            Detail
+                          </button>
+                        </router-link>
+                      </div>
+                    </span>
                   </div>
+                </div>
                   <div class="clearfix"></div>
                 </div>
               </div>
@@ -423,7 +445,7 @@
           <div class="col-lg-4 mr-auto text-center">
             <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
             <!-- Make sure to change the email address in anchor text AND the link below! -->
-            <a class="d-block" href="mailto:contact@yourwebsite.com"
+            <a class="d-block"
               >Tokocabai@gmail.com</a
             >
           </div>
@@ -436,7 +458,11 @@
 <script>
 import axios from "axios";
 const token = localStorage.getItem("token");
+import StarRating from "vue-star-rating";
 export default {
+  components: {
+    StarRating
+  },
   data() {
     return {
       produk: [],
@@ -462,6 +488,7 @@ export default {
             query{
                 searchProducts(params:{
                   category: "Cabai Merah Besar"
+                  limit: 4
                 }
                 ){
                   id
@@ -472,6 +499,8 @@ export default {
                   stockKG
                   category
                   slugName
+                  averageRating
+                  totalReviews
                 }
               }
         `
@@ -495,6 +524,7 @@ export default {
             query{
                 searchProducts(params:{
                   category: "${event}"
+                  limit: 4
                 }
                 ){
                   id
@@ -505,6 +535,8 @@ export default {
                   stockKG
                   category
                   slugName
+                  averageRating
+                  totalReviews
                 }
               }
         `
