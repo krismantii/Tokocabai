@@ -146,6 +146,41 @@
           </div>
           <div class="tab-pane  text-style" id="tab3">
             <div class=" con-w3l">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Nama Barang - Jumlah diminta</th>
+                    <th scope="col">Total Harga</th>
+                    <th scope="col">Detail pengiriman</th>
+                    <th scope="col">status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(pro, index) in order" :key="index">
+                    <div
+                      style="font-size: 12px;"
+                      v-for="(produk, index) in pro.products"
+                      :key="index"
+                    >
+                      <td>{{ produk.name }}</td>
+                      <td>Rp {{ produk.pricePerKG }}/KG</td>
+                      <td>{{ produk.boughtKG }} KG</td>
+                    </div>
+                    <td style="font-size: 12px;">Rp {{ pro.totalPrice }}</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-secondary float-left"
+                        v-b-modal.modal-prevent-closing
+                        @click="loadData(pro.customerID)"
+                      >
+                        lihat alamat
+                      </button>
+                    </td>
+                    <td style="font-size: 12px;">{{ pro.status }}</td>
+                  </tr>
+                </tbody>
+              </table>
               <div class="clearfix"></div>
             </div>
           </div>

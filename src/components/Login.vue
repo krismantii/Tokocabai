@@ -45,15 +45,6 @@
                 ></b-form-input>
               </b-form-group>
             </b-form>
-            <div class="text-right p-t-13 p-b-23">
-              <span class="txt1">
-                Lupa
-              </span>
-
-              <a href="#" class="txt2">
-                Password?
-              </a>
-            </div>
 
             <div class="container-login100-form-btn">
               <b-button

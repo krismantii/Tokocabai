@@ -17,19 +17,16 @@
         <b-card-text>
           <a style="color:green;"> {{ dataku.description }} </a>
         </b-card-text>
-        <b-card-text>
+      </b-card>
+      <b-card header-tag="header" footer-tag="footer">
+       <b-card-text>
           <i class="fas fa-map-marked-alt"></i>
           {{ dataku.addressDetail }}
         </b-card-text>
-      </b-card>
-      <b-card header-tag="header" footer-tag="footer">
-        <b-card-text><i class="fas fa-store"></i> 100 produk</b-card-text>
+        <b-card-text style="margin-left:20px"> Provinsi : {{ dataku.province }} | zipcode : {{dataku.zipCode}} </b-card-text>
         <b-card-text>
           <i class="fas fa-user-check"></i> Bergabung : {{ dataku.createdAt }}
         </b-card-text>
-        <b-card-text
-          ><i class="fas fa-grin-hearts"></i> 10000 review</b-card-text
-        >
       </b-card>
     </b-card-group>
     <br />

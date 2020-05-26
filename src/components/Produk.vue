@@ -56,16 +56,10 @@
               v-model="produk.averageRating"
             >
             </star-rating>
-            <div class="pr-single">
-              <p class="reduced ">Harga: Rp {{ produk.pricePerKG }} per/KG</p>
-            </div>
-            <div class="Stock">
-              <p>Stock: {{ produk.stockKG }} KG</p>
-            </div>
-            <div class="block block-w3">
-              <div class="starbox small ghosting"></div>
-            </div>
-            <p class="in-pa">{{ produk.description }}.</p>
+
+            <p class="reduced ">Harga : Rp {{ produk.pricePerKG }} per/KG</p>
+            <p>Stock : {{ produk.stockKG }} KG</p>
+            <p style="color:grey">{{ produk.description }}.</p>
             <span v-if="isLoggedIn && dataku.type == 1">
               <div class="form-group row">
                 <p for="inputNama3" style="margin-left:15px;">Pesan :</p>

@@ -22,7 +22,7 @@
                 class="nav-shop"
                 data-toggle="tab"
                 v-on:click="customerOrder('waiting_for_seller')"
-                >Pemesanan cabai</a
+                >Pemesanan diproses</a
               >
             </li>
             <li class="">
@@ -65,20 +65,20 @@
                   <div class="card-body">
                     <span v-for="(produk, index) in pro.products" :key="index">
                       <router-link
-                            :to="{
-                              name: 'Produk',
-                              params: {
-                                slug: produk.slugName,
-                                id: produk.id,
-                                shopid: produk.shopID
-                              }
-                            }"
-                          >
-                      <img
-                        :src="produk.photoURL || 'images/default.png'"
-                        class="gambar"
-                        alt=""
-                      />
+                        :to="{
+                          name: 'Produk',
+                          params: {
+                            slug: produk.slugName,
+                            id: produk.id,
+                            shopid: produk.shopID
+                          }
+                        }"
+                      >
+                        <img
+                          :src="produk.photoURL || 'images/default.png'"
+                          class="gambar"
+                          alt=""
+                        />
                       </router-link>
                       <h5
                         class="card-text"
@@ -126,28 +126,27 @@
                   <div class="card-body">
                     <span v-for="(produk, index) in pro.products" :key="index">
                       <router-link
-                            :to="{
-                              name: 'Produk',
-                              params: {
-                                slug: produk.slugName,
-                                id: produk.id,
-                                shopid: produk.shopID
-                              }
-                            }"
-                          >
-                      <img
-                        :src="produk.photoURL || 'images/default.png'"
-                        class="gambar"
-                        alt=""
-                      />
+                        :to="{
+                          name: 'Produk',
+                          params: {
+                            slug: produk.slugName,
+                            id: produk.id,
+                            shopid: produk.shopID
+                          }
+                        }"
+                      >
+                        <img
+                          :src="produk.photoURL || 'images/default.png'"
+                          class="gambar"
+                          alt=""
+                        />
                       </router-link>
                       <h5
                         class="card-text"
                         style="margin-top: -100px; margin-left:110px; color:green;"
                       >
-                        
-                          {{ produk.name }}
-                        
+                        {{ produk.name }}
+
                         X {{ produk.boughtKG }}KG
                       </h5>
                       <p class="card-text" style=" margin-left:110px">
@@ -189,26 +188,26 @@
                   <div class="card-body">
                     <span v-for="(produk, index) in pro.products" :key="index">
                       <router-link
-                            :to="{
-                              name: 'Produk',
-                              params: {
-                                slug: produk.slugName,
-                                id: produk.id,
-                                shopid: produk.shopID
-                              }
-                            }"
-                          >
-                      <img
-                        :src="produk.photoURL || 'images/default.png'"
-                        class="gambar"
-                        alt=""
-                      />
+                        :to="{
+                          name: 'Produk',
+                          params: {
+                            slug: produk.slugName,
+                            id: produk.id,
+                            shopid: produk.shopID
+                          }
+                        }"
+                      >
+                        <img
+                          :src="produk.photoURL || 'images/default.png'"
+                          class="gambar"
+                          alt=""
+                        />
                       </router-link>
                       <h5
                         class="card-text"
                         style="margin-top: -100px; margin-left:110px; color:green;"
                       >
-                          {{ produk.name }}
+                        {{ produk.name }}
                         X {{ produk.boughtKG }}KG
                       </h5>
                       <p class="card-text" style=" margin-left:110px">
@@ -262,27 +261,27 @@
                   <div class="card-body">
                     <span v-for="(produk, index) in pro.products" :key="index">
                       <router-link
-                            :to="{
-                              name: 'Produk',
-                              params: {
-                                slug: produk.slugName,
-                                id: produk.id,
-                                shopid: produk.shopID
-                              }
-                            }"
-                          >
-                      <img
-                        :src="produk.photoURL || 'images/default.png'"
-                        class="gambar"
-                        alt=""
-                      />
+                        :to="{
+                          name: 'Produk',
+                          params: {
+                            slug: produk.slugName,
+                            id: produk.id,
+                            shopid: produk.shopID
+                          }
+                        }"
+                      >
+                        <img
+                          :src="produk.photoURL || 'images/default.png'"
+                          class="gambar"
+                          alt=""
+                        />
                       </router-link>
 
                       <h5
                         class="card-text"
                         style="margin-top: -100px; margin-left:110px; color:green;"
                       >
-                          {{ produk.name }}
+                        {{ produk.name }}
                         X {{ produk.boughtKG }}KG
                       </h5>
                       <p class="card-text" style=" margin-left:110px">
