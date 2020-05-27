@@ -114,6 +114,7 @@
                     <th scope="col">Nama Barang - Jumlah diminta</th>
                     <th scope="col">Total Harga</th>
                     <th scope="col">Detail pengiriman</th>
+                    <th scope="col">Tracking kurir</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -136,6 +137,15 @@
                         @click="loadData(pro.customerID)"
                       >
                         lihat alamat
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-secondary float-left"
+                        v-b-modal.modal-center
+                      >
+                        Tracking
                       </button>
                     </td>
                   </tr>
@@ -262,11 +272,14 @@
             type="text"
             required
             :readonly="user.id >= 1"
-            placeholder="Silambat"
+            placeholder="Kurir A"
           ></b-form-input>
         </b-form-group>
       </form>
     </b-modal>
+     <b-modal id="modal-center" centered title="Kurir A">
+    <p class="my-4">Nomor Resi : XXXXXXXXXX</p>
+  </b-modal>
   </div>
 </template>
 <style scoped>

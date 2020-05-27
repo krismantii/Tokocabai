@@ -182,8 +182,18 @@
           ></b-form-input>
         </b-form-group>
         <b-form-group label="Pilih kurir pengiriman :">
-          <b-form-radio name="some-radios" value="A">Kurir A</b-form-radio>
-          <b-form-radio name="some-radios" value="B">Kurir B</b-form-radio>
+          <b-form-radio name="some-radios" value="A">Kurir A + Rp 0</b-form-radio>
+          <b-form-radio name="some-radios" value="B">Kurir B + Rp 0</b-form-radio>
+        </b-form-group>
+        <b-form-group label="Total Bayar :">
+          <b-form-input
+            id="input-1"
+            type="text"
+            required
+             v-model="totalSumm"
+            :readonly="user.id >= 1"
+            placeholder=""
+          ></b-form-input>
         </b-form-group>
       </form>
     </b-modal>

@@ -153,14 +153,25 @@
                         <i class="fas fa-tag"></i>harga produk : Rp
                         {{ produk.pricePerKG }}
                       </p>
+                      <p class="card-text" style=" margin-left:110px">
+                        No resi : XXXXXXXXXX
+                      </p>
                       <br />
                       <br />
                       <br />
                     </span>
                     <b-button
                       pill
-                      variant="danger"
+                      variant="secondary"
                       style="margin-left: 10%"
+                      v-b-modal.modal-center
+                      v-if="pro.status == 'on_shipment'"
+                      >Tracking</b-button
+                    >
+                    <b-button
+                      pill
+                      variant="danger"
+                      style="margin-left: 2%"
                       @click="fulfillOrder(pro.id, index)"
                       v-if="pro.status == 'on_shipment'"
                       >Produk telah sampai</b-button
@@ -316,6 +327,9 @@
         </div>
       </div>
     </div>
+    <b-modal id="modal-center" centered title="Kurir A">
+    <p class="my-4">Nomor Resi : XXXXXXXXXX</p>
+  </b-modal>
   </div>
 </template>
 <script>
