@@ -197,18 +197,20 @@ export default {
           }
         `
         }
-      })
-        .then(response => {
-          console.log("Data :", response.data);
-          this.validate = response.data.data.register.success;
+      }).then(response => {
+        console.log("Data register:", response.data);
+        if (response.data.errors == null) {
           alert("Register Berhasil~ Silahkan login dengan akun baru!");
           this.$router.push("/login");
-        })
-        .catch(function(error) {
-          alert("Data tidak sesuai!");
-          console.log(error);
-          console.log("error");
-        });
+        } else if (
+          response.data.errors[0].message ==
+          "rpc error: code = Unknown desc = email or username already exists"
+        ) {
+          alert("Email atau username sudah dipakai");
+        } else {
+          alert("Data tidak sesuai");
+        }
+      });
     }
   }
 };

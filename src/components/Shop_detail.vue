@@ -23,7 +23,9 @@
           <i class="fas fa-map-marked-alt"></i>
           {{ dataku.addressDetail }}
         </b-card-text>
-        <b-card-text style="margin-left:20px"> Provinsi : {{ dataku.province }} | zipcode : {{dataku.zipCode}} </b-card-text>
+        <b-card-text style="margin-left:20px">
+          Provinsi : {{ dataku.province }} | zipcode : {{ dataku.zipCode }}
+        </b-card-text>
         <b-card-text>
           <i class="fas fa-user-check"></i> Bergabung : {{ dataku.createdAt }}
         </b-card-text>

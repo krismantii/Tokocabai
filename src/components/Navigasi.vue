@@ -61,7 +61,7 @@
           <span v-if="isLoggedIn && dataku.type == 1">
             <li class="cart">
               <router-link
-              :to="{
+                :to="{
                   name: 'Keranjang',
                   params: { token: token }
                 }"
