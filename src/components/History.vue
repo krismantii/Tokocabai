@@ -328,8 +328,8 @@
       </div>
     </div>
     <b-modal id="modal-center" centered title="Kurir A">
-    <p class="my-4">Nomor Resi : XXXXXXXXXX</p>
-  </b-modal>
+      <p class="my-4">Nomor Resi : XXXXXXXXXX</p>
+    </b-modal>
   </div>
 </template>
 <script>

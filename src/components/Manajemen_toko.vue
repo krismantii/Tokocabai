@@ -277,9 +277,9 @@
         </b-form-group>
       </form>
     </b-modal>
-     <b-modal id="modal-center" centered title="Kurir A">
-    <p class="my-4">Nomor Resi : XXXXXXXXXX</p>
-  </b-modal>
+    <b-modal id="modal-center" centered title="Kurir A">
+      <p class="my-4">Nomor Resi : XXXXXXXXXX</p>
+    </b-modal>
   </div>
 </template>
 <style scoped>
