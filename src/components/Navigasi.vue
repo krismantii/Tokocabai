@@ -29,7 +29,6 @@
                 to="/login"
                 class="nav-link"
                 @click.native="$router.go()"
-                @click.prevent="doAjax"
               >
                 Login</router-link
               >
@@ -40,7 +39,6 @@
               <router-link
                 to="/register"
                 class="nav-link"
-                @click.prevent="doAjax"
                 @click.native="$router.go()"
               >
                 Register</router-link
@@ -69,7 +67,7 @@
                 }"
                 @click.native="$router.go()"
                 class="fas fa-shopping-cart my-cart-icon"
-                ></router-link>
+              ></router-link>
             </li>
           </span>
         </ul>
