@@ -46,7 +46,7 @@ export default {
     history_topup() {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{

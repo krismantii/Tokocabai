@@ -260,7 +260,7 @@ export default {
     Cart_user() {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{
@@ -300,7 +300,7 @@ export default {
       var result = JSON.stringify(this.check.map(a => a.id));
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `mutation {
                 checkout(params: {cartIDs: ${result}
@@ -347,7 +347,7 @@ export default {
     deleteData(event, index) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
            mutation{
@@ -373,7 +373,7 @@ export default {
       for (let i = 0; i < event.length; i++) {
         axios({
           method: "post",
-          url: "http://localhost:4000/query",
+          url: "http://103.133.56.19:17420/query",
           data: {
             query: `
             query{
@@ -394,7 +394,7 @@ export default {
     loadData() {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{
@@ -428,7 +428,7 @@ export default {
     updateCartQuantity(cartid, newquantity) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
            mutation{

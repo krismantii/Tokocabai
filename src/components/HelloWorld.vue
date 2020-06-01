@@ -1,31 +1,42 @@
 <template>
-  <div class="container" style="margin-top:10%">
+  <div class="container">
     <br />
     <br />
     <br />
     <br />
-    <div v-for="movie in movies" :key="movie.id">{{ movie.id }}</div>
+    <br />
+    <div class="vld-parent">
+      <loading
+        :active.sync="isLoading"
+        :can-cancel="true"
+        :on-cancel="onCancel"
+        :is-full-page="fullPage"
+      ></loading>
+
+      <label><input type="checkbox" v-model="fullPage" />Full page?</label>
+      <button @click.prevent="doAjax">fetch Data</button>
+    </div>
   </div>
 </template>
 
 <script>
+// Import component
+import Loading from "vue-loading-overlay";
+// Import stylesheet
+import "vue-loading-overlay/dist/vue-loading.css";
 import gql from "graphql-tag";
 export default {
+  components: {
+    Loading
+  },
   name: "HelloWorld",
   props: {
     msg: String
   },
   data() {
     return {
-      movies: [
-        {
-          id: "123123123",
-          title: "Harry Potter and the Order of the Phoenix",
-          director: "David Yates",
-          composer: "Nicholas Hopper",
-          release_date: "2007-07-11"
-        }
-      ]
+      isLoading: false,
+      fullPage: true
     };
   },
   apollo: {
@@ -37,6 +48,18 @@ export default {
         }
       }
     `
+  },
+  methods: {
+    doAjax() {
+      this.isLoading = true;
+      // simulate AJAX
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 10000);
+    },
+    onCancel() {
+      console.log("User cancelled the loader.");
+    }
   }
 };
 </script>

@@ -135,28 +135,26 @@ export default {
       formData.append("0", file);
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: formData,
         headers: {
           "content-type": "multipart/form-data"
         }
-      })
-        .then(response => {
-          console.log("data review baru:", response.data);
-          if (response.data.errors == null) {
-            alert("Data review berhasil diedit!");
-            this.$router.push(
-              { name: "History", params: { token: token } },
-              () => this.$router.go(0)
-            );
-          }
-          alert("Data review gagal diedit!");
-        })
+      }).then(response => {
+        console.log("data review baru:", response.data);
+        if (response.data.errors == null) {
+          alert("Data review berhasil diedit!");
+          this.$router.push({ name: "History", params: { token: token } }, () =>
+            this.$router.go(0)
+          );
+        }
+        alert("Data review gagal diedit!");
+      });
     },
     loadUser() {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{
@@ -181,7 +179,7 @@ export default {
     reviews() {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
                   {
@@ -211,7 +209,7 @@ export default {
     deleteReview() {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
           mutation{
@@ -224,14 +222,13 @@ export default {
         }
         `
         }
-      })
-        .then(response => {
-          alert("Data review berhasil dihapus!");
-          console.log("Data hapus review :", response.data);
-          this.$router.push({ name: "History", params: { token: token } }, () =>
-            this.$router.go(0)
-            );
-        })
+      }).then(response => {
+        alert("Data review berhasil dihapus!");
+        console.log("Data hapus review :", response.data);
+        this.$router.push({ name: "History", params: { token: token } }, () =>
+          this.$router.go(0)
+        );
+      });
     },
     previewImage: function(event) {
       const file = event.target.files[0];

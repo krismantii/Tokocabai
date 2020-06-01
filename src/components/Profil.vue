@@ -53,9 +53,9 @@
               <form ref="form" @submit.stop.prevent="handleSubmit">
                 <b-form-group
                   :state="nameState"
-                  label="Rp"
+                  label="Nominal :"
                   label-for="name-input"
-                  invalid-feedback="Isikan nominal"
+                  invalid-feedback=""
                 >
                   <b-form-input
                     id="name-input"
@@ -181,9 +181,9 @@
           <form ref="form" @submit.stop.prevent="handleSubmit">
             <b-form-group
               :state="nameState"
-              label="Rp"
+              label="Nominal:"
               label-for="name-input"
-              invalid-feedback="Isikan nominal"
+              invalid-feedback=""
             >
               <b-form-input
                 id="name-input"

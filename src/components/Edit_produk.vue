@@ -179,7 +179,7 @@ export default {
       formData.append("0", file);
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: formData
       }).then(response => {
         console.log("Data :", response.data);
@@ -196,7 +196,7 @@ export default {
     loadDataProduk() {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             {
@@ -222,7 +222,7 @@ export default {
     loadUser() {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{

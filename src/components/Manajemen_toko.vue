@@ -303,7 +303,7 @@ export default {
     shopOrder(event) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
                   {
@@ -336,7 +336,7 @@ export default {
     loadData(event) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{
@@ -366,7 +366,7 @@ export default {
     shipOrder(data, index) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             mutation{
@@ -396,7 +396,7 @@ export default {
     rejectOrder(data, index) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             mutation{

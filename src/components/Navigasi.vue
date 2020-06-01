@@ -29,6 +29,7 @@
                 to="/login"
                 class="nav-link"
                 @click.native="$router.go()"
+                @click.prevent="doAjax"
               >
                 Login</router-link
               >
@@ -39,6 +40,7 @@
               <router-link
                 to="/register"
                 class="nav-link"
+                @click.prevent="doAjax"
                 @click.native="$router.go()"
               >
                 Register</router-link
@@ -109,7 +111,7 @@ export default {
     loadData() {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{

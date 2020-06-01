@@ -351,7 +351,7 @@ export default {
     customerOrder(event) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
            query{
@@ -389,7 +389,7 @@ export default {
     fulfillOrder(data, index) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             mutation{

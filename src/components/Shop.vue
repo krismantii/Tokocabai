@@ -422,7 +422,7 @@ export default {
     loadProduk() {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{
@@ -459,7 +459,7 @@ export default {
     filterCategory(event) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{
@@ -495,7 +495,7 @@ export default {
     filterSearch(event) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{
@@ -529,7 +529,7 @@ export default {
     filterProvince(event, kategori) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{
@@ -565,7 +565,7 @@ export default {
     filterHarga(event, kategori) {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             {
@@ -598,7 +598,7 @@ export default {
     loadData() {
       axios({
         method: "post",
-        url: "http://localhost:4000/query",
+        url: "http://103.133.56.19:17420/query",
         data: {
           query: `
             query{
