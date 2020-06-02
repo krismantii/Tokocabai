@@ -126,7 +126,7 @@
                         }"
                       >
                         <div
-                          class="text-truncate"
+                          class="text-truncate font"
                           style="font-weight: bold; max-width: 150px;"
                         >
                           {{ pro.name }}
@@ -216,7 +216,7 @@
                         }"
                       >
                         <div
-                          class="text-truncate"
+                          class="text-truncate font"
                           style="font-weight: bold; max-width: 150px;"
                         >
                           {{ pro.name }}
@@ -305,7 +305,7 @@
                         }"
                       >
                         <div
-                          class="text-truncate"
+                          class="text-truncate font"
                           style="font-weight: bold; max-width: 150px;"
                         >
                           {{ pro.name }}
