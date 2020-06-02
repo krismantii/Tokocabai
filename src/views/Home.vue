@@ -110,7 +110,7 @@
                 <li class="">
                   <a
                     href="#tab1"
-                    class="nav-shop"
+                    class="font"
                     data-toggle="tab"
                     v-on:click="filterCategory('Cabai Merah Besar')"
                     >Cabai Merah Besar</a
@@ -119,7 +119,7 @@
                 <li class="">
                   <a
                     href="#tab2"
-                    class="nav-shop"
+                    class="font"
                     data-toggle="tab"
                     v-on:click="filterCategory('Cabai Merah Keriting')"
                     >Cabai Merah Keriting</a
@@ -128,7 +128,7 @@
                 <li class="">
                   <a
                     href="#tab3"
-                    class="nav-shop"
+                    class="font"
                     data-toggle="tab"
                     v-on:click="filterCategory('Cabai Rawit')"
                     >Cabai Rawit</a

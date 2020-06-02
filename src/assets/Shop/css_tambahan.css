@@ -272,3 +272,6 @@ body {
     font-weight: 700;
     margin-bottom: 10px;
   }
+  .font {
+    font-family: Poppins,sans-serif;
+  }

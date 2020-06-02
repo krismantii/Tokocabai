@@ -60,6 +60,7 @@
         Review produk
       </b-button>
     </b-form>
+    {{ data_review }}
   </div>
 </template>
 <script>
@@ -74,6 +75,7 @@ export default {
   data() {
     return {
       review: [],
+      re: [],
       token,
       user: [],
       gambar: null,
@@ -87,10 +89,42 @@ export default {
       show: true
     };
   },
+  computed: {
+    data_review: function() {
+      return this.data_reviews();
+    }
+  },
   created() {
     this.loadUser();
   },
   methods: {
+    data_reviews() {
+      axios({
+        method: "post",
+        url: "http://103.133.56.19:17420/query",
+        data: {
+          query: `
+            {
+            review(params:{
+              productID: "${this.$route.params.produkid}"
+              customerID: "${this.user.id}"
+            }){
+              id
+              productID
+            }
+          }
+        `
+        }
+      })
+        .then(response => {
+          console.log("Data review lama:", response.data);
+          this.re = response.data.data.review;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
     Add_review() {
       const formData = new FormData();
       const query = {
@@ -129,20 +163,39 @@ export default {
       formData.append("0", file);
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://localhost:4000/query",
         data: formData,
         headers: {
           "content-type": "multipart/form-data"
         }
       })
         .then(response => {
-          console.log("data review :", response.data);
-          alert("Produk berhasil direview!");
-          this.review = response.data;
-          this.$router.push(
-            { name: "History", params: { token: token } },
-            () => () => this.$router.go(0)
-          );
+          console.log("data review baru :", response.data);
+          if (response.data.errors == null) {
+            alert("Produk berhasil direview!");
+            this.review = response.data;
+            this.$router.push(
+              { name: "History", params: { token: token } },
+              () => () => this.$router.go(0)
+            );
+          } else if (
+            response.data.errors[0].message ==
+            "rpc error: code = Unknown desc = user already reviewed this product"
+          ) {
+            alert("user already reviewed this product");
+            this.$router.push(
+              {
+                name: "Edit_review",
+                params: {
+                  id: this.re.id,
+                  produkid: this.$route.params.produkid,
+                  shopid: this.$route.params.shopid,
+                  token: token
+                }
+              },
+              () => () => this.$router.go(0)
+            );
+          }
         })
         .catch(function(error) {
           console.log(error);
@@ -196,3 +249,4 @@ export default {
   }
 };
 </script>
+

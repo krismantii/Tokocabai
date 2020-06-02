@@ -183,7 +183,7 @@ export default {
         data: {
           query: `
                   {
-          review(reviewId: ${this.$route.params.id}) {
+          review(params: {id: "${this.$route.params.id}" } ) {
             id
             userID
             productID
