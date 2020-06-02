@@ -207,11 +207,8 @@
           </div>
           <div class=" contact-w3">
             <div class="col-md-5 contact-right">
-              <img
-                :src="dataku.photoURL || 'images/default.png'"
-                class="gambar"
-                alt=""
-              />
+              <img :src="dataku.photoURL ||
+              'images/default.png'" class="gambar" alt="" />
             </div>
             <div class="col-md-7 contact-left">
               <h4>{{ dataku.name }}</h4>

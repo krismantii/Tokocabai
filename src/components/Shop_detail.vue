@@ -19,7 +19,7 @@
         </b-card-text>
       </b-card>
       <b-card header-tag="header" footer-tag="footer">
-       <b-card-text>
+        <b-card-text>
           <i class="fas fa-map-marked-alt"></i>
           {{ dataku.addressDetail }}
         </b-card-text>

@@ -19,7 +19,7 @@
             <li class="">
               <a
                 href="#tab1"
-                class="nav-shop"
+                class="font"
                 data-toggle="tab"
                 v-on:click="customerOrder('waiting_for_seller')"
                 >Pemesanan diproses</a
@@ -28,7 +28,7 @@
             <li class="">
               <a
                 href="#tab2"
-                class="nav-shop"
+                class="font"
                 data-toggle="tab"
                 v-on:click="customerOrder('on_shipment')"
                 >Pemesanan dikirim</a
@@ -37,7 +37,7 @@
             <li class="">
               <a
                 href="#tab3"
-                class="nav-shop"
+                class="font"
                 data-toggle="tab"
                 v-on:click="customerOrder('fulfilled')"
                 >Pemesanan selesai</a
@@ -46,7 +46,7 @@
             <li class="">
               <a
                 href="#tab4"
-                class="nav-shop"
+                class="font"
                 data-toggle="tab"
                 v-on:click="customerOrder('rejected_by_shop')"
                 >Pemesanan dibatalkan</a

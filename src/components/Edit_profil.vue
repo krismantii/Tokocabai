@@ -329,8 +329,9 @@ export default {
           this.$router.push({ name: "Profil", params: { token: token } }, () =>
             this.$router.go(0)
           );
+        } else {
+          alert("Data masih belum benar!");
         }
-        alert("Data masih belum benar!");
       });
     },
     previewImage: function(event) {

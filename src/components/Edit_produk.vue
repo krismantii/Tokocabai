@@ -189,8 +189,9 @@ export default {
             { name: "Manajemen_produk", params: { token: token } },
             this.$router.go(0)
           );
+        } else {
+          alert("Data masih belum benar!");
         }
-        alert("Data masih belum benar");
       });
     },
     loadDataProduk() {

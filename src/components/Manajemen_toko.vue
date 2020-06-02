@@ -19,7 +19,7 @@
             <li class="">
               <a
                 href="#tab1"
-                class="nav-shop"
+                class="font"
                 data-toggle="tab"
                 v-on:click="shopOrder('waiting_for_seller')"
                 >Barang Di-request</a
@@ -28,7 +28,7 @@
             <li class="">
               <a
                 href="#tab2"
-                class="nav-shop"
+                class="font"
                 data-toggle="tab"
                 v-on:click="shopOrder('on_shipment')"
                 >Barang Dikirim</a
@@ -37,7 +37,7 @@
             <li class="">
               <a
                 href="#tab3"
-                class="nav-shop"
+                class="font"
                 data-toggle="tab"
                 v-on:click="shopOrder('fulfilled')"
               >
