@@ -325,24 +325,20 @@ export default {
               }
         `
         }
-      })
-        .then(response => {
-          console.log(response.data);
-          console.log(result);
-          if (response.data.errors == null) {
-            this.check_out = response.data.data.checkout;
-            alert("Produk berhasil dibeli");
-            this.$router.push(
-              { name: "Keranjang", params: { token: token } },
-              this.$router.go(0)
-            );
-          }
+      }).then(response => {
+        console.log(response.data);
+        console.log(result);
+        if (response.data.errors == null) {
+          this.check_out = response.data.data.checkout;
+          alert("Produk berhasil dibeli");
+          this.$router.push(
+            { name: "Keranjang", params: { token: token } },
+            this.$router.go(0)
+          );
+        } else {
           alert("error");
-        })
-        .catch(function(error) {
-          console.log(error);
-          alert("Data tidak sesuai atau saldo tidak cukup");
-        });
+        }
+      });
     },
     deleteData(event, index) {
       axios({

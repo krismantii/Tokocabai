@@ -153,9 +153,6 @@
                         <i class="fas fa-tag"></i>harga produk : Rp
                         {{ produk.pricePerKG }}
                       </p>
-                      <p class="card-text" style=" margin-left:110px">
-                        No resi : XXXXXXXXXX
-                      </p>
                       <br />
                       <br />
                       <br />
@@ -224,6 +221,9 @@
                       <p class="card-text" style=" margin-left:110px">
                         <i class="fas fa-tag"></i>harga produk : Rp
                         {{ produk.pricePerKG }}
+                      </p>
+                      <p class="card-text" style=" margin-left:110px">
+                        <i class="fas fa-box-open"></i>No resi : XXXXXXXXXX
                       </p>
                       <router-link
                         :to="{

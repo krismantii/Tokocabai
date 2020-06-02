@@ -15,7 +15,7 @@
           <h4 class="inline">{{ dataku.name }}</h4>
         </div>
         <b-card-text>
-          <a style="color:green;"> {{ dataku.description }} </a>
+          <a class="font" style="color:green;"> {{ dataku.description }} </a>
         </b-card-text>
       </b-card>
       <b-card header-tag="header" footer-tag="footer">

@@ -147,8 +147,9 @@ export default {
           this.$router.push({ name: "History", params: { token: token } }, () =>
             this.$router.go(0)
           );
+        } else {
+          alert("Data review gagal diedit!");
         }
-        alert("Data review gagal diedit!");
       });
     },
     loadUser() {
