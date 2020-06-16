@@ -4,6 +4,8 @@
     <br />
     <br />
     <br />
+    {{ data_order_kirim }}
+    {{ data_order_proses }}
     <div class="container">
       <div class="spec ">
         <h3>Manajemen Toko</h3>
@@ -19,19 +21,25 @@
             <li class="">
               <a
                 href="#tab1"
-                class="font"
+                class="nav-shop"
                 data-toggle="tab"
                 v-on:click="shopOrder('waiting_for_seller')"
-                >Barang Di-request</a
+                >Barang Di-request
+                <span class="badge badge-light">{{
+                  count_proses.length
+                }}</span></a
               >
             </li>
             <li class="">
               <a
                 href="#tab2"
-                class="font"
+                class="nav-shop"
                 data-toggle="tab"
                 v-on:click="shopOrder('on_shipment')"
-                >Barang Dikirim</a
+                >Barang Dikirim
+                <span class="badge badge-light">{{
+                  count_kirim.length
+                }}</span></a
               >
             </li>
             <li class="">
@@ -293,11 +301,21 @@ export default {
     return {
       token,
       order: [],
-      user: []
+      user: [],
+      count_proses: [],
+      count_kirim: []
     };
   },
   created() {
     this.shopOrder("waiting_for_seller");
+  },
+  computed: {
+    data_order_proses: function() {
+      return this.jumlah_proses("waiting_for_seller");
+    },
+    data_order_kirim: function() {
+      return this.jumlah_kirim("on_shipment");
+    }
   },
   methods: {
     shopOrder(event) {
@@ -391,6 +409,50 @@ export default {
           console.log(error);
           console.log("error");
           alert("error");
+        });
+    },
+    jumlah_proses(event) {
+      axios({
+        method: "post",
+        url: "http://103.133.56.19:17420/query",
+        data: {
+          query: `
+                  {
+          shopOrders(params: {status: "${event}"}) {
+            id
+          }
+        }`
+        }
+      })
+        .then(response => {
+          console.log("Data order:", response.data);
+          this.count_proses = response.data.data.shopOrders;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    jumlah_kirim(event) {
+      axios({
+        method: "post",
+        url: "http://103.133.56.19:17420/query",
+        data: {
+          query: `
+                  {
+          shopOrders(params: {status: "${event}"}) {
+            id
+          }
+        }`
+        }
+      })
+        .then(response => {
+          console.log("Data order:", response.data);
+          this.count_kirim = response.data.data.shopOrders;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
         });
     },
     rejectOrder(data, index) {

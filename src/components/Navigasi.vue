@@ -68,6 +68,9 @@
                 @click.native="$router.go()"
                 class="fas fa-shopping-cart my-cart-icon"
               ></router-link>
+              <span class="badge badge-light posisi">{{
+                count_cart.length
+              }}</span>
             </li>
           </span>
         </ul>
@@ -79,6 +82,11 @@
 <style scoped>
 @import "../assets/Shop/font-awesome.css";
 @import "../assets/navigasi.css";
+.posisi {
+  position: absolute;
+  margin-left: -10px;
+  margin-top: -10px;
+}
 </style>
 
 <script>
@@ -89,18 +97,42 @@ export default {
     return {
       //dataku merupakan variabel yg menampung data array JSON
       dataku: [],
-      token
+      token,
+      count_cart: []
     };
   },
   computed: {
     isLoggedIn: function() {
       return this.$store.getters.isLoggedIn;
+    },
+    data_keranjang: function() {
+      return this.jumlah_cart();
     }
   },
   created() {
     this.loadData();
   },
   methods: {
+    jumlah_cart() {
+      axios({
+        method: "post",
+        url: "http://103.133.56.19:17420/query",
+        data: {
+          query: `
+            query{
+            carts(params:{
+                  userID: ${this.dataku.id}
+                }){
+              id
+            }
+          }
+        `
+        }
+      }).then(response => {
+        console.log("Data cart:", response.data);
+        this.count_cart = response.data.data.carts;
+      });
+    },
     logout: function() {
       this.$store.dispatch("logout").then(() => {
         this.$router.push("/login");

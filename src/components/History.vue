@@ -4,6 +4,8 @@
     <br />
     <br />
     <br />
+     {{ data_order_proses }}
+     {{ data_order_kirim }}
     <div class="container">
       <div class="spec ">
         <h3>History</h3>
@@ -22,7 +24,9 @@
                 class="font"
                 data-toggle="tab"
                 v-on:click="customerOrder('waiting_for_seller')"
-                >Pemesanan diproses</a
+                >Pemesanan diproses <span class="badge badge-light">{{
+                  count_order_proses.length
+                }}</span></a
               >
             </li>
             <li class="">
@@ -31,7 +35,9 @@
                 class="font"
                 data-toggle="tab"
                 v-on:click="customerOrder('on_shipment')"
-                >Pemesanan dikirim</a
+                >Pemesanan dikirim <span class="badge badge-light">{{
+                  count_order_kirim.length
+                }}</span></a
               >
             </li>
             <li class="">
@@ -341,8 +347,18 @@ export default {
     return {
       token,
       order: [],
-      produk: []
+      produk: [],
+      count_order_proses: [],
+      count_order_kirim: []
     };
+  },
+  computed: {
+    data_order_proses: function() {
+      return this.jumlah_order_proses("waiting_for_seller");
+    },
+    data_order_kirim: function() {
+      return this.jumlah_order_kirim("on_shipment");
+    }
   },
   created() {
     this.customerOrder("waiting_for_seller");
@@ -380,6 +396,50 @@ export default {
         .then(response => {
           console.log("Data order:", response.data);
           this.order = response.data.data.customerOrders;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    jumlah_order_kirim(event) {
+      axios({
+        method: "post",
+        url: "http://103.133.56.19:17420/query",
+        data: {
+          query: `
+           query{
+            customerOrders(params: {status: "${event}"}){
+              id
+            }
+          }
+        `
+        }
+      })
+        .then(response => {
+          this.count_order_kirim = response.data.data.customerOrders;
+        })
+        .catch(function(error) {
+          console.log(error);
+          console.log("error");
+        });
+    },
+    jumlah_order_proses(event) {
+      axios({
+        method: "post",
+        url: "http://103.133.56.19:17420/query",
+        data: {
+          query: `
+           query{
+            customerOrders(params: {status: "${event}"}){
+              id
+            }
+          }
+        `
+        }
+      })
+        .then(response => {
+          this.count_order_proses = response.data.data.customerOrders;
         })
         .catch(function(error) {
           console.log(error);
