@@ -20,7 +20,12 @@
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <span v-if="isLoggedIn">
             <li class="nav-item">
-              <button @click="logout" class="nav-link">Logout</button>
+              <button @click="logout" class="set">Logout</button>
+            </li>
+          </span>
+          <span v-if="isLoggedIn">
+            <li class="nav-item">
+              <router-link to="/shop" class="fas fa-store set"> </router-link>
             </li>
           </span>
           <span v-if="isLoggedIn == ''">
@@ -46,27 +51,27 @@
             </li>
           </span>
           <span v-if="isLoggedIn">
-            <li class="org">
+            <li class=" nav-item">
               <router-link
                 :to="{
                   name: 'Profil',
                   params: { token: token }
                 }"
                 @click.native="$router.go()"
-                class="fas fa-user my-cart-icon"
+                class="fas fa-user set"
               >
               </router-link>
             </li>
           </span>
           <span v-if="isLoggedIn && dataku.type == 1">
-            <li class="cart">
+            <li class="nav-item">
               <router-link
                 :to="{
                   name: 'Keranjang',
                   params: { token: token }
                 }"
                 @click.native="$router.go()"
-                class="fas fa-shopping-cart my-cart-icon"
+                class="fas fa-shopping-cart set"
               ></router-link>
               <span class="badge badge-light posisi">{{
                 count_cart.length
@@ -76,12 +81,19 @@
         </ul>
       </div>
     </div>
+    {{ data_keranjang }}
   </nav>
 </template>
 
 <style scoped>
 @import "../assets/Shop/font-awesome.css";
 @import "../assets/navigasi.css";
+.set {
+  padding: 0px 10px;
+}
+.set:hover {
+  color: red;
+}
 .posisi {
   position: absolute;
   margin-left: -10px;
@@ -110,13 +122,18 @@ export default {
     }
   },
   created() {
-    this.loadData();
+    this.DataUser();
   },
   methods: {
+    logout: function() {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/login");
+      });
+    },
     jumlah_cart() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             query{
@@ -133,15 +150,10 @@ export default {
         this.count_cart = response.data.data.carts;
       });
     },
-    logout: function() {
-      this.$store.dispatch("logout").then(() => {
-        this.$router.push("/login");
-      });
-    },
-    loadData() {
+    DataUser() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             query{

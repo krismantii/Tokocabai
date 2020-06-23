@@ -15,7 +15,6 @@ import Manajemen_toko from "@/components/Manajemen_toko.vue";
 import Manajemen_produk from "@/components/Manajemen_produk.vue";
 import Tambah_produk from "@/components/Tambah_produk.vue";
 import HelloWorld from "@/components/HelloWorld.vue";
-import Detail_transaksi from "@/components/Detail_transaksi.vue";
 import Resource from "@/components/Resources.vue";
 import Shop_detail from "@/components/Shop_detail.vue";
 import Topup_history from "@/components/Topup_history.vue";
@@ -111,11 +110,6 @@ const routes = [
     path: "/edit_produk/:slug/:id",
     name: "Edit_produk",
     component: Edit_produk
-  },
-  {
-    path: "/detail_transaksi",
-    name: "Detail_transaksi",
-    component: Detail_transaksi
   },
   {
     path: "/shop_detail/:id",

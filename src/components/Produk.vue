@@ -190,6 +190,7 @@
                 <div class="media-body">
                   <star-rating
                     v-bind:read-only="true"
+                    v-bind:show-rating="false"
                     inactive-color="#000"
                     active-color="yellow"
                     v-bind:star-size="10"
@@ -269,7 +270,7 @@ export default {
     loadProduk() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             {
@@ -302,7 +303,7 @@ export default {
     loadData() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             query{
@@ -330,7 +331,7 @@ export default {
     loadToko() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             query{
@@ -359,7 +360,7 @@ export default {
       for (let i = 0; i < event.length; i++) {
         axios({
           method: "post",
-          url: "http://103.133.56.19:17420/query",
+          url: "http://www.idzhar.live/query",
           data: {
             query: `
             query{
@@ -401,7 +402,7 @@ export default {
     createCart() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
           mutation{
@@ -424,17 +425,29 @@ export default {
           }
         `
         }
-      })
-        .then(response => {
-          console.log("Data cart:", response.data);
+      }).then(response => {
+        console.log("Data cart:", response.data);
+        if (response.data.errors == null) {
           this.cart = response.data.data.createCart;
           alert("Produk berhasil masuk keranjang");
-        })
-        .catch(function(error) {
-          alert("Data tidak sesuai");
-          console.log(error);
-          console.log("error");
-        });
+          this.$router.push(
+            {
+              name: "Produk",
+              params: {
+                slug: this.$route.params.slug,
+                id: this.$route.params.id,
+                shopid: this.$route.params.shopid
+              }
+            },
+            this.$router.go(0)
+          );
+        } else if (
+          response.data.errors[0].message ==
+          "rpc error: code = Unknown desc = record already exists"
+        ) {
+          alert("Produk sudah ada dikeranjang anda");
+        }
+      });
     },
     del(event) {
       const jsonObject = event.map(JSON.stringify);
@@ -446,7 +459,7 @@ export default {
     reviews() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
           query{

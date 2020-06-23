@@ -321,7 +321,7 @@ export default {
     shopOrder(event) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
                   {
@@ -354,7 +354,7 @@ export default {
     loadData(event) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             query{
@@ -384,7 +384,7 @@ export default {
     shipOrder(data, index) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             mutation{
@@ -404,6 +404,13 @@ export default {
           console.log("Data :", response.data);
           alert("status berhasil dipindah");
           this.order.splice(index, 1);
+          this.$router.push(
+            {
+              name: "Manajemen_toko",
+              params: { token: token }
+            },
+            this.$router.go(0)
+          );
         })
         .catch(function(error) {
           console.log(error);
@@ -414,7 +421,7 @@ export default {
     jumlah_proses(event) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
                   {
@@ -436,7 +443,7 @@ export default {
     jumlah_kirim(event) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
                   {
@@ -458,7 +465,7 @@ export default {
     rejectOrder(data, index) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             mutation{

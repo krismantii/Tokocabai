@@ -260,7 +260,7 @@ export default {
     Cart_user() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             query{
@@ -300,7 +300,7 @@ export default {
       var result = JSON.stringify(this.check.map(a => a.id));
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `mutation {
                 checkout(params: {cartIDs: ${result}
@@ -335,15 +335,23 @@ export default {
             { name: "Keranjang", params: { token: token } },
             this.$router.go(0)
           );
-        } else {
-          alert("error");
+        } else if (
+          response.data.errors[0].message ==
+          "rpc error: code = Unknown desc = not enough saldo"
+        ) {
+          alert("Saldo kurang");
+        } else if (
+          response.data.errors[0].message ==
+          "rpc error: code = Unknown desc = carts not found"
+        ) {
+          alert("Produk tidak ditemukan");
         }
       });
     },
     deleteData(event, index) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
            mutation{
@@ -358,6 +366,10 @@ export default {
           alert("Data berhasil dihapus");
           this.cart.splice(index, 1);
           console.log("Data hapus :", response.data);
+          this.$router.push(
+            { name: "Keranjang", params: { token: token } },
+            this.$router.go(0)
+          );
         })
         .catch(function(error) {
           console.log(error);
@@ -369,7 +381,7 @@ export default {
       for (let i = 0; i < event.length; i++) {
         axios({
           method: "post",
-          url: "http://103.133.56.19:17420/query",
+          url: "http://www.idzhar.live/query",
           data: {
             query: `
             query{
@@ -390,7 +402,7 @@ export default {
     loadData() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             query{
@@ -424,7 +436,7 @@ export default {
     updateCartQuantity(cartid, newquantity) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
            mutation{

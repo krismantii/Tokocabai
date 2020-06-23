@@ -179,7 +179,7 @@ export default {
     register() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
            mutation{

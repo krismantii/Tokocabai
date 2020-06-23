@@ -35,7 +35,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
-          url: "http://103.133.56.19:17420/query",
+          url: "http://www.idzhar.live/query",
           data: {
             query: `
             query{
@@ -76,7 +76,7 @@ export default new Vuex.Store({
     data_user({ commit }, token) {
       return new Promise((resolve, reject) => {
         axios({
-          url: "http://103.133.56.19:17420/query",
+          url: "http://www.idzhar.live/query",
           data: {
             query: `
             {

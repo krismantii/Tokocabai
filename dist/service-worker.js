@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.c4ae38663fb95d32afd07ff72a360a64.js"
+  "/precache-manifest.a6bd699290e0943c9ac1ccb573cf2bad.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "coba"});

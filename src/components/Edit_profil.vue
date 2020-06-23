@@ -243,7 +243,7 @@ export default {
     loadUser() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             query{
@@ -320,7 +320,7 @@ export default {
       formData.append("0", file);
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: formData
       }).then(response => {
         console.log("Data :", response.data);

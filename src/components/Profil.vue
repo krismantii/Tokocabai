@@ -207,8 +207,11 @@
           </div>
           <div class=" contact-w3">
             <div class="col-md-5 contact-right">
-              <img :src="dataku.photoURL ||
-              'images/default.png'" class="gambar" alt="" />
+              <img
+                :src="dataku.photoURL || 'images/default.png'"
+                class="gambar"
+                alt=""
+              />
             </div>
             <div class="col-md-7 contact-left">
               <h4>{{ dataku.name }}</h4>
@@ -309,7 +312,7 @@ export default {
     loadData() {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             query{
@@ -362,7 +365,7 @@ export default {
       }
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             query{

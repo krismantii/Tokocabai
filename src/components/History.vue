@@ -4,8 +4,8 @@
     <br />
     <br />
     <br />
-     {{ data_order_proses }}
-     {{ data_order_kirim }}
+    {{ data_order_proses }}
+    {{ data_order_kirim }}
     <div class="container">
       <div class="spec ">
         <h3>History</h3>
@@ -24,7 +24,8 @@
                 class="font"
                 data-toggle="tab"
                 v-on:click="customerOrder('waiting_for_seller')"
-                >Pemesanan diproses <span class="badge badge-light">{{
+                >Pemesanan diproses
+                <span class="badge badge-light">{{
                   count_order_proses.length
                 }}</span></a
               >
@@ -35,7 +36,8 @@
                 class="font"
                 data-toggle="tab"
                 v-on:click="customerOrder('on_shipment')"
-                >Pemesanan dikirim <span class="badge badge-light">{{
+                >Pemesanan dikirim
+                <span class="badge badge-light">{{
                   count_order_kirim.length
                 }}</span></a
               >
@@ -367,7 +369,7 @@ export default {
     customerOrder(event) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
            query{
@@ -405,7 +407,7 @@ export default {
     jumlah_order_kirim(event) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
            query{
@@ -427,7 +429,7 @@ export default {
     jumlah_order_proses(event) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
            query{
@@ -449,7 +451,7 @@ export default {
     fulfillOrder(data, index) {
       axios({
         method: "post",
-        url: "http://103.133.56.19:17420/query",
+        url: "http://www.idzhar.live/query",
         data: {
           query: `
             mutation{
@@ -464,6 +466,13 @@ export default {
           console.log("Data :", response.data);
           alert("Terimakasih sudah berbelanja di Tokocabai!");
           this.order.splice(index, 1);
+          this.$router.push(
+            {
+              name: "History",
+              params: { token: token }
+            },
+            this.$router.go(0)
+          );
         })
         .catch(function(error) {
           console.log(error);
