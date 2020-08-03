@@ -281,9 +281,10 @@
 @import "../assets/Shop/css_tambahan.css";
 @import "../assets/produk/style.css";
 .gambar {
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
   object-fit: cover;
+  margin-left: 100px;
 }
 </style>
 <script>

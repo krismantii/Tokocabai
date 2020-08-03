@@ -25,14 +25,14 @@
       </tr>
       <tr class="cross" v-for="(pro, index) in cart" :key="pro.id">
         <td class="t-data">
-          <div class="form-group form-check">
+          <div class="form-check">
             <input
               type="checkbox"
               class="form-check-input"
               :value="pro"
               v-model="check"
             />
-            <label class="form-check-label" for="exampleCheck1">Pilih</label>
+            <label class="chekbox"></label>
           </div>
         </td>
         <td class="t-data">
@@ -69,7 +69,7 @@
         </td>
         <td class="t-data">Rp {{ pro.product.pricePerKG }}</td>
         <td class="t-data">
-          <div class="col-sm-10">
+          <div class="col-lg-10">
             <b-form-input
               v-model="pro.AmountKG"
               v-on:input="updateCartQuantity(pro.id, pro.AmountKG)"
@@ -80,7 +80,6 @@
             ></b-form-input>
           </div>
         </td>
-
         <td class="t-data">Rp {{ pro.product.pricePerKG * pro.AmountKG }}</td>
       </tr>
     </table>
@@ -217,6 +216,22 @@ th.t-head {
   width: 100px;
   height: 100px;
   object-fit: cover;
+}
+table td {
+  position: relative;
+}
+
+table td input {
+  position: absolute;
+  display: block;
+  top:-10px;
+  left:0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  border: none;
+  padding: 10px;
+  box-sizing: border-box;
 }
 </style>
 <script>

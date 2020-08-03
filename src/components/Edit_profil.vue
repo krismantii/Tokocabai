@@ -188,6 +188,7 @@ export default {
       imageData: [],
       user: [],
       provinsi: [
+        { value: null, text: "Please select an option" },
         { value: "Aceh", text: "Aceh" },
         { value: "Bali", text: "Bali" },
         { value: "Bengkulu", text: "Bengkulu" },

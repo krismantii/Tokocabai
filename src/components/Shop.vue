@@ -78,7 +78,7 @@
                     <b-button
                       size="sm"
                       class="my-2 my-sm-0"
-                      v-on:click="filterSearch(search)"
+                      v-on:click="filterSearch(search, kategori)"
                       >Search</b-button
                     >
                   </b-nav-form>
@@ -492,7 +492,7 @@ export default {
           console.log("error");
         });
     },
-    filterSearch(event) {
+    filterSearch(event, event1) {
       axios({
         method: "post",
         url: "http://www.idzhar.live/query",
@@ -501,6 +501,7 @@ export default {
             query{
                 searchProducts(params:{
                   search: "${event}"
+                  category:  "${event1}"
                 }
                 ){
                   id
@@ -518,7 +519,7 @@ export default {
         }
       })
         .then(response => {
-          console.log("Data search :", response.data);
+          console.log("Data search :", event1);
           this.produk = response.data.data.searchProducts;
         })
         .catch(function(error) {
@@ -553,7 +554,7 @@ export default {
         }
       })
         .then(response => {
-          console.log("Data produk :", response.data);
+          console.log("Data produk provinsi :", response.data);
           this.produk = response.data.data.searchProducts;
           console.log("kategori:", this.kategori);
         })

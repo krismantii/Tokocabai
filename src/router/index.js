@@ -56,10 +56,7 @@ const routes = [
   {
     path: "/shop",
     name: "Shop",
-    component: Shop,
-    meta: {
-      requiresAuth: true
-    }
+    component: Shop
   },
   {
     path: "/produk/:slug/:id/:shopid",

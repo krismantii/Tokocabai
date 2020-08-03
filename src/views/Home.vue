@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 <template>
   <div>
     <!-- Masthead -->
@@ -91,13 +90,12 @@
         </div>
       </div>
     </section>
-
     <!-- Portfolio Section -->
     <section>
       <div class="content-top">
         <div class="container">
           <div class="spec">
-            <h3>Shop</h3>
+            <h3>Toko</h3>
             <div class="ser-t">
               <b></b>
               <span><i></i></span>
@@ -447,15 +445,109 @@
 import axios from "axios";
 const token = localStorage.getItem("token");
 import StarRating from "vue-star-rating";
+import { Line } from "vue-chartjs";
 export default {
+  extends: Line,
   components: {
     StarRating
   },
   data() {
     return {
       produk: [],
+      contoh: [],
+      data_ttl: [],
       token,
-      dataku: []
+      test1: null,
+      dataChart: [10, 39, 10, 40, 39, 0, 0],
+      names: ["rata"],
+      rata_chart1: 0,
+      rata_chart2: 0,
+      rata_chart3: 0,
+      rata_chart4: 0,
+      rata_chart5: 0,
+      rata_chart6: 0,
+      rata_chart7: 0,
+      rata_chart8: 0,
+      rata_chart9: 0,
+      rata_chart10: 0,
+      rata_chart11: 0,
+      rata_chart12: 0,
+      sum1: 0,
+      sum2: 0,
+      sum3: 0,
+      sum4: 0,
+      sum5: 0,
+      sum6: 0,
+      sum7: 0,
+      sum8: 0,
+      sum9: 0,
+      sum10: 0,
+      sum11: 0,
+      sum12: 0,
+      count1: 0,
+      count2: 0,
+      count3: 0,
+      count4: 0,
+      count5: 0,
+      count6: 0,
+      count7: 0,
+      count8: 0,
+      count9: 0,
+      count10: 0,
+      count11: 0,
+      count12: 0,
+      dataku: [],
+      chart_1: [],
+      selected1: null,
+      selected2: null,
+      tahun: null,
+      datacollection: null,
+      Tahun: [
+        { value: null, text: "Pilih tahun" },
+        { value: "2020", text: "2020" }
+      ],
+      kategori: [
+        { value: null, text: "Pilih Kategori" },
+        { value: "Cabai Merah Besar", text: "Cabai Merah Besar" },
+        { value: "Cabai Merah Keriting", text: "Cabai Merah Keriting" },
+        { value: "Cabai Rawit", text: "Cabai Rawit" }
+      ],
+      provinsi: [
+        { value: null, text: "Pilih Provinsi" },
+        { value: "Aceh", text: "Aceh" },
+        { value: "Bali", text: "Bali" },
+        { value: "Bengkulu", text: "Bengkulu" },
+        { value: "Bangka Belitung", text: "Bangka Belitung" },
+        { value: "Banten", text: "Banten" },
+        { value: "Gorontalo", text: "Gorontalo" },
+        { value: "Jakarta", text: "Jakarta" },
+        { value: "Jambi", text: "Jambi" },
+        { value: "Jawa Barat", text: "Jawa Barat" },
+        { value: "Jawa Tengah", text: "Jawa Tengah" },
+        { value: "Jawa Timur", text: "Jawa Timur" },
+        { value: "Kalimantan Barat", text: "Kalimantan Barat" },
+        { value: "Kalimantan Timur", text: "Kalimantan Timur" },
+        { value: "Kalimantan Selatan", text: "Kalimantan Selatan" },
+        { value: "Kalimantan Tengah", text: "Kalimantan Tengah" },
+        { value: "Kalimantan Utara", text: "Kalimantan Utara" },
+        { value: "Kepulauan Riau", text: "Kepulauan Riau" },
+        { value: "Lampung", text: "Lampung" },
+        { value: "Maluku Utara", text: "Maluku Utara" },
+        { value: "Maluku", text: "Maluku" },
+        { value: "Nusa Tenggara Barat", text: "Nusa Tenggara Barat" },
+        { value: "Nusa Tenggara Timur", text: "Nusa Tenggara Timur" },
+        { value: "Papua Barat", text: "Papua Barat" },
+        { value: "Papua", text: "Papua" },
+        { value: "Riau", text: "Riau" },
+        { value: "Sulawesi Selatan", text: "Sulawesi Selatan" },
+        { value: "Sulawesi Tengah", text: "Sulawesi Tengah" },
+        { value: "Sulawesi Tenggara", text: "Sulawesi Tenggara" },
+        { value: "Sulawesi Utara", text: "Sulawesi Utara" },
+        { value: "Sumatra Barat", text: "Sumatra Barat" },
+        { value: "Sumatra Selatan", text: "Sumatra Selatan" },
+        { value: "Sumatra Utara", text: "Sumatra Utara" },
+        { value: "Yogyakarta", text: "Yogyakarta" }
+      ]
     };
   },
   computed: {
@@ -467,6 +559,99 @@ export default {
     this.loadProduk();
   },
   methods: {
+    changeData: function() {
+      this.dataChart = [6, 6, 3, 5, 5, 6,6, 6, 3, 5, 5, 6];
+    },
+    getSelectedItem: function(selected) {
+      console.log(selected);
+    },
+    filterProvince(event1, event2) {
+      axios({
+        method: "post",
+        url: "http://www.idzhar.live/query",
+        data: {
+          query: `
+            query{
+                searchProducts(params:{
+                  province: "${event2}"
+                  category: "${event1}"
+                }
+                ){
+                  pricePerKG
+                  createdAt
+                }
+              }
+        `
+        }
+      }).then(response => {
+        this.chart_1 = response.data.data.searchProducts;
+        for (let i = 0; i < this.chart_1.length; i++) {
+          var myDate = new Date(this.chart_1[i].createdAt);
+          var output = myDate.getMonth() + 1;
+          if (output == 1) {
+            this.sum1 = this.sum1 + this.chart_1[i].pricePerKG;
+            this.count1++;
+          } else if (output == 2) {
+            this.sum2 = this.sum2 + this.chart_1[i].pricePerKG;
+            this.count2++;
+          } else if (output == 3) {
+            this.sum3 = this.sum3 + this.chart_1[i].pricePerKG;
+            this.count3++;
+          } else if (output == 4) {
+            this.sum4 = this.sum4 + this.chart_1[i].pricePerKG;
+            this.count4++;
+          } else if (output == 5) {
+            this.sum5 = this.sum5 + this.chart_1[i].pricePerKG;
+            this.count5++;
+          } else if (output == 6) {
+            this.sum6 = this.sum6 + this.chart_1[i].pricePerKG;
+            this.count6++;
+          } else if (output == 7) {
+            this.sum7 = this.sum7 + this.chart_1[i].pricePerKG;
+            this.count7++;
+          } else if (output == 8) {
+            this.sum8 = this.sum8 + this.chart_1[i].pricePerKG;
+            this.count8++;
+          } else if (output == 9) {
+            this.sum9 = this.sum9 + this.chart_1[i].pricePerKG;
+            this.count9++;
+          } else if (output == 10) {
+            this.sum10 = this.sum10 + this.chart_1[i].pricePerKG;
+            this.count10++;
+          } else if (output == 11) {
+            this.sum11 = this.sum11 + this.chart_1[i].pricePerKG;
+            this.count11++;
+          } else if (output == 12) {
+            this.sum12 = this.sum12 + this.chart_1[i].pricePerKG;
+            this.count12++;
+          }
+        }
+        this.rata_chart1 = this.sum1 / this.count1;
+        this.data_ttl.push(this.rata_chart1);
+        this.rata_chart2 = this.sum2 / this.count2;
+        this.data_ttl.push(this.rata_chart2);
+        this.rata_chart3 = this.sum3 / this.count3;
+        this.data_ttl.push(this.rata_chart3);
+        this.rata_chart4 = this.sum4 / this.count4;
+        this.data_ttl.push(this.rata_chart4);
+        this.rata_chart5 = this.sum5 / this.count5;
+        this.data_ttl.push(this.rata_chart5);
+        this.rata_chart6 = this.sum6 / this.count6;
+        this.data_ttl.push(this.rata_chart6);
+        this.rata_chart7 = this.sum7 / this.count7;
+        this.data_ttl.push(this.rata_chart7);
+        this.rata_chart8 = this.sum8 / this.count8;
+        this.data_ttl.push(this.rata_chart8);
+        this.rata_chart9 = this.sum9 / this.count9;
+        this.data_ttl.push(this.rata_chart9);
+        this.rata_chart10 = this.sum10 / this.count10;
+        this.data_ttl.push(this.rata_chart10);
+        this.rata_chart11 = this.sum11 / this.count11;
+        this.data_ttl.push(this.rata_chart11);
+        this.rata_chart12 = this.sum12 / this.count12;
+        this.data_ttl.push(this.rata_chart12);
+      });
+    },
     loadProduk() {
       axios({
         method: "post",
@@ -559,5 +744,8 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+}
+.atur_graph {
+  margin-left: 65px;
 }
 </style>

@@ -285,6 +285,7 @@ export default {
               photoURL
               totalReviews
               averageRating
+              createdAt
             }
           }
         `

@@ -15,6 +15,9 @@ import router from "./router";
 import store from "./store";
 import axios from "axios";
 Vue.config.productionTip = false;
+//package untuk menampilkan graph
+import VueGraph from "vue-graph";
+Vue.use(VueGraph);
 
 Vue.component("Navigasi", require("./components/Navigasi.vue").default);
 Vue.component("Footer", require("./components/Footer.vue").default);
