@@ -86,18 +86,18 @@
                 </h6>
 
                 <div>
-                      Harga :
-                      <div class="text-truncate inline font" style="color: green;">
-                        Rp {{ pro.pricePerKG }}
-                      </div>
-                    </div>
+                  Harga :
+                  <div class="text-truncate inline font" style="color: green;">
+                    Rp {{ pro.pricePerKG }}/KG
+                  </div>
+                </div>
 
-                    <div>
-                      Stock :
-                      <div class="text-truncate inline font" style="color: red;">
-                        {{ pro.stockKG }} KG
-                      </div>
-                    </div>
+                <div>
+                  Stock :
+                  <div class="text-truncate inline font" style="color: red;">
+                    {{ pro.stockKG }} KG
+                  </div>
+                </div>
 
                 <div class="clearfix"></div>
 
@@ -150,7 +150,7 @@
   margin-right: auto;
   width: 50%;
 }
-.email_toko{
+.email_toko {
   margin-top: -30px;
   margin-left: 74px;
   color: grey;

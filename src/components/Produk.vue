@@ -57,7 +57,7 @@
             >
             </star-rating>
 
-            <p class="reduced ">Harga : Rp {{ produk.pricePerKG }} per/KG</p>
+            <p class="reduced ">Harga : Rp {{ produk.pricePerKG }}/KG</p>
             <p>Stock : {{ produk.stockKG }} KG</p>
             <p style="color:grey">{{ produk.description }}.</p>
             <span v-if="isLoggedIn && dataku.type == 1">

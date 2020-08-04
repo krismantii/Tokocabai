@@ -184,7 +184,7 @@
                       <div>
                         Harga :
                         <div class="text-truncate inline" style="color: green;">
-                          Rp {{ pro.pricePerKG }}
+                          Rp {{ pro.pricePerKG }}/KG
                         </div>
                       </div>
 
