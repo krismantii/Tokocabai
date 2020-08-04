@@ -93,6 +93,7 @@
               </ul>
               <div>
                 <br />
+                <div style="float:right;">
                 <router-link
                   :to="{
                     name: 'Edit_profil',
@@ -109,6 +110,7 @@
                   class="btn btn-outline-secondary mr-1"
                   >History transaksi</router-link
                 >
+                </div>
               </div>
               <!--Plug-in Initialisation-->
             </div>

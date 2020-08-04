@@ -157,7 +157,13 @@
         <hr />
         <br />
         <div>
-          <router-link to="/profil" @click.native="$router.go()">
+          <router-link
+            :to="{
+              name: 'Profil',
+              params: { token: token }
+            }"
+            @click.native="$router.go()"
+          >
             <b-button class="mr-1">Kembali</b-button></router-link
           >
           <b-button class="mr-1" type="submit" variant="success"

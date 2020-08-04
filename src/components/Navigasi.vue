@@ -35,7 +35,7 @@
                 class="nav-link"
                 @click.native="$router.go()"
               >
-                Login</router-link
+                Masuk</router-link
               >
             </li>
           </span>
@@ -46,7 +46,7 @@
                 class="nav-link"
                 @click.native="$router.go()"
               >
-                Register</router-link
+                Daftar</router-link
               >
             </li>
           </span>

@@ -11,7 +11,7 @@
           <div class="wrap-login100">
             <form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
               <span class="login100-form-title">
-                Register
+                Daftar Sekarang
               </span>
               <b-form @submit="register" v-if="show">
                 <b-form-group
@@ -128,7 +128,7 @@
                   class="login100-form-btn"
                   @click="register"
                   type="submit"
-                  >Submit</b-button
+                  >Daftar</b-button
                 >
               </div>
               <div class="flex-col-c p-t-30 p-b-40">
@@ -136,7 +136,7 @@
                   Sudah punya akun?
                 </span>
 
-                <router-link to="/login">login di sini</router-link>
+                <router-link to="/login">Masuk di sini</router-link>
               </div>
             </form>
           </div>

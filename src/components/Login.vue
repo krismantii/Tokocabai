@@ -14,7 +14,7 @@
         <div class="wrap-login100">
           <form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
             <span class="login100-form-title">
-              Login
+              Masuk
             </span>
             <b-form @submit="login" v-if="show">
               <b-form-group
@@ -52,7 +52,7 @@
                 type="submit"
                 @click="login"
                 variant="primary"
-                >Login</b-button
+                >Masuk</b-button
               >
             </div>
 
@@ -62,7 +62,7 @@
               </span>
 
               <router-link to="/register" class="nav-link"
-                >Register di sini</router-link
+                >Daftar di sini</router-link
               >
             </div>
           </form>

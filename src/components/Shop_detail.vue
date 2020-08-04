@@ -13,6 +13,7 @@
             size="4rem"
           ></b-avatar>
           <h4 class="inline">{{ dataku.name }}</h4>
+          <p class="email_toko">{{ dataku.email }}</p>
         </div>
         <b-card-text>
           <a class="font" style="color:green;"> {{ dataku.description }} </a>
@@ -84,15 +85,19 @@
                   </router-link>
                 </h6>
 
-                <p>
-                  Harga:
-                  <a style="color: green;"> Rp {{ pro.pricePerKG }} </a>
-                </p>
+                <div>
+                      Harga :
+                      <div class="text-truncate inline font" style="color: green;">
+                        Rp {{ pro.pricePerKG }}
+                      </div>
+                    </div>
 
-                <p>
-                  Stock :
-                  <a style="color: red;">{{ pro.stockKG }} KG </a>
-                </p>
+                    <div>
+                      Stock :
+                      <div class="text-truncate inline font" style="color: red;">
+                        {{ pro.stockKG }} KG
+                      </div>
+                    </div>
 
                 <div class="clearfix"></div>
 
@@ -144,6 +149,11 @@
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+}
+.email_toko{
+  margin-top: -30px;
+  margin-left: 74px;
+  color: grey;
 }
 </style>
 <script>
