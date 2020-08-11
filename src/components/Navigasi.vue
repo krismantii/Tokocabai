@@ -25,7 +25,15 @@
           </span>
           <span v-if="isLoggedIn">
             <li class="nav-item">
-              <router-link to="/shop" class="fas fa-store set"> </router-link>
+              <button>
+                <router-link
+                  class="set font"
+                  to="/about"
+                  @click.native="$router.go()"
+                >
+                  About</router-link
+                >
+              </button>
             </li>
           </span>
           <span v-if="isLoggedIn == ''">

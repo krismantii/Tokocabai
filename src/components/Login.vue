@@ -42,7 +42,7 @@
                   type="password"
                   required
                   placeholder="Masukan password"
-                ></b-form-input>
+                ></b-form-input>                
               </b-form-group>
             </b-form>
 

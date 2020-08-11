@@ -74,8 +74,8 @@
               v-model="pro.AmountKG"
               v-on:input="updateCartQuantity(pro.id, pro.AmountKG)"
               type="number"
-              min="0"
               step="any"
+              min="0"
               placeholder=""
             ></b-form-input>
           </div>
@@ -219,19 +219,6 @@ th.t-head {
 }
 table td {
   position: relative;
-}
-
-table td input {
-  position: absolute;
-  display: block;
-  top:-10px;
-  left:0;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  border: none;
-  padding: 10px;
-  box-sizing: border-box;
 }
 </style>
 <script>

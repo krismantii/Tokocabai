@@ -45,7 +45,7 @@
                     v-model="form.email"
                     type="email"
                     required
-                    placeholder="masukan email"
+                    placeholder="Masukan email"
                   ></b-form-input>
                 </b-form-group>
 
@@ -60,7 +60,7 @@
                     :state="validation_password"
                     type="password"
                     required
-                    placeholder="masukan password"
+                    placeholder="Masukan password"
                   ></b-form-input>
                   <b-form-invalid-feedback :state="validation_password">
                     min 6 karakter.
@@ -69,29 +69,13 @@
                     Looks Good.
                   </b-form-valid-feedback>
                 </b-form-group>
-                <b-form-group
-                  id="input-group-1"
-                  label="Nama lengkap:"
-                  label-for="input-1"
-                  description=""
-                >
-                  <b-form-input
-                    id="input-1"
-                    v-model="form.name"
-                    type="text"
-                    required
-                    placeholder="Masukan nama lengkap"
-                  ></b-form-input>
-                </b-form-group>
-                <b-form-group
-                  id="input-group-3"
-                  label="Saya:"
-                  label-for="input-3"
-                >
-                  <b-form-select
-                    v-model="form.role"
-                    :options="role"
-                  ></b-form-select>
+                <b-form-group label="Apakah anda petani cabai?">
+                  <b-form-radio v-model="form.role" name="some-radios" value="2"
+                    >Ya</b-form-radio
+                  >
+                  <b-form-radio v-model="form.role" name="some-radios" value="1"
+                    >Bukan</b-form-radio
+                  >
                 </b-form-group>
                 <b-form-group
                   id="input-group-1"
@@ -106,20 +90,6 @@
                     required
                     placeholder="Masukan No.Hp"
                   ></b-form-input>
-                </b-form-group>
-                <b-form-group
-                  id="input-group-2"
-                  label="Alamat :"
-                  label-for="input-2"
-                >
-                  <b-form-textarea
-                    id="input-2"
-                    v-model="form.alamat"
-                    type="text"
-                    rows="5"
-                    required
-                    placeholder=" Masukan alamat tempat tinggal"
-                  ></b-form-textarea>
                 </b-form-group>
               </b-form>
               <div class="flex-col-c p-t-10 p-b-40"></div>
@@ -158,12 +128,9 @@ export default {
         name: "",
         password: "",
         hp: "",
-        alamat: ""
+        alamat: "",
+        role: ""
       },
-      role: [
-        { value: 2, text: "Petani cabai" },
-        { value: 1, text: "Bukan petani cabai" }
-      ],
       show: true
     };
   },

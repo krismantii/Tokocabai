@@ -111,9 +111,9 @@
         <br />
         <br />
         <hr />
-        <b-alert show dismissible variant="danger"
-          >Password wajib diisi sebelum edit data ! ( Isi kolom "password baru"
-          jika ingin mengganti password anda ) <b>&rArr;</b></b-alert
+        <b-alert show dismissible variant="danger">
+          Isi kolom "password baru" jika ingin mengganti password anda
+          </b-alert
         >
         <b-form-group id="input-group-1" label="Password :" label-for="input-1">
           <b-form-input
@@ -156,6 +156,9 @@
         </b-form-group>
         <hr />
         <br />
+        <b-alert show dismissible variant="danger"
+          >Password wajib diisi sebelum edit data !</b-alert
+        >
         <div>
           <router-link
             :to="{

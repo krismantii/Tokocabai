@@ -67,6 +67,10 @@
               </form>
             </b-modal>
           </div>
+          <br />
+          <b-alert show variant="info"
+            >Update profil anda untuk kenyamanan bertransaksi.</b-alert
+          >
           <div class=" contact-w3">
             <div class="col-md-5 contact-right">
               <img
@@ -76,7 +80,7 @@
               />
             </div>
             <div class="col-md-7 contact-left">
-              <h4>{{ dataku.name }}</h4>
+              <h4>{{ dataku.userName }}</h4>
               <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
               <p>Provinsi : {{ dataku.province }}</p>
               <p>Alamat detail : {{ dataku.addressDetail }}</p>
@@ -94,22 +98,22 @@
               <div>
                 <br />
                 <div style="float:right;">
-                <router-link
-                  :to="{
-                    name: 'Edit_profil',
-                    params: { token: token }
-                  }"
-                  class="btn btn-outline-danger mr-1"
-                  >Edit Profil</router-link
-                >
-                <router-link
-                  :to="{
-                    name: 'History',
-                    params: { token: token }
-                  }"
-                  class="btn btn-outline-secondary mr-1"
-                  >History transaksi</router-link
-                >
+                  <router-link
+                    :to="{
+                      name: 'Edit_profil',
+                      params: { token: token }
+                    }"
+                    class="btn btn-outline-danger mr-1"
+                    >Edit Profil</router-link
+                  >
+                  <router-link
+                    :to="{
+                      name: 'History',
+                      params: { token: token }
+                    }"
+                    class="btn btn-outline-secondary mr-1"
+                    >History transaksi</router-link
+                  >
                 </div>
               </div>
               <!--Plug-in Initialisation-->
@@ -125,22 +129,14 @@
     <br />
     <span v-if="dataku.type == 2">
       <div class="container">
-        <div
-          class="alert alert-warning alert-dismissible fade show"
-          role="alert"
-        >
-          <strong>Attention!</strong> Fitur toko hanya untuk petani cabai !
-          <button
-            type="button"
-            class="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="spec ">
+          <h3>Profil Toko</h3>
+          <div class="ser-t">
+            <b></b>
+            <span><i></i></span>
+            <b class="line"></b>
+          </div>
         </div>
-      </div>
-      <div class="container">
         <b-card-group>
           <b-card title="Saldo Tokocabai">
             <b-card-text>
@@ -196,83 +192,87 @@
             </b-form-group>
           </form>
         </b-modal>
-      </div>
-      <div class="contact">
-        <div class="container">
-          <div class="spec ">
-            <h3>Profil Toko</h3>
-            <div class="ser-t">
-              <b></b>
-              <span><i></i></span>
-              <b class="line"></b>
-            </div>
-          </div>
-          <div class=" contact-w3">
-            <div class="col-md-5 contact-right">
-              <img
-                :src="dataku.photoURL || 'images/default.png'"
-                class="gambar"
-                alt=""
-              />
-            </div>
-            <div class="col-md-7 contact-left">
-              <h4>{{ dataku.name }}</h4>
-              <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
-              <p>Provinsi : {{ dataku.province }}</p>
-              <p>Alamat detail : {{ dataku.addressDetail }}</p>
-              <p>kode zip : {{ dataku.zipCode }}</p>
-              <ul class="contact-list">
-                <li>
-                  <i class="fas fa-envelope" aria-hidden="true"></i
-                  ><a>{{ dataku.email }}</a>
-                </li>
-                <li>
-                  <i class="fas fa-phone" aria-hidden="true"></i
-                  >{{ dataku.phone }}
-                </li>
-              </ul>
-              <div>
-                <br />
-                <br />
-                <div
-                  class="btn-group"
-                  role="group"
-                  aria-label="Basic example"
-                  style="float:right;"
-                >
-                  <router-link
-                    :to="{
-                      name: 'Manajemen_produk',
-                      params: { token: token }
-                    }"
-                    @click.native="$router.go()"
-                    class="btn btn-outline-success mr-1"
-                    >Manajemen Produk
-                  </router-link>
-                  <router-link
-                    :to="{
-                      name: 'Manajemen_toko',
-                      params: { token: token }
-                    }"
-                    @click.native="$router.go()"
-                    class="btn btn-outline-secondary mr-1"
-                    >Manajemen Transaksi
-                  </router-link>
-                  <router-link
-                    :to="{
-                      name: 'Edit_profil',
-                      params: { token: token }
-                    }"
-                    class="btn btn-outline-danger mr-1"
-                    >Edit Profil Toko</router-link
-                  >
-                </div>
-              </div>
-              <!--Plug-in Initialisation-->
-            </div>
-            <div class="clearfix"></div>
-          </div>
+        <b-alert show variant="info"
+          >Update profil anda untuk kenyamanan bertransaksi.</b-alert
+        >
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Attention!</strong> Fitur toko hanya untuk petani cabai !
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+      <div class=" contact-w3">
+        <div class="col-md-5 contact-right">
+          <img
+            :src="dataku.photoURL || 'images/default.png'"
+            class="gambar"
+            alt=""
+          />
+        </div>
+        <div class="col-md-7 contact-left">
+          <h4>{{ dataku.userName }}</h4>
+          <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+          <p>Provinsi : {{ dataku.province }}</p>
+          <p>Alamat detail : {{ dataku.addressDetail }}</p>
+          <p>kode zip : {{ dataku.zipCode }}</p>
+          <ul class="contact-list">
+            <li>
+              <i class="fas fa-envelope" aria-hidden="true"></i
+              ><a>{{ dataku.email }}</a>
+            </li>
+            <li>
+              <i class="fas fa-phone" aria-hidden="true"></i>{{ dataku.phone }}
+            </li>
+          </ul>
+          <div>
+            <br />
+            <br />
+            <div
+              class="btn-group"
+              role="group"
+              aria-label="Basic example"
+              style="float:right;"
+            >
+              <router-link
+                :to="{
+                  name: 'Manajemen_produk',
+                  params: { token: token }
+                }"
+                @click.native="$router.go()"
+                class="btn btn-outline-success mr-1"
+                >Manajemen Produk
+              </router-link>
+              <router-link
+                :to="{
+                  name: 'Manajemen_toko',
+                  params: { token: token }
+                }"
+                @click.native="$router.go()"
+                class="btn btn-outline-secondary mr-1"
+                >Manajemen Transaksi
+              </router-link>
+              <router-link
+                :to="{
+                  name: 'Edit_profil',
+                  params: { token: token }
+                }"
+                class="btn btn-outline-danger mr-1"
+                >Edit Profil Toko</router-link
+              >
+            </div>
+          </div>
+          <!--Plug-in Initialisation-->
+        </div>
+        <div class="clearfix"></div>
+      </div>
       </div>
     </span>
   </div>
@@ -323,6 +323,7 @@ export default {
                   "${token}"
                 ){
                   id
+                  userName
                   name
                   email
                   phone

@@ -68,11 +68,18 @@
                     id="input-1"
                     v-model="jumlah"
                     type="number"
-                    min="0"
+                    min="1"
+                    :state="validation_produk"
                     step="any"
                     required
                     placeholder=""
                   ></b-form-input>
+                   <b-form-invalid-feedback :state="validation_produk">
+                    minimum beli 1 KG.
+                  </b-form-invalid-feedback>
+                  <b-form-valid-feedback :state="validation_produk">
+                    Tambah sekarang.
+                  </b-form-valid-feedback>
                 </div>
                 <p>KG</p>
               </div>
@@ -233,6 +240,7 @@ export default {
       produk: [],
       toko: [],
       token,
+      validate: [],
       nama: "",
       shop_id: null,
       cart: [],
@@ -261,7 +269,10 @@ export default {
     },
     jumlah_review: function() {
       return this.review_count(this.review);
-    }
+    },
+    validation_produk() {
+      return this.jumlah > 0;
+    },
   },
   created() {
     this.loadData();
