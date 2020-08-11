@@ -17,35 +17,22 @@
               Masuk
             </span>
             <b-form @submit="login" v-if="show">
-              <b-form-group
-                id="input-group-1"
-                label="Email address:"
-                label-for="input-1"
-              >
-                <b-form-input
-                  id="input-1"
-                  v-model="form.email"
-                  type="email"
-                  required
-                  placeholder="Masukan email"
-                ></b-form-input>
-              </b-form-group>
-
-              <b-form-group
-                id="input-group-2"
-                label="Password:"
-                label-for="input-2"
-              >
-                <b-form-input
-                  id="input-2"
-                  v-model="form.password"
-                  type="password"
-                  required
-                  placeholder="Masukan password"
-                ></b-form-input>                
-              </b-form-group>
+              <v-text-field
+                v-model="form.email"
+                counter
+                label="E-mail"
+              ></v-text-field>
+              <v-text-field
+                v-model="form.password"
+                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show1 ? 'text' : 'password'"
+                name="input-10-1"
+                label="Password"
+                counter
+                @click:append="show1 = !show1"
+              ></v-text-field>
             </b-form>
-
+            <br />
             <div class="container-login100-form-btn">
               <b-button
                 class="login100-form-btn"
@@ -81,7 +68,9 @@ export default {
         email: "",
         password: ""
       },
-      show: true
+      show1: false,
+      show: true,
+      password: "Password"
     };
   },
   methods: {

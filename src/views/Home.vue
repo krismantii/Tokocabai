@@ -560,7 +560,7 @@ export default {
   },
   methods: {
     changeData: function() {
-      this.dataChart = [6, 6, 3, 5, 5, 6,6, 6, 3, 5, 5, 6];
+      this.dataChart = [6, 6, 3, 5, 5, 6, 6, 6, 3, 5, 5, 6];
     },
     getSelectedItem: function(selected) {
       console.log(selected);

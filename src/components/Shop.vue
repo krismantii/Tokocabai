@@ -77,7 +77,7 @@
                     ></b-form-input>
                     <b-button
                       size="sm"
-                      class="my-2 my-sm-0"
+                      class="btn btn-light mr-1"
                       v-on:click="filterSearch(search, kategori)"
                       >Search</b-button
                     >
@@ -425,6 +425,12 @@ export default {
     this.loadProduk();
   },
   methods: {
+    filter_data_produk(){
+      for (let i = 0; i < this.produk.length; i++) {
+        var c = new Intl.NumberFormat();
+        this.produk[i].pricePerKG = c.format(this.produk[i].pricePerKG);
+      }
+    },
     loadProduk() {
       axios({
         method: "post",
@@ -455,7 +461,7 @@ export default {
           this.produk = response.data.data.searchProducts;
           this.kategori = "Cabai Merah Besar";
           console.log("kategori:", this.kategori);
-          this.loadData();
+          this.filter_data_produk();
         })
         .catch(function(error) {
           console.log(error);
@@ -596,32 +602,6 @@ export default {
         .then(response => {
           console.log("Data filter harga:", response.data);
           this.produk = response.data.data.searchProducts;
-        })
-        .catch(function(error) {
-          console.log(error);
-          console.log("error");
-        });
-    },
-    loadData() {
-      axios({
-        method: "post",
-        url: "http://www.idzhar.live/query",
-        data: {
-          query: `
-            query{
-                getUserInfo(token:
-                  "${token}"
-                ){
-                  id
-                  province
-                }
-              }
-        `
-        }
-      })
-        .then(response => {
-          console.log("Data :", response.data);
-          this.dataku = response.data.data.getUserInfo;
         })
         .catch(function(error) {
           console.log(error);

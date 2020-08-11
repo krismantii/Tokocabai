@@ -23,9 +23,9 @@
               <b-card title="Top up saldo">
                 <b-card-text>
                   <b-button
-                    class="mr-1"
+                    class="mr-1 warna"
                     pill
-                    variant="info"
+                    variant="primary"
                     v-b-modal.modal-prevent-closing
                     >Topup</b-button
                   >
@@ -35,7 +35,7 @@
                       params: { token: token }
                     }"
                   >
-                    <b-button class="mr-1" pill variant="secondary"
+                    <b-button class="mr-1 warna" pill variant="dark"
                       >History</b-button
                     ></router-link
                   >
@@ -148,7 +148,7 @@
           <b-card title="Top up saldo">
             <b-card-text>
               <b-button
-                class="mr-1"
+                class="mr-1 warna"
                 pill
                 variant="info"
                 v-b-modal.modal-prevent-closing
@@ -161,7 +161,7 @@
                 }"
                 @click.native="$router.go()"
               >
-                <b-button class="mr-1" pill variant="secondary"
+                <b-button class="mr-1 warna" pill variant="secondary"
                   >History</b-button
                 ></router-link
               >
@@ -209,70 +209,71 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-      <div class=" contact-w3">
-        <div class="col-md-5 contact-right">
-          <img
-            :src="dataku.photoURL || 'images/default.png'"
-            class="gambar"
-            alt=""
-          />
-        </div>
-        <div class="col-md-7 contact-left">
-          <h4>{{ dataku.userName }}</h4>
-          <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
-          <p>Provinsi : {{ dataku.province }}</p>
-          <p>Alamat detail : {{ dataku.addressDetail }}</p>
-          <p>kode zip : {{ dataku.zipCode }}</p>
-          <ul class="contact-list">
-            <li>
-              <i class="fas fa-envelope" aria-hidden="true"></i
-              ><a>{{ dataku.email }}</a>
-            </li>
-            <li>
-              <i class="fas fa-phone" aria-hidden="true"></i>{{ dataku.phone }}
-            </li>
-          </ul>
-          <div>
-            <br />
-            <br />
-            <div
-              class="btn-group"
-              role="group"
-              aria-label="Basic example"
-              style="float:right;"
-            >
-              <router-link
-                :to="{
-                  name: 'Manajemen_produk',
-                  params: { token: token }
-                }"
-                @click.native="$router.go()"
-                class="btn btn-outline-success mr-1"
-                >Manajemen Produk
-              </router-link>
-              <router-link
-                :to="{
-                  name: 'Manajemen_toko',
-                  params: { token: token }
-                }"
-                @click.native="$router.go()"
-                class="btn btn-outline-secondary mr-1"
-                >Manajemen Transaksi
-              </router-link>
-              <router-link
-                :to="{
-                  name: 'Edit_profil',
-                  params: { token: token }
-                }"
-                class="btn btn-outline-danger mr-1"
-                >Edit Profil Toko</router-link
-              >
-            </div>
+        <div class=" contact-w3">
+          <div class="col-md-5 contact-right">
+            <img
+              :src="dataku.photoURL || 'images/default.png'"
+              class="gambar"
+              alt=""
+            />
           </div>
-          <!--Plug-in Initialisation-->
+          <div class="col-md-7 contact-left">
+            <h4>{{ dataku.userName }}</h4>
+            <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+            <p>Provinsi : {{ dataku.province }}</p>
+            <p>Alamat detail : {{ dataku.addressDetail }}</p>
+            <p>kode zip : {{ dataku.zipCode }}</p>
+            <ul class="contact-list">
+              <li>
+                <i class="fas fa-envelope" aria-hidden="true"></i
+                ><a>{{ dataku.email }}</a>
+              </li>
+              <li>
+                <i class="fas fa-phone" aria-hidden="true"></i
+                >{{ dataku.phone }}
+              </li>
+            </ul>
+            <div>
+              <br />
+              <br />
+              <div
+                class="btn-group"
+                role="group"
+                aria-label="Basic example"
+                style="float:right;"
+              >
+                <router-link
+                  :to="{
+                    name: 'Manajemen_produk',
+                    params: { token: token }
+                  }"
+                  @click.native="$router.go()"
+                  class="btn btn-outline-success mr-1"
+                  >Manajemen Produk
+                </router-link>
+                <router-link
+                  :to="{
+                    name: 'Manajemen_toko',
+                    params: { token: token }
+                  }"
+                  @click.native="$router.go()"
+                  class="btn btn-outline-secondary mr-1"
+                  >Manajemen Transaksi
+                </router-link>
+                <router-link
+                  :to="{
+                    name: 'Edit_profil',
+                    params: { token: token }
+                  }"
+                  class="btn btn-outline-danger mr-1"
+                  >Edit Profil Toko</router-link
+                >
+              </div>
+            </div>
+            <!--Plug-in Initialisation-->
+          </div>
+          <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
-      </div>
       </div>
     </span>
   </div>
@@ -287,6 +288,9 @@
   height: 300px;
   object-fit: cover;
   margin-left: 100px;
+}
+.warna {
+  color: white;
 }
 </style>
 <script>

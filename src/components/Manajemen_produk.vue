@@ -69,7 +69,7 @@
                 params: { slug: pro.slugName, id: pro.id }
               }"
               type="button"
-              class="btn btn-secondary float-left"
+              class="btn btn-secondary float-left warna"
             >
               Edit
             </router-link>
@@ -130,6 +130,7 @@ export default {
         .then(response => {
           console.log("Data produk :", response.data);
           this.produk = response.data.data.productsByShop;
+          this.filter_data_produk();
         })
         .catch(function(error) {
           console.log(error);
@@ -187,6 +188,17 @@ export default {
           console.log(error);
           console.log("error");
         });
+    },
+    filter_data_produk(){
+      for (let i = 0; i < this.produk.length; i++) {
+        var c = new Intl.NumberFormat();
+        this.produk[i].pricePerKG = c.format(this.produk[i].pricePerKG);
+      }
+      for (let i = 0; i < this.produk.length; i++) {
+        var d = new Date(this.produk[i].createdAt);
+        this.produk[i].createdAt =
+          d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+      }
     }
   }
 };
@@ -196,5 +208,8 @@ export default {
   width: 100px;
   height: 100px;
   object-fit: cover;
+}
+.warna {
+  color: white;
 }
 </style>

@@ -74,7 +74,7 @@
                     required
                     placeholder=""
                   ></b-form-input>
-                   <b-form-invalid-feedback :state="validation_produk">
+                  <b-form-invalid-feedback :state="validation_produk">
                     minimum beli 1 KG.
                   </b-form-invalid-feedback>
                   <b-form-valid-feedback :state="validation_produk">
@@ -272,7 +272,7 @@ export default {
     },
     validation_produk() {
       return this.jumlah > 0;
-    },
+    }
   },
   created() {
     this.loadData();

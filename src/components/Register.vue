@@ -14,61 +14,27 @@
                 Daftar Sekarang
               </span>
               <b-form @submit="register" v-if="show">
-                <b-form-group
-                  id="input-group-1"
-                  label="Username:"
-                  label-for="input-1"
-                  description=""
-                >
-                  <b-form-input
-                    id="input-1"
-                    v-model="form.username"
-                    :state="validation_username"
-                    type="text"
-                    required
-                    placeholder="Masukan username"
-                  ></b-form-input>
-                  <b-form-invalid-feedback :state="validation_username">
-                    min 6 karakter.
-                  </b-form-invalid-feedback>
-                  <b-form-valid-feedback :state="validation_username">
-                    Looks Good.
-                  </b-form-valid-feedback>
-                </b-form-group>
-                <b-form-group
-                  id="input-group-1"
-                  label="Email address:"
-                  label-for="input-1"
-                >
-                  <b-form-input
-                    id="input-1"
-                    v-model="form.email"
-                    type="email"
-                    required
-                    placeholder="Masukan email"
-                  ></b-form-input>
-                </b-form-group>
-
-                <b-form-group
-                  id="input-group-2"
-                  label="Password:"
-                  label-for="input-2"
-                >
-                  <b-form-input
-                    id="input-2"
-                    v-model="form.password"
-                    :state="validation_password"
-                    type="password"
-                    required
-                    placeholder="Masukan password"
-                  ></b-form-input>
-                  <b-form-invalid-feedback :state="validation_password">
-                    min 6 karakter.
-                  </b-form-invalid-feedback>
-                  <b-form-valid-feedback :state="validation_password">
-                    Looks Good.
-                  </b-form-valid-feedback>
-                </b-form-group>
+                <v-text-field
+                  v-model="form.username"
+                  counter
+                  hint="Minimum 6 karakter"
+                  label="Username"
+                ></v-text-field>
+                <v-text-field
+                  v-model="form.email"
+                  counter
+                  label="E-mail"
+                ></v-text-field>
+                <v-text-field
+                  v-model="form.password"
+                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="show1 ? 'text' : 'password'"
+                  name="input-10-1"
+                  label="Password"
+                  hint="Minimum 6 karakter"
+                  counter
+                  @click:append="show1 = !show1"
+                ></v-text-field>
                 <b-form-group label="Apakah anda petani cabai?">
                   <b-form-radio v-model="form.role" name="some-radios" value="2"
                     >Ya</b-form-radio
@@ -77,20 +43,11 @@
                     >Bukan</b-form-radio
                   >
                 </b-form-group>
-                <b-form-group
-                  id="input-group-1"
-                  label="No. Hp:"
-                  label-for="input-1"
-                  description=""
-                >
-                  <b-form-input
-                    id="input-1"
-                    v-model="form.hp"
-                    type="text"
-                    required
-                    placeholder="Masukan No.Hp"
-                  ></b-form-input>
-                </b-form-group>
+                <v-text-field
+                  v-model="form.hp"
+                  counter
+                  label="No.Hp"
+                ></v-text-field>
               </b-form>
               <div class="flex-col-c p-t-10 p-b-40"></div>
               <div class="container-login100-form-btn">
@@ -122,6 +79,8 @@ export default {
   data() {
     return {
       validate: [],
+      show1: false,
+      password: "Password",
       form: {
         username: "",
         email: "",

@@ -113,8 +113,7 @@
         <hr />
         <b-alert show dismissible variant="danger">
           Isi kolom "password baru" jika ingin mengganti password anda
-          </b-alert
-        >
+        </b-alert>
         <b-form-group id="input-group-1" label="Password :" label-for="input-1">
           <b-form-input
             id="input-1"
@@ -167,9 +166,9 @@
             }"
             @click.native="$router.go()"
           >
-            <b-button class="mr-1">Kembali</b-button></router-link
+            <b-button class="mr-1 warna">Kembali</b-button></router-link
           >
-          <b-button class="mr-1" type="submit" variant="success"
+          <b-button class="mr-1 warna" type="submit" variant="success"
             >Edit Profil</b-button
           >
         </div>
@@ -357,5 +356,8 @@ export default {
   width: 400px;
   height: 400px;
   object-fit: cover;
+}
+.warna {
+  color: white;
 }
 </style>

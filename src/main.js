@@ -15,8 +15,11 @@ import router from "./router";
 import store from "./store";
 import axios from "axios";
 Vue.config.productionTip = false;
+
 //package untuk menampilkan graph
 import VueGraph from "vue-graph";
+
+import vuetify from "./plugins/vuetify";
 Vue.use(VueGraph);
 
 Vue.component("Navigasi", require("./components/Navigasi.vue").default);
@@ -32,5 +35,6 @@ if (token) {
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount("#app");
