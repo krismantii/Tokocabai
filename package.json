@@ -15,7 +15,7 @@
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link-http": "^1.5.16",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-jest": "^26.0.1",
     "bootstrap-vue": "^2.11.0",
     "chart.js": "^2.9.3",
